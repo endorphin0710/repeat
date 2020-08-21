@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">repeat</string>
+
+    <string name="naver_client_id">CT20Gn8QO6LfJdnS2pkf</string>
+    <string name="naver_client_secret">qCOlbYXuur</string>
+    <string name="naver_client_name">repeat</string>
+</resources>
