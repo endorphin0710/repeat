@@ -1,4 +1,4 @@
-package com.behemoth.repeat.login;
+package com.behemoth.repeat.auth;
 
 public class User {
 

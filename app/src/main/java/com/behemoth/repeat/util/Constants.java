@@ -7,6 +7,7 @@ public class Constants {
     public static int USER_TYPE_SOCIAL = 0;
 
     public static String SHARED_PREFERENCE_NAME = "shared_preference_repeat";
+    public static String USER_ID = "user_id";
 
     public static String LOGIN_TYPE = "login_type";
 

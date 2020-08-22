@@ -11,8 +11,8 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity"></activity>
-        <activity android:name=".login.NaverLogin"></activity>
-        <activity android:name=".login.LoginActivity">
+        <activity android:name=".auth.NaverLogin"></activity>
+        <activity android:name=".auth.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

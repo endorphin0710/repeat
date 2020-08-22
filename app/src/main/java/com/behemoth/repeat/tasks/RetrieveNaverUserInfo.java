@@ -1,6 +1,6 @@
 package com.behemoth.repeat.tasks;
 
-import com.behemoth.repeat.login.User;
+import com.behemoth.repeat.auth.User;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.LogUtil;
 import com.behemoth.repeat.util.SharedPreference;
@@ -51,6 +51,7 @@ public class RetrieveNaverUserInfo implements Runnable{
 
             /** sharedPreference **/
             SharedPreference.getInstance().putString(Constants.LOGIN_TYPE, Constants.NAVER);
+            SharedPreference.getInstance().putString(Constants.USER_ID, id);
         } catch (JSONException e) {
             e.printStackTrace();
         }

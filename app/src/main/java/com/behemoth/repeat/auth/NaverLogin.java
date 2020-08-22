@@ -1,4 +1,4 @@
-package com.behemoth.repeat.login;
+package com.behemoth.repeat.auth;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -17,8 +17,9 @@ import com.nhn.android.naverlogin.OAuthLoginHandler;
 import com.nhn.android.naverlogin.data.OAuthLoginState;
 
 public class NaverLogin extends AppCompatActivity {
+
     private static final String TAG = "NaverLogin";
-    private static Context mContext;
+    private Context mContext;
 
     private static OAuthLogin mOAuthLoginModule;
 
@@ -50,7 +51,7 @@ public class NaverLogin extends AppCompatActivity {
             startActivity(i);
             finish();
         }else{
-            mOAuthLoginModule.startOauthLoginActivity(this, new NaverLoginHandler(this));
+            mOAuthLoginModule.startOauthLoginActivity(this, new NaverLoginHandler(this, mContext));
         }
     }
 
@@ -58,25 +59,27 @@ public class NaverLogin extends AppCompatActivity {
     private static class NaverLoginHandler extends OAuthLoginHandler {
 
         private Activity parent;
+        private Context ctx;
 
-        public NaverLoginHandler(Activity activity){
+        private NaverLoginHandler(Activity activity, Context ctx){
             this.parent = activity;
+            this.ctx = ctx;
         }
 
         @Override
         public void run(boolean success) {
             if (success) {
                 LogUtil.d(TAG, "login succeeded[NAVER]");
-                mOAuthLoginModule.refreshAccessToken(mContext);
-                String token = mOAuthLoginModule.getAccessToken(mContext);
+                mOAuthLoginModule.refreshAccessToken(ctx);
+                String token = mOAuthLoginModule.getAccessToken(ctx);
                 ExecutorUtil.getInstance().execute(new RetrieveNaverUserInfo(token));
 
                 Intent i = new Intent(parent, MainActivity.class);
                 parent.startActivity(i);
                 parent.finish();
             } else {
-                String errorCode = mOAuthLoginModule.getLastErrorCode(mContext).getCode();
-                String errorDesc = mOAuthLoginModule.getLastErrorDesc(mContext);
+                String errorCode = mOAuthLoginModule.getLastErrorCode(ctx).getCode();
+                String errorDesc = mOAuthLoginModule.getLastErrorDesc(ctx);
                 LogUtil.d(TAG, "errorCode:" + errorCode + ", errorDesc:" + errorDesc);
 
                 Intent i = new Intent(parent, LoginActivity.class);

@@ -1,4 +1,4 @@
-package com.behemoth.repeat.login;
+package com.behemoth.repeat.auth;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +12,8 @@ import com.behemoth.repeat.R;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.LogUtil;
 import com.behemoth.repeat.util.SharedPreference;
+import com.nhn.android.naverlogin.OAuthLogin;
+import com.nhn.android.naverlogin.data.OAuthLoginState;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,7 +34,20 @@ public class LoginActivity extends AppCompatActivity {
         String loginType = SharedPreference.getInstance().getString(Constants.LOGIN_TYPE, "");
         LogUtil.d(TAG, "loginType: " + loginType);
         if(loginType.equals(Constants.NAVER)){
-            startNaverLogin();
+            OAuthLogin mOAuthLoginModule = OAuthLogin.getInstance();
+            mOAuthLoginModule.showDevelopersLog(true);
+            mOAuthLoginModule.init(
+                    LoginActivity.this
+                    ,mContext.getString(R.string.naver_client_id)
+                    ,mContext.getString(R.string.naver_client_secret)
+                    ,mContext.getString(R.string.naver_client_name)
+            );
+
+            if(mOAuthLoginModule.getState(mContext) == OAuthLoginState.OK){
+                startNaverLogin();
+            }else{
+                prepareButtons();
+            }
         }else{
             prepareButtons();
         }
