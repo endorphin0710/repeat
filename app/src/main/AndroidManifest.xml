@@ -10,21 +10,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
-        <activity android:name=".auth.KakaoLogin"></activity>
-        <activity android:name=".MainActivity" />
+        <activity android:name=".auth.KakaoLogin" />
+        <activity
+            android:name=".MainActivity"
+            android:label="내 서재"/>
         <activity android:name=".auth.NaverLogin" />
         <activity android:name=".auth.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="@string/kakao_app_key" />
     </application>
-
-    <queries>
-        <package android:name="com.kakao.talk" />
-    </queries>
 
 </manifest>

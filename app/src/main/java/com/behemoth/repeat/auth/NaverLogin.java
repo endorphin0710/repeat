@@ -26,7 +26,7 @@ public class NaverLogin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_naver);
+        setContentView(R.layout.activity_blank);
         mContext = getApplicationContext();
         initNaver();
     }

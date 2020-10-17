@@ -13,6 +13,7 @@ import com.behemoth.repeat.R;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.LogUtil;
 import com.behemoth.repeat.util.SharedPreference;
+import com.kakao.auth.Session;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.data.OAuthLoginState;
 
@@ -52,6 +53,12 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 break;
             case Constants.KAKAO :
+                boolean opened = Session.getCurrentSession().isOpened();
+                if(opened){
+                    startLogin(loginType);
+                }else{
+                    prepareButtons();
+                }
                 break;
             default:
                 prepareButtons();

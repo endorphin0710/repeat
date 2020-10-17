@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">repeat</string>
+    <string name="app_name">Repeat</string>
 
     <string name="naver_client_id">CT20Gn8QO6LfJdnS2pkf</string>
     <string name="naver_client_secret">qCOlbYXuur</string>
     <string name="naver_client_name">Repeat</string>
+    <string name="kakao_app_key">5016c44520068f26880ce08b8ba80f7a</string>
 </resources>
