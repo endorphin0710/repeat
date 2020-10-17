@@ -8,7 +8,9 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.behemoth.repeat.auth.LoginActivity;
 import com.behemoth.repeat.auth.NaverLogin;
+import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.SharedPreference;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.data.OAuthLoginState;
@@ -37,20 +39,28 @@ public class Application extends android.app.Application {
                         || activity.getClass().getSimpleName().equals("OAuthLoginActivity")
                         || activity.getClass().getSimpleName().equals("NaverLogin")) return;
                 Log.d("juntae", "onActivity Resumed");
-                OAuthLogin mOAuthLoginModule = OAuthLogin.getInstance();
-                mOAuthLoginModule.showDevelopersLog(true);
-                mOAuthLoginModule.init(
-                        getApplicationContext()
-                        ,getApplicationContext().getString(R.string.naver_client_id)
-                        ,getApplicationContext().getString(R.string.naver_client_secret)
-                        ,getApplicationContext().getString(R.string.naver_client_name)
-                );
 
-                if(mOAuthLoginModule.getState(getApplicationContext()) != OAuthLoginState.OK){
-                    Log.d("juntae", "onActivity Resumed : state NOT OK");
-                    startNaverLogin();
-                }else{
-                    Log.d("juntae", "onActivity Resumed : state OK");
+                String loginType = SharedPreference.getInstance().getString(Constants.LOGIN_TYPE, "");
+                switch(loginType){
+                    case Constants.NAVER :
+                        OAuthLogin mOAuthLoginModule = OAuthLogin.getInstance();
+                        mOAuthLoginModule.showDevelopersLog(true);
+                        mOAuthLoginModule.init(
+                                getApplicationContext()
+                                ,getApplicationContext().getString(R.string.naver_client_id)
+                                ,getApplicationContext().getString(R.string.naver_client_secret)
+                                ,getApplicationContext().getString(R.string.naver_client_name)
+                        );
+
+                        if(mOAuthLoginModule.getState(getApplicationContext()) != OAuthLoginState.OK){
+                            Log.d("juntae", "onActivity Resumed : state NOT OK");
+                            startLoginActivity();
+                        }else{
+                            Log.d("juntae", "onActivity Resumed : state OK");
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
 
@@ -76,10 +86,9 @@ public class Application extends android.app.Application {
         });
     }
 
-    private void startNaverLogin(){
-        Intent i = new Intent(getApplicationContext(), NaverLogin.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(i);
+    private void startLoginActivity(){
+        Intent i = new Intent(getApplicationContext(), LoginActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
 }

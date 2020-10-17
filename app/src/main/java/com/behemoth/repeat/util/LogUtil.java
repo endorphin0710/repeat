@@ -1,6 +1,5 @@
 package com.behemoth.repeat.util;
 
-import android.os.Build;
 import android.util.Log;
 
 import com.behemoth.repeat.BuildConfig;

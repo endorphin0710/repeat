@@ -58,8 +58,8 @@ public class NaverLogin extends AppCompatActivity {
 
     private static class NaverLoginHandler extends OAuthLoginHandler {
 
-        private Activity parent;
-        private Context ctx;
+        private final Activity parent;
+        private final Context ctx;
 
         private NaverLoginHandler(Activity activity, Context ctx){
             this.parent = activity;
@@ -76,7 +76,6 @@ public class NaverLogin extends AppCompatActivity {
 
                 Intent i = new Intent(parent, MainActivity.class);
                 parent.startActivity(i);
-                parent.finish();
             } else {
                 String errorCode = mOAuthLoginModule.getLastErrorCode(ctx).getCode();
                 String errorDesc = mOAuthLoginModule.getLastErrorDesc(ctx);
@@ -84,8 +83,8 @@ public class NaverLogin extends AppCompatActivity {
 
                 Intent i = new Intent(parent, LoginActivity.class);
                 parent.startActivity(i);
-                parent.finish();
             }
+            parent.finish();
         }
 
     }

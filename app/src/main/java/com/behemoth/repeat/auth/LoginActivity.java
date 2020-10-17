@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -22,8 +23,8 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        setTheme(R.style.AppTheme);
         super.onCreate(savedInstanceState);
+        if (getSupportActionBar() != null) getSupportActionBar().hide();
         setContentView(R.layout.activity_login);
         mContext = getApplicationContext();
 
@@ -33,39 +34,60 @@ public class LoginActivity extends AppCompatActivity {
     private void checkLoginType(){
         String loginType = SharedPreference.getInstance().getString(Constants.LOGIN_TYPE, "");
         LogUtil.d(TAG, "loginType: " + loginType);
-        if(loginType.equals(Constants.NAVER)){
-            OAuthLogin mOAuthLoginModule = OAuthLogin.getInstance();
-            mOAuthLoginModule.showDevelopersLog(true);
-            mOAuthLoginModule.init(
-                    LoginActivity.this
-                    ,mContext.getString(R.string.naver_client_id)
-                    ,mContext.getString(R.string.naver_client_secret)
-                    ,mContext.getString(R.string.naver_client_name)
-            );
+        switch(loginType){
+            case Constants.NAVER :
+                OAuthLogin mOAuthLoginModule = OAuthLogin.getInstance();
+                mOAuthLoginModule.showDevelopersLog(true);
+                mOAuthLoginModule.init(
+                        LoginActivity.this
+                        ,mContext.getString(R.string.naver_client_id)
+                        ,mContext.getString(R.string.naver_client_secret)
+                        ,mContext.getString(R.string.naver_client_name)
+                );
 
-            if(mOAuthLoginModule.getState(mContext) == OAuthLoginState.OK){
-                startNaverLogin();
-            }else{
+                if(mOAuthLoginModule.getState(mContext) == OAuthLoginState.OK){
+                    startLogin(loginType);
+                }else{
+                    prepareButtons();
+                }
+                break;
+            case Constants.KAKAO :
+                break;
+            default:
                 prepareButtons();
-            }
-        }else{
-            prepareButtons();
+                break;
         }
     }
 
     private void prepareButtons(){
-        Button mOAuthLoginButton = findViewById(R.id.buttonOAuthLoginImg);
-        mOAuthLoginButton.setVisibility(View.VISIBLE);
-        mOAuthLoginButton.setOnClickListener(new View.OnClickListener(){
+        Button naverLoginButton = findViewById(R.id.buttonNaverLogin);
+        naverLoginButton.setVisibility(View.VISIBLE);
+        naverLoginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                startNaverLogin();
+                startLogin(Constants.NAVER);
             }
         });
+
+        Button kakaoLoginButton = findViewById(R.id.buttonKakaoLogin);
+        kakaoLoginButton.setVisibility(View.VISIBLE);
+        kakaoLoginButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                startLogin(Constants.KAKAO);
+            }
+        });
+
     }
 
-    private void startNaverLogin(){
-        Intent i = new Intent(LoginActivity.this, NaverLogin.class);
+    private void startLogin(String name){
+        Intent i;
+        if(name.equals(Constants.KAKAO)){
+            i = new Intent(LoginActivity.this, KakaoLogin.class);
+        }
+        else {
+            i = new Intent(LoginActivity.this, NaverLogin.class);
+        }
         startActivity(i);
         finish();
     }
