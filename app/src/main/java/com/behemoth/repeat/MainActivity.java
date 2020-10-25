@@ -29,12 +29,10 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_profile);
 
-        textView = findViewById(R.id.textView);
         logout = findViewById(R.id.logout);
         logout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                textView.setText("hi android!");
                 /**Runnable r = new Runnable() {
                     @Override
                     public void run() {

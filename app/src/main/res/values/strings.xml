@@ -5,4 +5,9 @@
     <string name="naver_client_secret">qCOlbYXuur</string>
     <string name="naver_client_name">Repeat</string>
     <string name="kakao_app_key">5016c44520068f26880ce08b8ba80f7a</string>
+
+    <string name="nav_home">홈</string>
+    <string name="nav_mark">채점하기</string>
+    <string name="nav_stats">결과보기</string>
+
 </resources>
