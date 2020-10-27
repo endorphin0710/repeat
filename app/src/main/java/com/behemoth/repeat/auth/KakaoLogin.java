@@ -2,6 +2,7 @@ package com.behemoth.repeat.auth;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -111,13 +112,15 @@ public class KakaoLogin extends AppCompatActivity {
 
     private void startLoginActivity(){
         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
-        startActivity(i);
+        startActivity(i,
+                ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         finish();
     }
 
     private void startMainActivity(){
         Intent i = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(i);
+        startActivity(i,
+                ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         finish();
     }
 

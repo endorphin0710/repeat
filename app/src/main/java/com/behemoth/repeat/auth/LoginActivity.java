@@ -2,6 +2,7 @@ package com.behemoth.repeat.auth;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -95,7 +96,8 @@ public class LoginActivity extends AppCompatActivity {
         else {
             i = new Intent(LoginActivity.this, NaverLogin.class);
         }
-        startActivity(i);
+        startActivity(i,
+                ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         finish();
     }
 

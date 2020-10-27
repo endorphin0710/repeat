@@ -13,11 +13,12 @@
         <activity android:name=".auth.KakaoLogin" />
         <activity
             android:name=".MainActivity"
-            android:label="내 서재"/>
+            android:label="내 서재" />
         <activity android:name=".auth.NaverLogin" />
         <activity android:name=".auth.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
