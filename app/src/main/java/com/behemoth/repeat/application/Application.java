@@ -1,16 +1,15 @@
-package com.behemoth.repeat;
+package com.behemoth.repeat.application;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.behemoth.repeat.R;
 import com.behemoth.repeat.auth.LoginActivity;
-import com.behemoth.repeat.auth.NaverLogin;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.LogUtil;
 import com.behemoth.repeat.util.SharedPreference;

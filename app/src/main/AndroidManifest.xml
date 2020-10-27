@@ -3,18 +3,14 @@
     package="com.behemoth.repeat">
 
     <application
-        android:name=".Application"
+        android:name=".application.Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
-        <activity android:name=".auth.KakaoLogin" />
-        <activity
-            android:name=".MainActivity"
-            android:label="내 서재" />
-        <activity android:name=".auth.NaverLogin" />
+
         <activity android:name=".auth.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -22,6 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".auth.KakaoLogin" />
+        <activity android:name=".auth.NaverLogin" />
+
+        <activity
+            android:name=".main.MainActivity"
+            android:label="내 서재" />
+        <activity android:name=".addBook.TitleAndImageActivity"
+            android:label="책 제목 입력" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

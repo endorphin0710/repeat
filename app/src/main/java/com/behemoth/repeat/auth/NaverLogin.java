@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.behemoth.repeat.MainActivity;
+import com.behemoth.repeat.main.MainActivity;
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.tasks.RetrieveNaverUserInfo;
 import com.behemoth.repeat.util.ExecutorUtil;
