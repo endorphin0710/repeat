@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.behemoth.repeat">
 
+    <uses-feature android:name="android.hardware.camera.any" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".application.Application"
         android:allowBackup="true"
@@ -23,9 +28,9 @@
 
         <activity
             android:name=".main.MainActivity"
-            android:label="내 서재" />
+            android:label="@string/label_mainActivity" />
         <activity android:name=".addBook.TitleAndImageActivity"
-            android:label="책 제목 입력" />
+            android:label="@string/label_TitleAndImageActivity" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
