@@ -1,18 +1,55 @@
 package com.behemoth.repeat.model;
 
-public class Book {
+import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-    private String text;
+public class Book implements Parcelable {
 
-    public Book(String text){
-        this.text = text;
+    private String title;
+    private Uri imageUri;
+
+    public Book(){};
+
+    public Book(String title){
+        this.title = title;
     }
 
-    public String getText() {
-        return text;
+    protected Book(Parcel in) {
+        title = in.readString();
+        imageUri = in.readParcelable(Uri.class.getClassLoader());
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public static final Creator<Book> CREATOR = new Creator<Book>() {
+        @Override
+        public Book createFromParcel(Parcel in) {
+            return new Book(in);
+        }
+
+        @Override
+        public Book[] newArray(int size) {
+            return new Book[size];
+        }
+    };
+
+    public String getTitle() {
+        return title;
+    }
+    public void setTitle(String text) {
+        this.title = text;
+    }
+
+    public Uri getImageUri() { return imageUri; }
+    public void setImageUri(Uri imageUri) { this.imageUri = imageUri; }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(title);
+        parcel.writeParcelable(imageUri, i);
     }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".addBook.TitleAndImageActivity">
+    tools:context=".addBook.titleAndImage.AddTitleAndImageActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -29,7 +29,7 @@
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/etTitle"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginTop="8dp"
@@ -41,9 +41,23 @@
         android:hint="@string/hint_title_add"
         android:inputType="textPersonName"
         android:textSize="16sp"
+        android:maxLength="20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <ImageView
+        android:id="@+id/btnRemovetitle"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="@string/desc_remove"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/etTitle"
+        app:layout_constraintEnd_toEndOf="@+id/etTitle"
+        app:layout_constraintTop_toTopOf="@+id/etTitle"
+        app:srcCompat="@drawable/ic_remove"
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/textView2"
@@ -52,29 +66,42 @@
         android:layout_marginTop="8dp"
         android:text="@string/tv_image_add"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintStart_toStartOf="@+id/etTitle"
+        app:layout_constraintTop_toBottomOf="@+id/etTitle" />
 
     <ImageView
         android:id="@+id/btnImage"
         android:layout_width="46dp"
-        android:layout_height="40dp"
+        android:layout_height="46dp"
         android:layout_marginStart="21dp"
         android:layout_marginTop="12dp"
+        android:scaleType="fitXY"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2"
-        app:srcCompat="@drawable/ic_camera" />
+        app:srcCompat="@drawable/ic_camera"
+        android:contentDescription="@string/desc_image" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnNext"
         android:layout_width="88dp"
         android:layout_height="40dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="24dp"
         android:background="@drawable/button_background"
         android:text="@string/next"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnImage" />
+
+    <ImageView
+        android:id="@+id/btnRemove"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="@+id/btnImage"
+        app:layout_constraintTop_toTopOf="@+id/btnImage"
+        app:srcCompat="@drawable/ic_remove"
+        tools:visibility="visible"
+        android:contentDescription="@string/desc_remove" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

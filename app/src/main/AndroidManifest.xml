@@ -3,9 +3,9 @@
     package="com.behemoth.repeat">
 
     <uses-feature android:name="android.hardware.camera.any" />
-    <uses-permission android:name="android.permission.CAMERA" />
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".application.Application"
@@ -15,7 +15,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
-
         <activity android:name=".auth.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,12 +24,15 @@
         </activity>
         <activity android:name=".auth.KakaoLogin" />
         <activity android:name=".auth.NaverLogin" />
-
         <activity
             android:name=".main.MainActivity"
             android:label="@string/label_mainActivity" />
-        <activity android:name=".addBook.TitleAndImageActivity"
-            android:label="@string/label_TitleAndImageActivity" />
+        <activity
+            android:name=".addBook.titleAndImage.AddTitleAndImageActivity"
+            android:label="@string/label_AddTitleAndImageActivity" />
+        <activity android:name=".addBook.chapter.AddChapterActivity"
+            android:label="@string/label_AddChapterActivity"></activity>
+
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

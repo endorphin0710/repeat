@@ -1,20 +1,18 @@
 package com.behemoth.repeat.main;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ActivityOptions;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.widget.Toast;
 
 import com.behemoth.repeat.R;
-import com.behemoth.repeat.addBook.TitleAndImageActivity;
+import com.behemoth.repeat.addBook.titleAndImage.AddTitleAndImageActivity;
 import com.behemoth.repeat.recyclerView.BookAdapter;
 import com.behemoth.repeat.recyclerView.CardClickListener;
 import com.behemoth.repeat.recyclerView.SpaceDecoration;
@@ -91,7 +89,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void newBook() {
-        Intent i = new Intent(MainActivity.this, TitleAndImageActivity.class);
+        Intent i = new Intent(MainActivity.this, AddTitleAndImageActivity.class);
         startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 }

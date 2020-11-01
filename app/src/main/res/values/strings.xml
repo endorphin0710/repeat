@@ -1,9 +1,7 @@
 <resources>
     <string name="app_name">Repeat</string>
 
-    <string name="label_mainActivity">내 서재</string>
-    <string name="label_TitleAndImageActivity">책 제목 입력</string>
-
+    <!-- Login -->
     <string name="naver_client_id">CT20Gn8QO6LfJdnS2pkf</string>
     <string name="naver_client_secret">qCOlbYXuur</string>
     <string name="naver_client_name">Repeat</string>
@@ -17,9 +15,21 @@
     <string name="confirm">확인</string>
     <string name="cancel">취소</string>
 
+    <!-- content description -->
+    <string name="desc_remove">remove contents</string>
+    <string name="desc_image">image</string>
+
+    <!-- Main -->
+    <string name="label_mainActivity">내 서재</string>
+
     <!-- Add title and image -->
     <string name="tv_title_add">책 제목 입력하기</string>
     <string name="hint_title_add">도서명을 입력해주세요.</string>
     <string name="tv_image_add">책 이미지 추가하기</string>
+
+    <!-- Add Chapter -->
+    <string name="label_AddTitleAndImageActivity">책 제목 입력</string>
+    <string name="label_AddChapterActivity">단원수 입력</string>
+    <string name="hint_chapter_add">총 몇 단원인가요?</string>
 
 </resources>

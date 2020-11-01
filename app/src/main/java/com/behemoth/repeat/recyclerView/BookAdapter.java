@@ -83,7 +83,7 @@ public class BookAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             });
         }else{
             BookViewHolder bookViewHolder = (BookViewHolder)holder;
-            bookViewHolder.text.setText(mList.get(position).getText());
+            bookViewHolder.text.setText(mList.get(position).getTitle());
             bookViewHolder.image.setImageResource(R.drawable.common_google_signin_btn_icon_dark);
             bookViewHolder.container.setOnClickListener(new View.OnClickListener() {
                 @Override
