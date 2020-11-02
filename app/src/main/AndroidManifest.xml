@@ -31,8 +31,9 @@
             android:name=".addBook.titleAndImage.AddTitleAndImageActivity"
             android:label="@string/label_AddTitleAndImageActivity" />
         <activity android:name=".addBook.chapter.AddChapterActivity"
-            android:label="@string/label_AddChapterActivity"></activity>
-
+            android:label="@string/label_AddChapterActivity"/>
+        <activity android:name=".addBook.problem.AddProblemActivity"
+            android:label="@string/label_AddProblemActivity"/>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

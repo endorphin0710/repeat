@@ -8,6 +8,7 @@ public class Book implements Parcelable {
 
     private String title;
     private Uri imageUri;
+    private int chapterCount;
 
     public Book(){};
 
@@ -18,6 +19,7 @@ public class Book implements Parcelable {
     protected Book(Parcel in) {
         title = in.readString();
         imageUri = in.readParcelable(Uri.class.getClassLoader());
+        chapterCount = in.readInt();
     }
 
     public static final Creator<Book> CREATOR = new Creator<Book>() {
@@ -42,6 +44,9 @@ public class Book implements Parcelable {
     public Uri getImageUri() { return imageUri; }
     public void setImageUri(Uri imageUri) { this.imageUri = imageUri; }
 
+    public int getChapterCount() { return chapterCount; }
+    public void setChapterCount(int chapterCount) { this.chapterCount = chapterCount; }
+
     @Override
     public int describeContents() {
         return 0;
@@ -51,5 +56,6 @@ public class Book implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(title);
         parcel.writeParcelable(imageUri, i);
+        parcel.writeInt(chapterCount);
     }
 }

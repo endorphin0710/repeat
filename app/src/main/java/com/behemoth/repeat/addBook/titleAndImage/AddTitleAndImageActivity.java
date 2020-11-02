@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,9 +28,7 @@ import com.behemoth.repeat.util.Util;
 public class AddTitleAndImageActivity extends AppCompatActivity implements AddTitleAndImageContract.View, View.OnClickListener, TextWatcher {
 
     private static final String TAG = "TitleAndImageActivity";
-
     private AddTitleAndImageContract.Presenter presenter;
-
     private final int REQUEST_CODE_GALLERY = 0;
     private final int REQUEST_CODE_CAMERA = 1;
     private EditText etTitle;

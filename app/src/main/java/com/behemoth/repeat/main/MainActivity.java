@@ -13,9 +13,9 @@ import android.widget.Toast;
 
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.addBook.titleAndImage.AddTitleAndImageActivity;
-import com.behemoth.repeat.recyclerView.BookAdapter;
-import com.behemoth.repeat.recyclerView.CardClickListener;
-import com.behemoth.repeat.recyclerView.SpaceDecoration;
+import com.behemoth.repeat.recyclerView.card.BookAdapter;
+import com.behemoth.repeat.recyclerView.card.CardClickListener;
+import com.behemoth.repeat.recyclerView.card.SpaceDecoration;
 import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.util.Constants;
 
