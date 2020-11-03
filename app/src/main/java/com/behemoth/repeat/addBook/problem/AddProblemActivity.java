@@ -3,6 +3,7 @@ package com.behemoth.repeat.addBook.problem;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -36,12 +37,13 @@ public class AddProblemActivity extends AppCompatActivity implements AddProblemC
 
         Bundle data = getIntent().getExtras();
         newBook =  data.getParcelable("book");
-        Log.d("juntae", "book : " + newBook);
 
         setRecyclerView();
     }
 
     private void setOnClickListener(){
+        Button btnNext = findViewById(R.id.problemBtnNext);
+        btnNext.setOnClickListener(this);
     }
 
     private void setToolbar(){
@@ -77,6 +79,10 @@ public class AddProblemActivity extends AppCompatActivity implements AddProblemC
     @Override
     public void onClick(View view) {
         int id = view.getId();
+        if(id == R.id.problemBtnNext){
+            ArrayList<Chapter> chapters = mAdapter.getmList();
+            presenter.saveBookInfo(newBook, chapters);
+        }
     }
 
 }

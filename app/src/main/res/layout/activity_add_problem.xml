@@ -31,11 +31,22 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/problemRecyclerView"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+    <Button
+        android:id="@+id/problemBtnNext"
+        android:layout_width="88dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="53dp"
+        android:background="@drawable/button_background"
+        android:text="@string/next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/problemRecyclerView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

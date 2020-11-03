@@ -17,4 +17,6 @@ public class Constants {
     /** MAIN **/
     public static final int CARD_COLUMN_COUNT = 2;
 
+    public static final long MAX_UPLOAD_RETRY_MILLIS = 10 * 1000;
+
 }

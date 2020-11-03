@@ -121,7 +121,6 @@ public class AddChapterActivity extends AppCompatActivity implements AddChapterC
     @Override
     public void nextStep(Book book) {
         Intent i = new Intent(AddChapterActivity.this, AddProblemActivity.class);
-        Log.d("juntae1", "book : " + book);
         i.putExtra("book", book);
         startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }

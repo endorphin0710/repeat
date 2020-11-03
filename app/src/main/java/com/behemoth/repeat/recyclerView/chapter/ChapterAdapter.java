@@ -53,7 +53,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 chapterViewHolder.problemCnt.setText(i+"");
-                Log.d("juntae", i +"");
+                mList.get(position).setProblemCount(i);
             }
 
             @Override
@@ -71,6 +71,10 @@ public class ChapterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     @Override
     public int getItemCount() {
         return (null != mList ? mList.size() : 0);
+    }
+
+    public ArrayList<Chapter> getmList(){
+        return mList;
     }
 
 }
