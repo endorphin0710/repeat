@@ -28,7 +28,7 @@
         <activity android:name=".auth.NaverLogin" />
         <activity
             android:name=".main.MainActivity"
-            android:label="@string/label_mainActivity" />
+            android:label="@string/label_mainActivity"/>
         <activity
             android:name=".addBook.titleAndImage.AddTitleAndImageActivity"
             android:label="@string/label_AddTitleAndImageActivity" />

@@ -84,7 +84,6 @@ public class LoginActivity extends AppCompatActivity {
                 startLogin(Constants.KAKAO);
             }
         });
-
     }
 
     private void startLogin(String name){

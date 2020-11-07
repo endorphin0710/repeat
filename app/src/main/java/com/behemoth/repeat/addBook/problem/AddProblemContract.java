@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public interface AddProblemContract {
 
     interface View{
+        void onUploadSuccess();
     }
 
     interface Presenter{

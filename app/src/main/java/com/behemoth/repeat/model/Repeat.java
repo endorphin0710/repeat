@@ -12,6 +12,8 @@ public class Repeat implements Parcelable {
     private List<Integer> mark;
     private boolean finished;
 
+    public Repeat(){}
+
     public Repeat(int cnt){
         problemCount = cnt;
         mark = new ArrayList<>();

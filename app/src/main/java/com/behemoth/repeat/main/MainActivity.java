@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private ArrayList<Book> mArrayList;
     private BookAdapter mAdapter;
     private CardClickListener cardClickListener;
-    private int count = -1;
 
     private MainContract.Presenter presenter;
 
@@ -38,7 +37,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         setToolbar();
         presenter = new MainPresenter(this);
+
         setRecyclerView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        presenter.getBooks();
     }
 
     private void setToolbar(){
@@ -48,12 +54,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void setRecyclerView(){
+        mArrayList = new ArrayList<>();
         RecyclerView mRecyclerView = findViewById(R.id.recyclerView);
 
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(this, Constants.CARD_COLUMN_COUNT);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
 
-        mArrayList = new ArrayList<>();
         cardClickListener = new CardClickListener() {
             @Override
             public void onClick(int position) {
@@ -61,18 +67,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             }
         };
 
-        /** dummy data for index 0 **/
-        mArrayList.add(new Book(""));
+        mAdapter = new BookAdapter(mArrayList, cardClickListener, this);
 
-        List<Book> books = presenter.getBooks();
-        for(Book b : books){
-            mArrayList.add(new Book(""));
-        }
-
-        mAdapter = new BookAdapter(mArrayList, cardClickListener);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.addItemDecoration(new SpaceDecoration(20));
         mAdapter.notifyDataSetChanged();
+
     }
 
     @Override
@@ -92,4 +92,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         Intent i = new Intent(MainActivity.this, AddTitleAndImageActivity.class);
         startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
+
+    @Override
+    public void onRetrieveBook(List<Book> books) {
+        mArrayList.clear();
+        mArrayList.add(new Book(""));
+        for(Book b : books){
+            mArrayList.add(new Book(b.getTitle(), b.getImageName(), b.getCreatedDate()));
+        }
+        mAdapter.notifyDataSetChanged();
+    }
+
 }

@@ -1,7 +1,10 @@
 package com.behemoth.repeat.addBook.titleAndImage;
 
+import android.content.ContentResolver;
+import android.content.res.Resources;
 import android.net.Uri;
 
+import com.behemoth.repeat.R;
 import com.behemoth.repeat.model.Book;
 
 public class AddTitleAndImagePresenter implements AddTitleAndImageContract.Presenter{
@@ -25,7 +28,9 @@ public class AddTitleAndImagePresenter implements AddTitleAndImageContract.Prese
     public Book getBook(String title, Uri bookImage) {
         Book newBook = new Book();
         newBook.setTitle(title);
-        newBook.setImageUri(bookImage);
+        if(bookImage != null){
+            newBook.setImageUri(bookImage);
+        }
         return newBook;
     }
 

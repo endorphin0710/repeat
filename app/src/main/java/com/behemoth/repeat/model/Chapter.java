@@ -13,6 +13,8 @@ public class Chapter implements Parcelable {
     private int repeatCount;
     private List<Repeat> repeat;
 
+    public Chapter(){}
+
     public Chapter(int i){
         this.chapterNumber = i;
         this.problemCount = 0;

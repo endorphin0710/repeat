@@ -1,5 +1,7 @@
 package com.behemoth.repeat.recyclerView.card;
 
+import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.model.Book;
+import com.behemoth.repeat.util.Util;
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
@@ -19,17 +25,20 @@ public class BookAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final ArrayList<Book> mList;
     private CardClickListener mListener;
+    private Context mContext;
 
     class BookViewHolder extends RecyclerView.ViewHolder {
 
         protected ConstraintLayout container;
         protected TextView text;
         protected ImageView image;
+        protected TextView date;
 
         public BookViewHolder(View view) {
             super(view);
             this.container = view.findViewById(R.id.card_view);
             this.text = view.findViewById(R.id.bookText);
+            this.date = view.findViewById(R.id.tvCreatedDate);
             this.image = view.findViewById(R.id.imageView);
         }
     }
@@ -46,9 +55,10 @@ public class BookAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    public BookAdapter(ArrayList<Book> list, CardClickListener listener) {
+    public BookAdapter(ArrayList<Book> list, CardClickListener listener, Context ctx) {
         this.mList = list;
         this.mListener = listener;
+        this.mContext = ctx;
     }
 
     @Override
@@ -84,7 +94,13 @@ public class BookAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }else{
             BookViewHolder bookViewHolder = (BookViewHolder)holder;
             bookViewHolder.text.setText(mList.get(position).getTitle());
-            bookViewHolder.image.setImageResource(R.drawable.common_google_signin_btn_icon_dark);
+            bookViewHolder.date.setText(Util.dateFormatting(mList.get(position).getCreatedDate()));
+
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/"+mList.get(position).getImageName());;
+            Glide.with(mContext)
+                    .load(storageReference)
+                    .into(bookViewHolder.image);
+
             bookViewHolder.container.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

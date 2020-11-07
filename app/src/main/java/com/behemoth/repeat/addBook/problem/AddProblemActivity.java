@@ -1,5 +1,10 @@
 package com.behemoth.repeat.addBook.problem;
 
+import android.app.ActivityOptions;
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -7,10 +12,14 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.IntentCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.behemoth.repeat.R;
+import com.behemoth.repeat.addBook.chapter.AddChapterActivity;
+import com.behemoth.repeat.addBook.titleAndImage.AddTitleAndImageActivity;
+import com.behemoth.repeat.main.MainActivity;
 import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.model.Chapter;
 import com.behemoth.repeat.recyclerView.chapter.ChapterAdapter;
@@ -23,6 +32,7 @@ public class AddProblemActivity extends AppCompatActivity implements AddProblemC
     private ChapterAdapter mAdapter;
     private ArrayList<Chapter> mArrayList;
     private Book newBook;
+    private boolean uploadClicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,9 +90,18 @@ public class AddProblemActivity extends AppCompatActivity implements AddProblemC
     public void onClick(View view) {
         int id = view.getId();
         if(id == R.id.problemBtnNext){
+            if(uploadClicked) return;
             ArrayList<Chapter> chapters = mAdapter.getmList();
             presenter.saveBookInfo(newBook, chapters);
+            uploadClicked = true;
         }
     }
 
+    @Override
+    public void onUploadSuccess() {
+        Intent i = new Intent(AddProblemActivity.this, MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        finishAffinity();
+    }
 }

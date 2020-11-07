@@ -48,26 +48,34 @@ public class AddProblemPresenter implements AddProblemContract.Presenter{
         newBook.setChapter(chapters);
 
         /** firebase **/
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("book");
-        DatabaseReference bookRef = ref.push();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("book").child(userId);
 
-        String id = bookRef.getKey();
+        String id = ref.push().getKey();
         if(id == null) return;
 
         newBook.setId(id);
 
-        if(newBook.getImageUri() == null) return;
-
+        String imageId = "image_"+id;
         Uri file = newBook.getImageUri();
+        if(file == null){
+            imageId = "default_image.PNG";
+        }
         newBook.setImageUri(null);
 
-        ref.child("book").child(id).setValue(newBook);
+        newBook.setImageName(imageId);
+
+        ref.child(id).setValue(newBook);
+
+        if(imageId.equals("default_image.PNG")) {
+            view.onUploadSuccess();
+            return;
+        }
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storage.setMaxUploadRetryTimeMillis(Constants.MAX_UPLOAD_RETRY_MILLIS);
 
         StorageReference storageRef = storage.getReference();
-        StorageReference riversRef = storageRef.child("images/"+id);
+        StorageReference riversRef = storageRef.child("images/"+imageId);
         UploadTask uploadTask = riversRef.putFile(file);
 
         // Register observers to listen for when the download is done or if it fails
@@ -79,6 +87,7 @@ public class AddProblemPresenter implements AddProblemContract.Presenter{
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                view.onUploadSuccess();
                 // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
                 // ...
             }

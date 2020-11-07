@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
@@ -134,7 +135,6 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
             Uri imageUri = data.getData();
 
             showSelectedImage(imageUri);
-
         }
     }
 
@@ -162,6 +162,11 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
         Intent i = new Intent(AddTitleAndImageActivity.this, AddChapterActivity.class);
         i.putExtra("book", newBook);
         startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
     }
 
     @Override

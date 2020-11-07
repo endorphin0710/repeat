@@ -10,6 +10,7 @@ import java.util.List;
 public interface AddTitleAndImageContract {
 
     interface View{
+        Context getContext();
         void Toast(String message);
     }
 

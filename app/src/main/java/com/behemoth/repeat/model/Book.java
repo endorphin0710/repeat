@@ -14,6 +14,7 @@ public class Book implements Parcelable {
     private String title;
     private long createdDate;
     private Uri imageUri;
+    private String imageName;
     private int chapterCount;
     private List<Chapter> chapter;
 
@@ -23,12 +24,19 @@ public class Book implements Parcelable {
         this.title = title;
     }
 
+    public Book(String title, String imageName, long createdDate){
+        this.title = title;
+        this.imageName = imageName;
+        this.createdDate = createdDate;
+    }
+
     protected Book(Parcel in) {
         id = in.readString();
         author = in.readString();
         title = in.readString();
         createdDate = in.readLong();
         imageUri = in.readParcelable(Uri.class.getClassLoader());
+        imageName = in.readString();
         chapterCount = in.readInt();
 
         chapter = new ArrayList<>();
@@ -66,6 +74,9 @@ public class Book implements Parcelable {
     public Uri getImageUri() { return imageUri; }
     public void setImageUri(Uri imageUri) { this.imageUri = imageUri; }
 
+    public String getImageName() { return imageName; }
+    public void setImageName(String imageName) { this.imageName = imageName; }
+
     public int getChapterCount() { return chapterCount; }
     public void setChapterCount(int chapterCount) { this.chapterCount = chapterCount; }
 
@@ -84,6 +95,7 @@ public class Book implements Parcelable {
         dest.writeString(title);
         dest.writeLong(createdDate);
         dest.writeParcelable(imageUri, i);
+        dest.writeString(imageName);
         dest.writeInt(chapterCount);
         dest.writeList(chapter);
     }
@@ -96,6 +108,7 @@ public class Book implements Parcelable {
                 ", title='" + title + '\'' +
                 ", createdDate=" + createdDate +
                 ", imageUri=" + imageUri +
+                ", imageName='" + imageName + '\'' +
                 ", chapterCount=" + chapterCount +
                 ", chapter=" + chapter +
                 '}';
