@@ -15,7 +15,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:titleTextColor="@android:color/black" />
+        app:titleTextColor="@color/repeat_gray" />
 
     <TextView
         android:id="@+id/textView"
@@ -89,6 +89,7 @@
         android:background="@drawable/button_background"
         android:text="@string/next"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnImage" />
 
@@ -102,6 +103,5 @@
         app:srcCompat="@drawable/ic_remove"
         tools:visibility="visible"
         android:contentDescription="@string/desc_remove" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

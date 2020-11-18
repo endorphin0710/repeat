@@ -12,7 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="240dp"
         android:gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@drawable/dotted">
 
         <ImageView
             android:id="@+id/imageView"

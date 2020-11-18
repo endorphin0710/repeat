@@ -5,6 +5,6 @@
         android:id="@+id/miCompose"
         android:icon="@drawable/ic_favorite"
         app:showAsAction="ifRoom"
-        android:title="Compose">
+        android:title="">
     </item>
 </menu>

@@ -8,13 +8,11 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.ActivityOptions;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,12 +71,7 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_nav_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
 
@@ -106,16 +99,13 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Dialog_Alert);
 
         String[] animals = getResources().getStringArray(R.array.image_options);
-        builder.setItems(animals, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if(which == 0){
-                    // 카메라 촬영
-                }else{
-                    // 갤러리에서 가져오기
-                    Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(pickPhoto , REQUEST_CODE_GALLERY);
-                }
+        builder.setItems(animals, (dialog, which) -> {
+            if(which == 0){
+                // 카메라 촬영
+            }else{
+                // 갤러리에서 가져오기
+                Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(pickPhoto , REQUEST_CODE_GALLERY);
             }
         });
 
@@ -131,11 +121,13 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
 
         }else if(requestCode == REQUEST_CODE_GALLERY){
             if (data == null) return;
-
             Uri imageUri = data.getData();
-
-            showSelectedImage(imageUri);
+            startCrop(imageUri);
         }
+
+    }
+
+    private void startCrop(Uri imageUri){
     }
 
     private void showSelectedImage(Uri imageUri){

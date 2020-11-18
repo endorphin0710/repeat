@@ -21,6 +21,8 @@
             android:layout_height="172dp"
             android:layout_marginBottom="68dp"
             android:scaleType="fitXY"
+            android:background="@drawable/bottom_border"
+            android:paddingBottom="1dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

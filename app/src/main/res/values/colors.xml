@@ -6,5 +6,6 @@
     <color name="colorGradientStart">#FFD500</color>
     <color name="colorGradientEnd">#F88B06</color>
 
+    <color name="repeat_gray">#666666</color>
     <color name="nav_inactive">#64000000</color>
 </resources>

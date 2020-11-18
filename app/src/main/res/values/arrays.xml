@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <array name="image_options">
-        <item>카메라로 촬영</item>
+        <item>카메라로 촬영하기</item>
         <item>갤러리에서 가져오기</item>
     </array>
 </resources>
