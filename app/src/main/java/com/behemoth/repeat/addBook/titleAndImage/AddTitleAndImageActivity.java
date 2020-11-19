@@ -22,14 +22,13 @@ import android.widget.Toast;
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.addBook.chapter.AddChapterActivity;
 import com.behemoth.repeat.model.Book;
+import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.Util;
 
 public class AddTitleAndImageActivity extends AppCompatActivity implements AddTitleAndImageContract.View, View.OnClickListener, TextWatcher {
 
     private static final String TAG = "TitleAndImageActivity";
     private AddTitleAndImageContract.Presenter presenter;
-    private final int REQUEST_CODE_GALLERY = 0;
-    private final int REQUEST_CODE_CAMERA = 1;
     private EditText etTitle;
     private ImageView btnImage;
     private Uri bookImage;
@@ -105,7 +104,7 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
             }else{
                 // 갤러리에서 가져오기
                 Intent pickPhoto = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(pickPhoto , REQUEST_CODE_GALLERY);
+                startActivityForResult(pickPhoto, Constants.REQUEST_CODE_GALLERY );
             }
         });
 
@@ -117,17 +116,21 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode == REQUEST_CODE_CAMERA){
+        if(requestCode == Constants.REQUEST_CODE_CAMERA && resultCode == RESULT_OK){
 
-        }else if(requestCode == REQUEST_CODE_GALLERY){
+        }else if(requestCode == Constants.REQUEST_CODE_GALLERY && resultCode == RESULT_OK){
             if (data == null) return;
             Uri imageUri = data.getData();
-            startCrop(imageUri);
+
+            Intent i = new Intent(AddTitleAndImageActivity.this, CropActivity.class);
+            i.putExtra(Constants.LABEL_IMAGE_URI, imageUri.toString());
+            startActivityForResult(i, Constants.REQUEST_CROP_IMAGE);
+        }else if(requestCode == Constants.REQUEST_CROP_IMAGE && resultCode == RESULT_OK){
+            String strUri = data.getStringExtra(Constants.LABEL_CROPPED_IMAGE_URI);
+            bookImage = Uri.parse(strUri);
+            showSelectedImage(bookImage);
         }
 
-    }
-
-    private void startCrop(Uri imageUri){
     }
 
     private void showSelectedImage(Uri imageUri){
@@ -136,7 +139,6 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
         layoutParams.height = Util.dpToPx(this, 172);
         btnImage.setLayoutParams(layoutParams);
         btnImage.setImageURI(imageUri);
-        bookImage = imageUri;
         btnRemove.setVisibility(View.VISIBLE);
     }
 
