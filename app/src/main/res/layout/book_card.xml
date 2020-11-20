@@ -51,7 +51,7 @@
             tools:text="2020.10.01" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/bookMenu"
             android:layout_width="24dp"
             android:layout_height="24dp"
             android:layout_marginEnd="8dp"

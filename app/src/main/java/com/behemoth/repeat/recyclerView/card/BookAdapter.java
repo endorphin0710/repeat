@@ -33,6 +33,7 @@ public class BookAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         protected TextView text;
         protected ImageView image;
         protected TextView date;
+        protected ImageView bookMenu;
 
         public BookViewHolder(View view) {
             super(view);
@@ -40,6 +41,7 @@ public class BookAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             this.text = view.findViewById(R.id.bookText);
             this.date = view.findViewById(R.id.tvCreatedDate);
             this.image = view.findViewById(R.id.imageView);
+            this.bookMenu = view.findViewById(R.id.bookMenu);
         }
     }
 
@@ -101,11 +103,11 @@ public class BookAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     .load(storageReference)
                     .into(bookViewHolder.image);
 
-            bookViewHolder.container.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mListener.onClick(position);
-                }
+            bookViewHolder.container.setOnClickListener(view -> mListener.onClick(position));
+
+            bookViewHolder.bookMenu.setOnClickListener(view -> {
+                Book delete = mList.get(position);
+                mListener.onMenuClick(position, delete);
             });
         }
     }

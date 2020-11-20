@@ -9,4 +9,5 @@
     <color name="black">#000000</color>
     <color name="repeat_gray">#666666</color>
     <color name="nav_inactive">#64000000</color>
+    <color name="image_guide_color">#707070</color>
 </resources>

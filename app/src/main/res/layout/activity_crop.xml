@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorGradientStart"
+    android:background="@color/black"
     tools:context=".addBook.titleAndImage.CropActivity">
 
     <com.isseiaoki.simplecropview.CropImageView
@@ -12,165 +12,41 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:paddingLeft="16dp"
-        android:paddingTop="16dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/rotate_left"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:scv_crop_mode="fit_image"
-        app:scv_frame_color="@color/colorAccent"
+        app:layout_constraintTop_toBottomOf="@+id/btnClose"
+        app:scv_crop_mode="square"
+        app:scv_frame_color="@color/black"
         app:scv_frame_stroke_weight="1dp"
-        app:scv_guide_color="@color/colorAccent"
+        app:scv_guide_color="@color/image_guide_color"
         app:scv_guide_show_mode="show_always"
         app:scv_guide_stroke_weight="1dp"
-        app:scv_handle_color="@color/colorAccent"
-        app:scv_handle_show_mode="show_always"
-        app:scv_handle_size="14dp"
+        app:scv_handle_show_mode="not_show"
         app:scv_min_frame_size="50dp"
-        app:scv_touch_padding="8dp" />
-
-    <ImageView
-        android:id="@+id/btnCrop"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:padding="1dp"
-        app:layout_constraintBottom_toBottomOf="@+id/rotate_right"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/rotate_right"
-        app:layout_constraintTop_toTopOf="@+id/rotate_right"
-        app:srcCompat="@drawable/ic_crop" />
+        app:scv_touch_padding="32dp" />
 
     <ImageView
         android:id="@+id/btnClose"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/rotate_left"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_close" />
 
-    <ImageView
-        android:id="@+id/rotate_left"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+    <TextView
+        android:id="@+id/btnCrop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="확인"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="@+id/btnClose"
-        app:layout_constraintEnd_toStartOf="@+id/rotate_right"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnClose"
-        app:layout_constraintTop_toTopOf="@+id/btnClose"
-        app:srcCompat="@drawable/ic_rotate_left" />
-
-    <ImageView
-        android:id="@+id/rotate_right"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintBottom_toBottomOf="@+id/rotate_left"
-        app:layout_constraintEnd_toStartOf="@+id/btnCrop"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/rotate_left"
-        app:layout_constraintTop_toTopOf="@+id/rotate_left"
-        app:srcCompat="@drawable/ic_rotate_right" />
-
-    <HorizontalScrollView
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="15dp"
-        app:layout_constraintBottom_toTopOf="@+id/rotate_right"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:scrollbars="none">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/ratio_free"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="20dp"
-                android:gravity="center"
-                android:text="FREE"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
-
-            <TextView
-                android:id="@+id/ratio_square"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="20dp"
-                android:gravity="center"
-                android:text="SQUARE"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
-
-            <TextView
-                android:id="@+id/ratio_43"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="20dp"
-                android:gravity="center"
-                android:text="4 : 3"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
-
-            <TextView
-                android:id="@+id/ratio_34"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="20dp"
-                android:gravity="center"
-                android:text="3 : 4"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
-
-            <TextView
-                android:id="@+id/ratio_169"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="20dp"
-                android:gravity="center"
-                android:text="16 : 9"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
-
-            <TextView
-                android:id="@+id/ratio_916"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="20dp"
-                android:gravity="center"
-                android:text="9 : 16"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
-
-            <TextView
-                android:id="@+id/ratio_57"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="20dp"
-                android:gravity="center"
-                android:text="5 : 7"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
-
-            <TextView
-                android:id="@+id/ratio_75"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:paddingHorizontal="20dp"
-                android:gravity="center"
-                android:text="7 : 5"
-                android:textStyle="bold"
-                android:textSize="18sp"/>
-
-        </LinearLayout>
-    </HorizontalScrollView>
+        app:layout_constraintTop_toTopOf="@+id/btnClose" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

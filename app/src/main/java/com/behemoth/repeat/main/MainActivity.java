@@ -1,5 +1,6 @@
 package com.behemoth.repeat.main;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -9,7 +10,6 @@ import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
-import android.widget.Toast;
 
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.addBook.titleAndImage.AddTitleAndImageActivity;
@@ -26,7 +26,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private ArrayList<Book> mArrayList;
     private BookAdapter mAdapter;
-    private CardClickListener cardClickListener;
 
     private MainContract.Presenter presenter;
 
@@ -60,10 +59,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         GridLayoutManager mGridLayoutManager = new GridLayoutManager(this, Constants.CARD_COLUMN_COUNT);
         mRecyclerView.setLayoutManager(mGridLayoutManager);
 
-        cardClickListener = new CardClickListener() {
+        CardClickListener cardClickListener = new CardClickListener() {
             @Override
             public void onClick(int position) {
                 presenter.onClick(position);
+            }
+
+            @Override
+            public void onMenuClick(int position, Book book) {
+                showChooseOptions(position, book);
             }
         };
 
@@ -75,16 +79,24 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     }
 
+    private void showChooseOptions(int position, Book book){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.Theme_MaterialComponents_Light_Dialog);
+
+        String[] book_menu = getResources().getStringArray(R.array.book_menu);
+        builder.setItems(book_menu, (dialog, which) -> {
+            if(which == 0){
+                presenter.deleteBook(position, book);
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
-    }
-
-
-    @Override
-    public void showToast(String str) {
-        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -98,8 +110,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         mArrayList.clear();
         mArrayList.add(new Book(""));
         for(Book b : books){
-            mArrayList.add(new Book(b.getTitle(), b.getImageName(), b.getCreatedDate()));
+            mArrayList.add(new Book(b.getId(), b.getAuthor(), b.getTitle(), b.getImageName(), b.getCreatedDate()));
         }
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDeleteSuccess(int position) {
+        mArrayList.remove(position);
         mAdapter.notifyDataSetChanged();
     }
 

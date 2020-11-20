@@ -93,7 +93,6 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
             etTitle.setText("");
         }
     }
-
     private void showChooseOptions(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Dialog_Alert);
 
@@ -111,6 +110,7 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
         AlertDialog dialog = builder.create();
         dialog.show();
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

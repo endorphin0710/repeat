@@ -9,18 +9,22 @@ import java.util.List;
 public interface MainContract {
 
     interface View{
-        void showToast(String str);
         void newBook();
         void onRetrieveBook(List<Book> books);
+        void onDeleteSuccess(int position);
     }
 
     interface Presenter{
-        void getBooks();
         void onClick(int position);
+        void getBooks();
+        void onRetrieveBook(List<Book> books);
+        void deleteBook(int position, Book book);
+        void onDeleteSuccess(int position);
     }
 
     interface Model{
-
+        void getBooks();
+        void deleteBook(int position, Book book);
     }
 
 }
