@@ -13,10 +13,11 @@ public interface AddProblemContract {
 
     interface Presenter{
         void saveBookInfo(Book book, ArrayList<Chapter> chapters);
+        void onUploadSuccess();
     }
 
     interface Model{
-
+        void saveBookInfo(Book book, ArrayList<Chapter> chapters);
     }
 
 }

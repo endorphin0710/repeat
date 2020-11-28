@@ -16,8 +16,4 @@ public interface AddChapterContract {
         void validateInput(String chapter, Book newBook);
     }
 
-    interface Model{
-
-    }
-
 }

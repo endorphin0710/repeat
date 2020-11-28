@@ -1,7 +1,5 @@
 package com.behemoth.repeat.addBook.chapter;
 
-import android.util.Log;
-
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.util.LogUtil;
@@ -10,7 +8,7 @@ public class AddChapterPresenter implements AddChapterContract.Presenter{
 
     private static final String TAG = "AddChapterPresenter";
 
-    private AddChapterContract.View view;
+    private final AddChapterContract.View view;
 
     public AddChapterPresenter(AddChapterContract.View view){
         this.view = view;

@@ -15,6 +15,9 @@ public class Constants {
     public static final int REQUEST_CODE_CAMERA = 1;
     public static final int REQUEST_CROP_IMAGE = 2;
 
+    public static final int PERMISSION_WRITE_EXTERNAL_STORAGE = 3;
+    public static final int PERMISSION_CAMERA = 4;
+
     /** SHARED PREFERENCE **/
     public static final String SHARED_PREFERENCE_NAME = "shared_preference_repeat";
     public static final String USER_ID = "user_id";

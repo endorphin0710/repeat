@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,9 +17,7 @@ import android.widget.Toast;
 
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.addBook.problem.AddProblemActivity;
-import com.behemoth.repeat.addBook.titleAndImage.AddTitleAndImageActivity;
 import com.behemoth.repeat.model.Book;
-import com.behemoth.repeat.util.LogUtil;
 
 public class AddChapterActivity extends AppCompatActivity implements AddChapterContract.View, TextWatcher, View.OnClickListener {
 
@@ -62,12 +59,7 @@ public class AddChapterActivity extends AppCompatActivity implements AddChapterC
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_nav_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
     @Override
