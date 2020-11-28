@@ -1,7 +1,6 @@
 package com.behemoth.repeat.recyclerView.card;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,7 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 
-public class BookAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final ArrayList<Book> mList;
     private CardClickListener mListener;
@@ -57,7 +56,7 @@ public class BookAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    public BookAdapter(ArrayList<Book> list, CardClickListener listener, Context ctx) {
+    public MainAdapter(ArrayList<Book> list, CardClickListener listener, Context ctx) {
         this.mList = list;
         this.mListener = listener;
         this.mContext = ctx;

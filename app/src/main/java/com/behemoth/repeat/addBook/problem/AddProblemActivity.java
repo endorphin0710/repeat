@@ -3,8 +3,6 @@ package com.behemoth.repeat.addBook.problem;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -57,9 +55,7 @@ public class AddProblemActivity extends AppCompatActivity implements AddProblemC
         ArrayList<Chapter> mArrayList = new ArrayList<>();
 
         int cnt = newBook.getChapterCount();
-        Log.d("juntae", "count : " + cnt);
         for(int i = 1; i <= cnt; i++){
-            Log.d("juntae", "make!" + i);
             mArrayList.add(new Chapter(i));
         }
         mArrayList.add(new Chapter(-1));

@@ -1,53 +1,43 @@
 package com.behemoth.repeat.addBook.titleAndImage;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
-import androidx.core.content.FileProvider;
 
 import android.Manifest;
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.behemoth.repeat.R;
+import com.behemoth.repeat.addBook.SearchBook.SearchBookActivity;
 import com.behemoth.repeat.addBook.chapter.AddChapterActivity;
 import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.Util;
 
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 public class AddTitleAndImageActivity extends AppCompatActivity implements AddTitleAndImageContract.View, View.OnClickListener, TextWatcher {
 
-    private static final String TAG = "TitleAndImageActivity";
     private AddTitleAndImageContract.Presenter presenter;
     private EditText etTitle;
     private ImageView btnImage;
     private Uri bookImage;
     private ImageView btnRemove;
     private ImageView btnRemoveTitle;
-    private Button btnNext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,13 +48,8 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
 
         presenter = new AddTitleAndImagePresenter(this);
 
-        btnImage = findViewById(R.id.btnImage);
-        btnRemove = findViewById(R.id.btnRemove);
-        btnNext = findViewById(R.id.btnNext);
-        btnRemoveTitle = findViewById(R.id.btnRemovetitle);
-
         setTextWatcher();
-        setClickEvent();
+        setOnClickListener();
     }
 
     private void setTextWatcher(){
@@ -72,11 +57,21 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
         etTitle.addTextChangedListener(this);
     }
 
-    private void setClickEvent(){
+    private void setOnClickListener(){
+        btnImage = findViewById(R.id.btnImage);
         btnImage.setOnClickListener(this);
+
+        btnRemove = findViewById(R.id.btnRemove);
         btnRemove.setOnClickListener(this);
+
+        Button btnNext = findViewById(R.id.btnNext);
         btnNext.setOnClickListener(this);
+
+        btnRemoveTitle = findViewById(R.id.btnRemovetitle);
         btnRemoveTitle.setOnClickListener(this);
+
+        TextView tvSearchBook = findViewById(R.id.searchBook);
+        tvSearchBook.setOnClickListener(this);
     }
 
     private void setToolbar(){
@@ -99,7 +94,6 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
             removeSelectedImage();
         }else if(id == R.id.btnNext){
             String title = etTitle.getText().toString();
-
             boolean validated = presenter.validateInput(title);
             if(validated){
                 Book book = presenter.getBook(title, bookImage);
@@ -107,20 +101,20 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
             }
         }else if(id == R.id.btnRemovetitle){
             etTitle.setText("");
+        }else if(id == R.id.searchBook){
+            GoSearchBookActivity();
         }
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case Constants.PERMISSION_WRITE_EXTERNAL_STORAGE:
-                // If request is cancelled, the result arrays are empty.
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     showChooseOptions();
                 }
                 break;
             case Constants.PERMISSION_CAMERA:
-                // If request is cancelled, the result arrays are empty.
                 if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     presenter.getImageFromCamera();
                 }
@@ -155,9 +149,11 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
         }else if(requestCode == Constants.REQUEST_CODE_GALLERY && resultCode == RESULT_OK){
             presenter.cropGalleryImage(data);
         }else if(requestCode == Constants.REQUEST_CROP_IMAGE && resultCode == RESULT_OK){
-            String strUri = data.getStringExtra(Constants.LABEL_CROPPED_IMAGE_URI);
-            bookImage = Uri.parse(strUri);
-            showSelectedImage(bookImage);
+            if(data != null){
+                String strUri = data.getStringExtra(Constants.LABEL_CROPPED_IMAGE_URI);
+                bookImage = Uri.parse(strUri);
+                showSelectedImage(bookImage);
+            }
         }
 
     }
@@ -223,6 +219,11 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
 
     private void hideRemoveButton(){
         btnRemoveTitle.setVisibility(View.GONE);
+    }
+
+    private void GoSearchBookActivity(){
+        Intent i = new Intent(AddTitleAndImageActivity.this, SearchBookActivity.class);
+        startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
 }

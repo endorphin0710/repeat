@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.behemoth.repeat">
 
-    <uses-feature android:name="android.hardware.camera.any"
-        android:required="false"/>
+    <uses-feature
+        android:name="android.hardware.camera.any"
+        android:required="false" />
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -21,7 +22,9 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
-        <activity android:name=".addBook.titleAndImage.CropActivity"></activity>
+        <activity android:name=".addBook.SearchBook.SearchBookActivity"
+            android:label="@string/label_searchBookActivity" />
+        <activity android:name=".addBook.crop.CropActivity" />
         <activity android:name=".auth.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,6 +37,9 @@
         <activity
             android:name=".main.MainActivity"
             android:label="@string/label_mainActivity" />
+        <activity
+            android:name=".mark.MarkActivity"
+            android:label="@string/label_markActivity" />
         <activity
             android:name=".addBook.titleAndImage.AddTitleAndImageActivity"
             android:label="@string/label_AddTitleAndImageActivity" />
@@ -53,12 +59,10 @@
             android:authorities="com.example.android.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
-
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
     </application>
 
 </manifest>

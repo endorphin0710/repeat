@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.core.content.FileProvider;
 
 import com.behemoth.repeat.R;
+import com.behemoth.repeat.addBook.crop.CropActivity;
 import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.Util;

@@ -1,4 +1,4 @@
-package com.behemoth.repeat.main;
+package com.behemoth.repeat.mark;
 
 import androidx.annotation.NonNull;
 
@@ -14,11 +14,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainModel implements MainContract.Model{
+public class MarkModel implements MarkContract.Model{
 
-    private final MainContract.Presenter presenter;
+    private final MarkContract.Presenter presenter;
 
-    public MainModel(MainContract.Presenter p){
+    public MarkModel(MarkContract.Presenter p){
         this.presenter = p;
     }
 
@@ -46,17 +46,6 @@ public class MainModel implements MainContract.Model{
                 presenter.onRetrieveBook(books);
             }
         });
-    }
-
-    @Override
-    public void deleteBook(int position, Book book) {
-        String userId = book.getAuthor();
-        String bookId = book.getId();
-        FirebaseDatabase.getInstance().getReference().child("book").child(userId).child(bookId).removeValue()
-                .addOnSuccessListener(aVoid -> presenter.onDeleteSuccess(position))
-                .addOnFailureListener(e -> {
-
-                });
     }
 
 }

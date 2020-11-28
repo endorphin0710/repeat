@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    tools:context=".addBook.chapter.AddChapterActivity">
+    tools:context=".addBook.SearchBook.SearchBookActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -19,46 +18,38 @@
         app:titleTextColor="@color/repeat_gray" />
 
     <EditText
-        android:id="@+id/etChapter"
+        android:id="@+id/etTitle"
         android:layout_width="0dp"
         android:layout_height="56dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/edittext_background"
-        android:hint="@string/hint_chapter_add"
-        android:inputType="number"
+        android:drawableLeft="@drawable/ic_search"
+        android:drawablePadding="10dp"
+        android:hint="@string/hint_search_title_add"
+        android:inputType="textPersonName"
+        android:maxLength="20"
         android:paddingLeft="16dp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
         android:textSize="16sp"
-        android:maxLength="4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
-
-    <Button
-        android:id="@+id/chapterBtnNext"
-        android:layout_width="88dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="24dp"
-        android:background="@drawable/button_background"
-        android:text="@string/next"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etChapter" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:ignore="Autofill" />
 
     <ImageView
-        android:id="@+id/ivRemove"
+        android:id="@+id/btnRemovetitle"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginEnd="12dp"
+        android:contentDescription="@string/desc_remove"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/etChapter"
-        app:layout_constraintEnd_toEndOf="@+id/etChapter"
-        app:layout_constraintTop_toTopOf="@+id/etChapter"
+        app:layout_constraintBottom_toBottomOf="@+id/etTitle"
+        app:layout_constraintEnd_toEndOf="@+id/etTitle"
+        app:layout_constraintTop_toTopOf="@+id/etTitle"
         app:srcCompat="@drawable/ic_remove"
-        tools:visibility="visible"
-        android:contentDescription="@string/desc_remove" />
+        tools:visibility="visible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

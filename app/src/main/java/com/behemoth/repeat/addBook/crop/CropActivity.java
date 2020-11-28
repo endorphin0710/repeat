@@ -1,4 +1,4 @@
-package com.behemoth.repeat.addBook.titleAndImage;
+package com.behemoth.repeat.addBook.crop;
 
 import androidx.appcompat.app.AppCompatActivity;
 

@@ -26,10 +26,18 @@
     <!-- Main -->
     <string name="label_mainActivity">내 서재</string>
 
+    <!-- Mark -->
+    <string name="label_markActivity">채점하기</string>
+
     <!-- Add title and image -->
     <string name="tv_title_add">책 제목 입력하기</string>
     <string name="hint_title_add">도서명을 입력해주세요.</string>
     <string name="tv_image_add">책 이미지 추가하기</string>
+    <string name="search_book">웹으로 찾아보기</string>
+
+    <!-- Search Book -->
+    <string name="label_searchBookActivity">도서 검색</string>
+    <string name="hint_search_title_add">어떤 책을 찾으시나요?</string>
 
     <!-- Add Chapter -->
     <string name="label_AddTitleAndImageActivity">책 제목 입력</string>
