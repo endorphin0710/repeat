@@ -1,4 +1,4 @@
-package com.behemoth.repeat.recyclerView.card;
+package com.behemoth.repeat.recyclerView.bookCard;
 
 import android.graphics.Rect;
 import android.view.View;

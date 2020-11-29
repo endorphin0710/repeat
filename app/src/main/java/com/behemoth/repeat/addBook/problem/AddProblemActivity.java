@@ -13,7 +13,7 @@ import com.behemoth.repeat.R;
 import com.behemoth.repeat.main.MainActivity;
 import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.model.Chapter;
-import com.behemoth.repeat.recyclerView.chapter.ChapterAdapter;
+import com.behemoth.repeat.recyclerView.problem.ProblemAdapter;
 
 import java.util.ArrayList;
 
@@ -21,7 +21,7 @@ public class AddProblemActivity extends AppCompatActivity implements AddProblemC
 
     private AddProblemContract.Presenter presenter;
     private Book newBook;
-    private ChapterAdapter mAdapter;
+    private ProblemAdapter mAdapter;
     private boolean uploadClicked;
 
     @Override
@@ -60,7 +60,7 @@ public class AddProblemActivity extends AppCompatActivity implements AddProblemC
         }
         mArrayList.add(new Chapter(-1));
 
-        mAdapter = new ChapterAdapter(this, mArrayList);
+        mAdapter = new ProblemAdapter(this, mArrayList);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }

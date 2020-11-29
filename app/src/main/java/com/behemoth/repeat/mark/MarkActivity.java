@@ -28,12 +28,10 @@ public class MarkActivity extends AppCompatActivity implements MarkContract.View
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             if(id == R.id.bottom_navigation_home){
-                goToMainActivity();
-                return true;
-            }else if(id == R.id.bottom_navigation_mark){
-                return true;
+                onBackPressed();
+                return false;
             }else if(id == R.id.bottom_navigation_stats){
-                return true;
+                return false;
             }
             return false;
         });
@@ -58,11 +56,6 @@ public class MarkActivity extends AppCompatActivity implements MarkContract.View
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
-    }
-
-    private void goToMainActivity(){
-        Intent i = new Intent(MarkActivity.this, MainActivity.class);
-        startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     @Override

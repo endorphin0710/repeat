@@ -1,4 +1,4 @@
-package com.behemoth.repeat.recyclerView.card;
+package com.behemoth.repeat.recyclerView.bookCard;
 
 import com.behemoth.repeat.model.Book;
 

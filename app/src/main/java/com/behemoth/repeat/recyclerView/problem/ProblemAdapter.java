@@ -1,7 +1,6 @@
-package com.behemoth.repeat.recyclerView.chapter;
+package com.behemoth.repeat.recyclerView.problem;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +17,7 @@ import com.behemoth.repeat.model.Chapter;
 
 import java.util.ArrayList;
 
-public class ChapterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class ProblemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final ArrayList<Chapter> mList;
     private AddProblemActivity parent;
@@ -47,7 +46,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    public ChapterAdapter(Context activity, ArrayList<Chapter> list) {
+    public ProblemAdapter(Context activity, ArrayList<Chapter> list) {
         this.parent = (AddProblemActivity) activity;
         this.mList = list;
     }

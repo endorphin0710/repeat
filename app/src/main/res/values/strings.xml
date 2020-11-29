@@ -10,6 +10,7 @@
     <string name="naver_client_secret">qCOlbYXuur</string>
     <string name="naver_client_name">Repeat</string>
     <string name="kakao_app_key">5016c44520068f26880ce08b8ba80f7a</string>
+    <string name="kakao_rest_api_key">KakaoAK 3a67c63f2298f8a94153f760e8235bbd</string>
 
     <string name="nav_home">홈</string>
     <string name="nav_mark">채점하기</string>
@@ -38,6 +39,7 @@
     <!-- Search Book -->
     <string name="label_searchBookActivity">도서 검색</string>
     <string name="hint_search_title_add">어떤 책을 찾으시나요?</string>
+    <string name="desc_book_cover_image">book cover image</string>
 
     <!-- Add Chapter -->
     <string name="label_AddTitleAndImageActivity">책 제목 입력</string>

@@ -3,18 +3,19 @@ package com.behemoth.repeat.addBook.SearchBook;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.behemoth.repeat.R;
 
-public class SearchBookActivity extends AppCompatActivity implements View.OnClickListener, TextWatcher {
+public class SearchBookActivity extends AppCompatActivity implements SearchBookContract.View, View.OnClickListener, TextWatcher {
+
+    private SearchBookContract.Presenter presenter;
 
     private EditText etTitle;
     private ImageView btnRemoveTitle;
@@ -24,6 +25,8 @@ public class SearchBookActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_book);
 
+        this.presenter = new SearchBookPresenter(this);
+
         setToolbar();
 
         setOnClickListener();
@@ -32,6 +35,7 @@ public class SearchBookActivity extends AppCompatActivity implements View.OnClic
 
     private void setTextWatcher(){
         etTitle = findViewById(R.id.etTitle);
+        etTitle.requestFocus();
         etTitle.addTextChangedListener(this);
     }
 
@@ -57,6 +61,7 @@ public class SearchBookActivity extends AppCompatActivity implements View.OnClic
         }else{
             hideRemoveButton();
         }
+        presenter.searchBook(charSequence.toString().trim());
     }
 
     @Override
@@ -76,5 +81,10 @@ public class SearchBookActivity extends AppCompatActivity implements View.OnClic
         if(id == R.id.btnRemovetitle){
             etTitle.setText("");
         }
+    }
+
+    @Override
+    public Context getContext() {
+        return this;
     }
 }

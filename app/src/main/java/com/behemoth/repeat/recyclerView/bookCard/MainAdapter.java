@@ -1,4 +1,4 @@
-package com.behemoth.repeat.recyclerView.card;
+package com.behemoth.repeat.recyclerView.bookCard;
 
 import android.content.Context;
 import android.view.LayoutInflater;

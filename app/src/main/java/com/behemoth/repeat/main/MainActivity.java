@@ -29,13 +29,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
-            if(id == R.id.bottom_navigation_home){
-                return true;
-            }else if(id == R.id.bottom_navigation_mark){
+            if(id == R.id.bottom_navigation_mark){
                 goToMarkActivity();
-                return true;
+                return false;
             }else if(id == R.id.bottom_navigation_stats){
-                return true;
+                return false;
             }
             return false;
         });
