@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.behemoth.repeat.R;
+import com.behemoth.repeat.model.Search;
 
 public class SearchBookActivity extends AppCompatActivity implements SearchBookContract.View, View.OnClickListener, TextWatcher {
 
@@ -86,5 +88,11 @@ public class SearchBookActivity extends AppCompatActivity implements SearchBookC
     @Override
     public Context getContext() {
         return this;
+    }
+
+    @Override
+    public void finishWithSearchData(Intent i) {
+        setResult(RESULT_OK, i);
+        finish();
     }
 }

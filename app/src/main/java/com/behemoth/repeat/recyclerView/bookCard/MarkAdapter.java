@@ -66,16 +66,30 @@ public class MarkAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         BookViewHolder bookViewHolder = (BookViewHolder)holder;
-        bookViewHolder.text.setText(mList.get(position).getTitle());
-        bookViewHolder.date.setText(Util.dateFormatting(mList.get(position).getCreatedDate()));
+        Book book = mList.get(position);
+
+        bookViewHolder.text.setText(book.getTitle());
+        bookViewHolder.date.setText(Util.dateFormatting(book.getCreatedDate()));
         bookViewHolder.bookMenu.setVisibility(View.GONE);
 
-        StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/"+mList.get(position).getImageName());;
-        Glide.with(mContext)
-                .load(storageReference)
-                .into(bookViewHolder.image);
-
-        bookViewHolder.container.setOnClickListener(view -> mListener.onClick(position));
+        if(book.getUsingThumbnail() > 0){
+            String thumbnailUrl = book.getThumbnail();
+            if(thumbnailUrl.length() > 0){
+                Glide.with(mContext)
+                        .load(thumbnailUrl)
+                        .into(bookViewHolder.image);
+            }else{
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/image_default.PNG");;
+                Glide.with(mContext)
+                        .load(storageReference)
+                        .into(bookViewHolder.image);
+            }
+        }else{
+            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/"+book.getImageName());;
+            Glide.with(mContext)
+                    .load(storageReference)
+                    .into(bookViewHolder.image);
+        }
     }
 
     @Override

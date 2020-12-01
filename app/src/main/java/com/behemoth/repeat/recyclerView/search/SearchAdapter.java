@@ -57,7 +57,7 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         searchViewHolder.title.setText(mList.get(position).getTitle());
 
         String thumbnail = mList.get(position).getThumbnail();
-        if(thumbnail.length() > 0){
+        if(thumbnail.startsWith("https")){
             Glide.with(mContext)
                     .load(mList.get(position).getThumbnail())
                     .into(searchViewHolder.thumbnail);

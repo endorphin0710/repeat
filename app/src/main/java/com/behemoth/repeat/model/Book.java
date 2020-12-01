@@ -1,6 +1,7 @@
 package com.behemoth.repeat.model;
 
 import android.net.Uri;
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -15,6 +16,8 @@ public class Book implements Parcelable {
     private long createdDate;
     private Uri imageUri;
     private String imageName;
+    private String thumbnail;
+    private int usingThumbnail;
     private int chapterCount;
     private List<Chapter> chapter;
 
@@ -24,11 +27,13 @@ public class Book implements Parcelable {
         this.title = title;
     }
 
-    public Book(String id, String author, String title, String imageName, long createdDate){
+    public Book(String id, String author, String title, String imageName, String thumbnail, int usingThumbnail, long createdDate){
         this.id = id;
         this.author = author;
         this.title = title;
         this.imageName = imageName;
+        this.thumbnail = thumbnail;
+        this.usingThumbnail = usingThumbnail;
         this.createdDate = createdDate;
     }
 
@@ -39,6 +44,8 @@ public class Book implements Parcelable {
         createdDate = in.readLong();
         imageUri = in.readParcelable(Uri.class.getClassLoader());
         imageName = in.readString();
+        thumbnail = in.readString();
+        usingThumbnail = in.readInt();
         chapterCount = in.readInt();
 
         chapter = new ArrayList<>();
@@ -79,6 +86,12 @@ public class Book implements Parcelable {
     public String getImageName() { return imageName; }
     public void setImageName(String imageName) { this.imageName = imageName; }
 
+    public String getThumbnail() { return thumbnail; }
+    public void setThumbnail(String thumbnail) { this.thumbnail = thumbnail; }
+
+    public int getUsingThumbnail() { return usingThumbnail; }
+    public void setUsingThumbnail(int usingThumbnail) { this.usingThumbnail = usingThumbnail; }
+
     public int getChapterCount() { return chapterCount; }
     public void setChapterCount(int chapterCount) { this.chapterCount = chapterCount; }
 
@@ -98,6 +111,8 @@ public class Book implements Parcelable {
         dest.writeLong(createdDate);
         dest.writeParcelable(imageUri, i);
         dest.writeString(imageName);
+        dest.writeString(thumbnail);
+        dest.writeInt(usingThumbnail);
         dest.writeInt(chapterCount);
         dest.writeList(chapter);
     }
@@ -111,6 +126,8 @@ public class Book implements Parcelable {
                 ", createdDate=" + createdDate +
                 ", imageUri=" + imageUri +
                 ", imageName='" + imageName + '\'' +
+                ", thumbnail='" + thumbnail + '\'' +
+                ", usingThumbnail=" + usingThumbnail +
                 ", chapterCount=" + chapterCount +
                 ", chapter=" + chapter +
                 '}';

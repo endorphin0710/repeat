@@ -13,6 +13,7 @@ public interface SearchBookContract {
 
     interface View{
         Context getContext();
+        void finishWithSearchData(Intent i);
     }
 
     interface Presenter{

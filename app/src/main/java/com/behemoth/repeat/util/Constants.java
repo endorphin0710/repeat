@@ -14,6 +14,7 @@ public class Constants {
     public static final int REQUEST_CODE_GALLERY = 0;
     public static final int REQUEST_CODE_CAMERA = 1;
     public static final int REQUEST_CROP_IMAGE = 2;
+    public static final int REQUEST_CODE_SEARCH = 3;
 
     public static final int PERMISSION_WRITE_EXTERNAL_STORAGE = 3;
     public static final int PERMISSION_CAMERA = 4;
@@ -29,5 +30,7 @@ public class Constants {
     /** IMAGE **/
     public static final String LABEL_IMAGE_URI = "imageUri";
     public static final String LABEL_CROPPED_IMAGE_URI = "croppedUri";
+    public static final String LABEL_SEARCHED_TITLE = "searched_title";
+    public static final String LABEL_SEARCHED_THUMBNAIL = "searched_thumbnail";
 
 }

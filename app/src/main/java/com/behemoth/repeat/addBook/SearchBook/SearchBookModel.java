@@ -39,11 +39,12 @@ public class SearchBookModel extends AppCompatActivity implements SearchBookCont
         call.enqueue(new retrofit2.Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                Log.d("juntae", "onResponse : " + title);
                 JsonArray result = (JsonArray) response.body().get("documents");
                 for(int i = 0; i < result.size(); i++){
                     String title = result.get(i).getAsJsonObject().get("title").getAsString();
                     String thumbnail = result.get(i).getAsJsonObject().get("thumbnail").getAsString();
+                    Log.d("juntae", title);
+                    Log.d("juntae", thumbnail);
                     searches.add(new Search(title, thumbnail));
                     presenter.onSearchBooks(searches);
                 }

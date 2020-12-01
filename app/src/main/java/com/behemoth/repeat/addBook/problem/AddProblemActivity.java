@@ -1,28 +1,21 @@
 package com.behemoth.repeat.addBook.problem;
 
 import android.app.ActivityOptions;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.main.MainActivity;
 import com.behemoth.repeat.model.Book;
-import com.behemoth.repeat.model.Chapter;
-import com.behemoth.repeat.recyclerView.problem.ProblemAdapter;
-
-import java.util.ArrayList;
 
 public class AddProblemActivity extends AppCompatActivity implements AddProblemContract.View {
 
     private AddProblemContract.Presenter presenter;
-    private Book newBook;
-    private ProblemAdapter mAdapter;
-    private boolean uploadClicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,49 +27,37 @@ public class AddProblemActivity extends AppCompatActivity implements AddProblemC
         presenter = new AddProblemPresenter(this);
 
         Bundle data = getIntent().getExtras();
-        newBook =  data.getParcelable("book");
+        Book newBook = data.getParcelable("book");
 
-        setRecyclerView();
+        presenter.setRecyclerView(newBook);
     }
 
-    private void setToolbar(){
+    private void setToolbar() {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_nav_back);
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
-    private void setRecyclerView(){
-        RecyclerView mRecyclerView = findViewById(R.id.problemRecyclerView);
-
-        LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLinearLayoutManager);
-
-        ArrayList<Chapter> mArrayList = new ArrayList<>();
-
-        int cnt = newBook.getChapterCount();
-        for(int i = 1; i <= cnt; i++){
-            mArrayList.add(new Chapter(i));
-        }
-        mArrayList.add(new Chapter(-1));
-
-        mAdapter = new ProblemAdapter(this, mArrayList);
-        mRecyclerView.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
+    public void upload() {
+        presenter.upload();
     }
 
-    public void upload(){
-        if(uploadClicked) return;
-        ArrayList<Chapter> chapters = mAdapter.getmList();
-        presenter.saveBookInfo(newBook, chapters);
-        uploadClicked = true;
+    @Override
+    public Context getContext() {
+        return this;
     }
 
     @Override
     public void onUploadSuccess() {
         Intent i = new Intent(AddProblemActivity.this, MainActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-        finishAffinity();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

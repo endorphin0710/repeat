@@ -1,6 +1,8 @@
 package com.behemoth.repeat.addBook.SearchBook;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,6 +11,7 @@ import com.behemoth.repeat.R;
 import com.behemoth.repeat.model.Search;
 import com.behemoth.repeat.recyclerView.search.SearchAdapter;
 import com.behemoth.repeat.recyclerView.search.SearchClickListener;
+import com.behemoth.repeat.util.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +58,11 @@ public class SearchBookPresenter implements SearchBookContract.Presenter{
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         SearchClickListener searchClickListener = position -> {
+            Search s = mArrayList.get(position);
+            Intent i = new Intent();
+            i.putExtra(Constants.LABEL_SEARCHED_TITLE,s.getTitle());
+            i.putExtra(Constants.LABEL_SEARCHED_THUMBNAIL,s.getThumbnail());
+            view.finishWithSearchData(i);
         };
 
         mAdapter = new SearchAdapter(mArrayList, searchClickListener, viewContext);

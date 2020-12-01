@@ -16,7 +16,7 @@ public interface AddTitleAndImageContract {
 
     interface Presenter{
         boolean validateInput(String title);
-        Book getBook(String title, Uri bookImage);
+        Book getBook(String title, Uri bookImage, String thumbnail, int usingThumbnail);
         void getImageFromGallery();
         void getImageFromCamera();
         void cropGalleryImage(Intent data);

@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,6 +30,7 @@ import com.behemoth.repeat.addBook.chapter.AddChapterActivity;
 import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.Util;
+import com.bumptech.glide.Glide;
 
 public class AddTitleAndImageActivity extends AppCompatActivity implements AddTitleAndImageContract.View, View.OnClickListener, TextWatcher {
 
@@ -36,6 +38,8 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
     private EditText etTitle;
     private ImageView btnImage;
     private Uri bookImage;
+    private String bookThumbnail;
+    private int usingThumbnail;
     private ImageView btnRemove;
     private ImageView btnRemoveTitle;
 
@@ -96,7 +100,7 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
             String title = etTitle.getText().toString();
             boolean validated = presenter.validateInput(title);
             if(validated){
-                Book book = presenter.getBook(title, bookImage);
+                Book book = presenter.getBook(title, bookImage, bookThumbnail, usingThumbnail);
                 nextStep(book);
             }
         }else if(id == R.id.btnRemovetitle){
@@ -151,8 +155,18 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
         }else if(requestCode == Constants.REQUEST_CROP_IMAGE && resultCode == RESULT_OK){
             if(data != null){
                 String strUri = data.getStringExtra(Constants.LABEL_CROPPED_IMAGE_URI);
-                bookImage = Uri.parse(strUri);
+                this.bookImage = Uri.parse(strUri);
                 showSelectedImage(bookImage);
+                this.usingThumbnail = 0;
+            }
+        }else if(requestCode == Constants.REQUEST_CODE_SEARCH && resultCode == RESULT_OK){
+            if(data != null){
+                String title = data.getStringExtra(Constants.LABEL_SEARCHED_TITLE);
+                etTitle.setText(title);
+                String thumbnail = data.getStringExtra(Constants.LABEL_SEARCHED_THUMBNAIL);
+                showSelectedImage(thumbnail);
+                this.bookThumbnail = thumbnail;
+                this.usingThumbnail = 1;
             }
         }
 
@@ -163,7 +177,26 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
         layoutParams.width = Util.dpToPx(this, 168);
         layoutParams.height = Util.dpToPx(this, 172);
         btnImage.setLayoutParams(layoutParams);
-        btnImage.setImageURI(imageUri);
+        Glide.with(this)
+                .load(imageUri)
+                .into(btnImage);
+        btnRemove.setVisibility(View.VISIBLE);
+    }
+
+    private void showSelectedImage(String imageUrl){
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) btnImage.getLayoutParams();
+        layoutParams.width = Util.dpToPx(this, 168);
+        layoutParams.height = Util.dpToPx(this, 172);
+        btnImage.setLayoutParams(layoutParams);
+        if(imageUrl.length() > 0){
+            Glide.with(this)
+                    .load(imageUrl)
+                    .into(btnImage);
+        }else{
+            Glide.with(this)
+                    .load(ContextCompat.getDrawable(this, R.drawable.image_default))
+                    .into(btnImage);
+        }
         btnRemove.setVisibility(View.VISIBLE);
     }
 
@@ -223,7 +256,7 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
 
     private void GoSearchBookActivity(){
         Intent i = new Intent(AddTitleAndImageActivity.this, SearchBookActivity.class);
-        startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        startActivityForResult(i, Constants.REQUEST_CODE_SEARCH, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
 }

@@ -48,21 +48,23 @@ public class AddProblemModel implements AddProblemContract.Model{
 
         newBook.setId(id);
 
-        String imageId = "image_"+id;
         Uri file = newBook.getImageUri();
-        if(file == null){
-            imageId = "default_image.PNG";
-        }
         newBook.setImageUri(null);
-
-        newBook.setImageName(imageId);
-
-        ref.child(id).setValue(newBook);
-
-        if(imageId.equals("default_image.PNG")) {
+        if(newBook.getUsingThumbnail() > 0){
+            ref.child(id).setValue(newBook);
+            presenter.onUploadSuccess();
+            return;
+        }else if(file == null){
+            newBook.setImageName("image_default.PNG");
+            ref.child(id).setValue(newBook);
             presenter.onUploadSuccess();
             return;
         }
+
+        String imageId = "image_"+id;
+        newBook.setImageName(imageId);
+
+        ref.child(id).setValue(newBook);
 
         FirebaseStorage storage = FirebaseStorage.getInstance();
         storage.setMaxUploadRetryTimeMillis(Constants.MAX_UPLOAD_RETRY_MILLIS);
