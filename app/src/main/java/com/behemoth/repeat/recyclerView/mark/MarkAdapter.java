@@ -1,4 +1,4 @@
-package com.behemoth.repeat.recyclerView.bookCard;
+package com.behemoth.repeat.recyclerView.mark;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.model.Book;
+import com.behemoth.repeat.recyclerView.bookCard.CardClickListener;
 import com.behemoth.repeat.util.Util;
 import com.bumptech.glide.Glide;
 import com.google.firebase.storage.FirebaseStorage;
@@ -67,6 +68,10 @@ public class MarkAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         BookViewHolder bookViewHolder = (BookViewHolder)holder;
         Book book = mList.get(position);
+
+        bookViewHolder.container.setOnClickListener(view -> {
+            mListener.onClick(position);
+        });
 
         bookViewHolder.text.setText(book.getTitle());
         bookViewHolder.date.setText(Util.dateFormatting(book.getCreatedDate()));

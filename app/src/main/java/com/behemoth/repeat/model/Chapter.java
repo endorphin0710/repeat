@@ -21,27 +21,6 @@ public class Chapter implements Parcelable {
         this.repeatCount = 1;
     }
 
-    protected Chapter(Parcel in) {
-        chapterNumber = in.readInt();
-        problemCount = in.readInt();
-        repeatCount = in.readInt();
-        repeat = new ArrayList<>();
-        in.readTypedList(repeat, Repeat.CREATOR);
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(chapterNumber);
-        dest.writeInt(problemCount);
-        dest.writeInt(repeatCount);
-        dest.writeList(repeat);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
     public static final Creator<Chapter> CREATOR = new Creator<Chapter>() {
         @Override
         public Chapter createFromParcel(Parcel in) {
@@ -53,6 +32,28 @@ public class Chapter implements Parcelable {
             return new Chapter[size];
         }
     };
+
+    protected Chapter(Parcel in) {
+        chapterNumber = in.readInt();
+        problemCount = in.readInt();
+        repeatCount = in.readInt();
+
+        repeat = new ArrayList<>();
+        in.readTypedList(repeat, Repeat.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(chapterNumber);
+        dest.writeInt(problemCount);
+        dest.writeInt(repeatCount);
+        dest.writeTypedList(repeat);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
     public int getChapterNumber() {
         return chapterNumber;
@@ -74,4 +75,13 @@ public class Chapter implements Parcelable {
     public List<Repeat> getRepeat() { return repeat; }
     public void setRepeat(List<Repeat> repeat) { this.repeat = repeat; }
 
+    @Override
+    public String toString() {
+        return "Chapter{" +
+                "chapterNumber=" + chapterNumber +
+                ", problemCount=" + problemCount +
+                ", repeatCount=" + repeatCount +
+                ", repeat=" + repeat +
+                '}';
+    }
 }

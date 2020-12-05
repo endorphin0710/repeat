@@ -128,6 +128,7 @@ public class NaverLogin extends AppCompatActivity {
                         String id = Constants.NAVER_ID_PREFIX + obj.get("id").getAsString();
                         LogUtil.d(TAG, "naverId: " + id);
 
+
                         // SharedPreference
                         SharedPreference.getInstance().putString(Constants.LOGIN_TYPE, Constants.NAVER);
                         SharedPreference.getInstance().putString(Constants.USER_ID, id);

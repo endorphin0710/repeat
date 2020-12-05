@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.recyclerView.bookCard.CardClickListener;
-import com.behemoth.repeat.recyclerView.bookCard.MarkAdapter;
+import com.behemoth.repeat.recyclerView.mark.MarkAdapter;
 import com.behemoth.repeat.recyclerView.bookCard.SpaceDecoration;
 import com.behemoth.repeat.util.Constants;
 
@@ -40,7 +40,9 @@ public class MarkPresenter implements MarkContract.Presenter{
         mArrayList.clear();
         for(int i = books.size()-1; i >= 0; i--) {
             Book b = books.get(i);
-            mArrayList.add(new Book(b.getId(), b.getAuthor(), b.getTitle(), b.getImageName(), b.getThumbnail(), b.getUsingThumbnail(), b.getCreatedDate()));
+            if(b.getState() == 0) {
+                mArrayList.add(new Book(b.getId(), b.getAuthor(), b.getTitle(), b.getImageName(), b.getThumbnail(), b.getUsingThumbnail(), b.getCreatedDate(), b.getChapter()));
+            }
         }
         mAdapter.notifyDataSetChanged();
     }
@@ -71,7 +73,8 @@ public class MarkPresenter implements MarkContract.Presenter{
     }
 
     public void onCardClick(int position) {
-
+        Book b = mArrayList.get(position);
+        view.goToMarkChapterActivity(b);
     }
 
 }

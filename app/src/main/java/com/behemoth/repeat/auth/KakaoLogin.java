@@ -89,6 +89,9 @@ public class KakaoLogin extends AppCompatActivity {
 
             @Override
             public void onSuccess(MeV2Response response) {
+                String token = Session.getCurrentSession().getTokenInfo().getAccessToken();
+                LogUtil.d(TAG, "token -> " + token);
+
                 LogUtil.d(TAG, "reuqestMe -> onSuccess: ");
                 String id = Long.toString(response.getId());
                 saveUser(id);

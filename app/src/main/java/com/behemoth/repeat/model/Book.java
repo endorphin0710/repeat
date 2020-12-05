@@ -1,7 +1,6 @@
 package com.behemoth.repeat.model;
 
 import android.net.Uri;
-import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -20,6 +19,11 @@ public class Book implements Parcelable {
     private int usingThumbnail;
     private int chapterCount;
     private List<Chapter> chapter;
+    /**
+     * 0 --> normal
+     * 1 --> keep
+     */
+    private int state;
 
     public Book(){}
 
@@ -37,6 +41,17 @@ public class Book implements Parcelable {
         this.createdDate = createdDate;
     }
 
+    public Book(String id, String author, String title, String imageName, String thumbnail, int usingThumbnail, long createdDate, List<Chapter> chapter){
+        this.id = id;
+        this.author = author;
+        this.title = title;
+        this.imageName = imageName;
+        this.thumbnail = thumbnail;
+        this.usingThumbnail = usingThumbnail;
+        this.createdDate = createdDate;
+        this.chapter = chapter;
+    }
+
     protected Book(Parcel in) {
         id = in.readString();
         author = in.readString();
@@ -50,6 +65,23 @@ public class Book implements Parcelable {
 
         chapter = new ArrayList<>();
         in.readTypedList(chapter, Chapter.CREATOR);
+
+        state = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int i) {
+        dest.writeString(id);
+        dest.writeString(author);
+        dest.writeString(title);
+        dest.writeLong(createdDate);
+        dest.writeParcelable(imageUri, 0);
+        dest.writeString(imageName);
+        dest.writeString(thumbnail);
+        dest.writeInt(usingThumbnail);
+        dest.writeInt(chapterCount);
+        dest.writeTypedList(chapter);
+        dest.writeInt(state);
     }
 
     public static final Creator<Book> CREATOR = new Creator<Book>() {
@@ -98,23 +130,12 @@ public class Book implements Parcelable {
     public List<Chapter> getChapter() { return chapter; }
     public void setChapter(List<Chapter> chapter) { this.chapter = chapter; }
 
+    public int getState() { return state; }
+    public void setState(int state) { this.state = state; }
+
     @Override
     public int describeContents() {
         return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int i) {
-        dest.writeString(id);
-        dest.writeString(author);
-        dest.writeString(title);
-        dest.writeLong(createdDate);
-        dest.writeParcelable(imageUri, i);
-        dest.writeString(imageName);
-        dest.writeString(thumbnail);
-        dest.writeInt(usingThumbnail);
-        dest.writeInt(chapterCount);
-        dest.writeList(chapter);
     }
 
     @Override
@@ -130,6 +151,8 @@ public class Book implements Parcelable {
                 ", usingThumbnail=" + usingThumbnail +
                 ", chapterCount=" + chapterCount +
                 ", chapter=" + chapter +
+                ", state=" + state +
                 '}';
     }
+
 }

@@ -10,6 +10,7 @@ public interface MarkContract {
 
     interface View{
         Context getContext();
+        void goToMarkChapterActivity(Book b);
     }
 
     interface Presenter{

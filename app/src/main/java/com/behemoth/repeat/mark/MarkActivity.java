@@ -7,11 +7,18 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.main.MainActivity;
+import com.behemoth.repeat.mark.chapter.MarkChapterActivity;
+import com.behemoth.repeat.model.Book;
+import com.behemoth.repeat.model.Chapter;
+import com.behemoth.repeat.model.Repeat;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
 
 public class MarkActivity extends AppCompatActivity implements MarkContract.View{
 
@@ -61,5 +68,12 @@ public class MarkActivity extends AppCompatActivity implements MarkContract.View
     @Override
     public Context getContext() {
         return this;
+    }
+
+    @Override
+    public void goToMarkChapterActivity(Book b) {
+        Intent i = new Intent(MarkActivity.this, MarkChapterActivity.class);
+        i.putExtra("markBook", b);
+        startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 }

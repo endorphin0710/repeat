@@ -26,8 +26,15 @@ public class Repeat implements Parcelable {
     protected Repeat(Parcel in) {
         problemCount = in.readInt();
         mark = new ArrayList<>();
-        in.readList(mark, Integer.class.getClassLoader());
+        in.readList(mark, ClassLoader.getSystemClassLoader());
         finished = in.readByte() != 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeInt(problemCount);
+        parcel.writeList(mark);
+        parcel.writeByte((byte) (finished ? 1 : 0));
     }
 
     public static final Creator<Repeat> CREATOR = new Creator<Repeat>() {
@@ -56,10 +63,4 @@ public class Repeat implements Parcelable {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(problemCount);
-        parcel.writeList(mark);
-        parcel.writeByte((byte) (finished ? 1 : 0));
-    }
 }

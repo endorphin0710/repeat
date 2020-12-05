@@ -46,6 +46,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'com.google.firebase:firebase-database'
     implementation 'com.google.firebase:firebase-storage'
+    implementation 'com.google.firebase:firebase-auth'
     implementation 'com.firebaseui:firebase-ui-storage:6.4.0'
 
     implementation 'com.isseiaoki:simplecropview:1.1.8'

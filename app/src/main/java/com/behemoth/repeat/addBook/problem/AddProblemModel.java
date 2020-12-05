@@ -28,6 +28,7 @@ public class AddProblemModel implements AddProblemContract.Model{
     public void saveBookInfo(Book newBook, ArrayList<Chapter> chapters) {
         String userId = SharedPreference.getInstance().getString(Constants.USER_ID, "");
         newBook.setAuthor(userId);
+        newBook.setState(0);
 
         long currentTime = System.currentTimeMillis();
         newBook.setCreatedDate(currentTime);
@@ -36,6 +37,7 @@ public class AddProblemModel implements AddProblemContract.Model{
             Chapter c = chapters.get(i);
             List<Repeat> repeats = new ArrayList<>();
             repeats.add(new Repeat(c.getProblemCount()));
+            c.setRepeat(repeats);
             c.setRepeat(repeats);
         }
         newBook.setChapter(chapters);

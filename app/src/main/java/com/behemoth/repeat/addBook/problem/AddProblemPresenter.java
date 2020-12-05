@@ -54,6 +54,7 @@ public class AddProblemPresenter implements AddProblemContract.Presenter{
     @Override
     public void upload() {
         if (uploadClicked) return;
+        mAdapter.getmList().remove(mAdapter.getmList().size()-1);
         ArrayList<Chapter> chapters = mAdapter.getmList();
         model.saveBookInfo(newBook, chapters);
         uploadClicked = true;

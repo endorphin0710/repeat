@@ -38,9 +38,6 @@
             android:name=".main.MainActivity"
             android:label="@string/label_mainActivity" />
         <activity
-            android:name=".mark.MarkActivity"
-            android:label="@string/label_markActivity" />
-        <activity
             android:name=".addBook.titleAndImage.AddTitleAndImageActivity"
             android:label="@string/label_AddTitleAndImageActivity" />
         <activity
@@ -49,6 +46,11 @@
         <activity
             android:name=".addBook.problem.AddProblemActivity"
             android:label="@string/label_AddProblemActivity" />
+        <activity
+            android:name=".mark.MarkActivity"
+            android:label="@string/label_markActivity" />
+        <activity
+            android:name=".mark.chapter.MarkChapterActivity"/>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

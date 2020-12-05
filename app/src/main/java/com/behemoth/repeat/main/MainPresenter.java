@@ -41,7 +41,9 @@ public class MainPresenter implements MainContract.Presenter{
         mArrayList.add(new Book(""));
         for(int i = books.size()-1; i >= 0; i--) {
             Book b = books.get(i);
-            mArrayList.add(new Book(b.getId(), b.getAuthor(), b.getTitle(), b.getImageName(), b.getThumbnail(), b.getUsingThumbnail(), b.getCreatedDate()));
+            if(b.getState() == 0){
+                mArrayList.add(b);
+            }
         }
         mAdapter.notifyDataSetChanged();
     }
