@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class MarkChapterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final ArrayList<Chapter> mList;
+    private MarkClickListener mListener;
 
     class ChapterViewHolder extends RecyclerView.ViewHolder {
 
@@ -33,8 +34,9 @@ public class MarkChapterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
     }
 
-    public MarkChapterAdapter(ArrayList<Chapter> list) {
+    public MarkChapterAdapter(ArrayList<Chapter> list, MarkClickListener listener) {
         this.mList = list;
+        this.mListener = listener;
     }
 
     @Override
@@ -59,7 +61,7 @@ public class MarkChapterAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         chapterViewHolder.chapter.setText(String.valueOf(c.getChapterNumber()));
         chapterViewHolder.repeat.setText(String.valueOf(c.getRepeatCount()));
         chapterViewHolder.btnMark.setOnClickListener(view ->{
-            Log.d("juntae", c.getChapterNumber() +"");
+            mListener.onClick(position);
         });
     }
 

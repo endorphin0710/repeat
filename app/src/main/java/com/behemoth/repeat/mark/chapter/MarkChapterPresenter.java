@@ -11,6 +11,7 @@ import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.model.Chapter;
 import com.behemoth.repeat.recyclerView.bookCard.SpaceDecoration;
 import com.behemoth.repeat.recyclerView.mark.MarkChapterAdapter;
+import com.behemoth.repeat.recyclerView.mark.MarkClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,9 @@ public class MarkChapterPresenter implements MarkChapterContract.Presenter{
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(viewContext);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-        mAdapter = new MarkChapterAdapter(mArrayList);
+        MarkClickListener markClickListener = position -> view.goToMarkRepeatActivity(b, position);
+
+        mAdapter = new MarkChapterAdapter(mArrayList, markClickListener);
 
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();

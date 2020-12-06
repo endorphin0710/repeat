@@ -8,6 +8,7 @@ public interface MarkChapterContract {
 
     interface View{
         Context getContext();
+        void goToMarkRepeatActivity(Book b, int chapterNumber);
     }
 
     interface Presenter{

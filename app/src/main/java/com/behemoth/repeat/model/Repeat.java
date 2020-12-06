@@ -9,10 +9,21 @@ import java.util.List;
 public class Repeat implements Parcelable {
 
     private int problemCount;
+    /**
+     * -1 > 미채점
+     * 0 -> 오답
+     * 1 -> 정답
+     */
     private List<Integer> mark;
     private boolean finished;
 
     public Repeat(){}
+
+    public Repeat(int problemCount, List<Integer> mark, boolean finished){
+        this.problemCount = problemCount;
+        this.mark = mark;
+        this.finished = finished;
+    }
 
     public Repeat(int cnt){
         problemCount = cnt;

@@ -51,6 +51,8 @@
             android:label="@string/label_markActivity" />
         <activity
             android:name=".mark.chapter.MarkChapterActivity"/>
+        <activity
+            android:name=".mark.repeat.MarkRepeatActivity"/>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"
