@@ -57,7 +57,7 @@ public class SearchBookPresenter implements SearchBookContract.Presenter{
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(viewContext);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-        SearchClickListener searchClickListener = position -> {
+        SearchClickListener searchClickListener = (position) -> {
             Search s = mArrayList.get(position);
             Intent i = new Intent();
             i.putExtra(Constants.LABEL_SEARCHED_TITLE,s.getTitle());

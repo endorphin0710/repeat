@@ -43,8 +43,6 @@ public class SearchBookModel extends AppCompatActivity implements SearchBookCont
                 for(int i = 0; i < result.size(); i++){
                     String title = result.get(i).getAsJsonObject().get("title").getAsString();
                     String thumbnail = result.get(i).getAsJsonObject().get("thumbnail").getAsString();
-                    Log.d("juntae", title);
-                    Log.d("juntae", thumbnail);
                     searches.add(new Search(title, thumbnail));
                     presenter.onSearchBooks(searches);
                 }

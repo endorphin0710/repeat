@@ -125,6 +125,9 @@ public class NaverLogin extends AppCompatActivity {
 
                         JsonObject obj = (JsonObject) response.body().get("response");
 
+                        String token = mOAuthLoginModule.getAccessToken(ctx);
+                        LogUtil.d(TAG, "naverToken: " + token);
+
                         String id = Constants.NAVER_ID_PREFIX + obj.get("id").getAsString();
                         LogUtil.d(TAG, "naverId: " + id);
 

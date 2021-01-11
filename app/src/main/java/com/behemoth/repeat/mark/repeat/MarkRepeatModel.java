@@ -66,7 +66,7 @@ public class MarkRepeatModel implements MarkRepeatContract.Model{
                     presenter.onUpdateSuccess();
                 })
                 .addOnFailureListener(e -> {
-                    Log.d("juntae", "Failure");
+
                 });
 
     }

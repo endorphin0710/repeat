@@ -2,9 +2,7 @@ package com.behemoth.repeat.addBook.SearchBook;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 
-import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.model.Search;
 
 import java.util.List;

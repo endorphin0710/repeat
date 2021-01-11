@@ -1,5 +1,7 @@
 package com.behemoth.repeat.main;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.behemoth.repeat.model.Book;

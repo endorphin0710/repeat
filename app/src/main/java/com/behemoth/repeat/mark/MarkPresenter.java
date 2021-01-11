@@ -32,6 +32,7 @@ public class MarkPresenter implements MarkContract.Presenter{
 
     @Override
     public void getBooks() {
+        view.showProgressBar();
         model.getBooks();
     }
 
@@ -45,6 +46,7 @@ public class MarkPresenter implements MarkContract.Presenter{
             }
         }
         mAdapter.notifyDataSetChanged();
+        view.hideProgressBar();
     }
 
     @Override

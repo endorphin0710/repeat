@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.behemoth.repeat.R;
@@ -63,7 +64,9 @@ public class SearchAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                     .into(searchViewHolder.thumbnail);
         }
 
-        searchViewHolder.container.setOnClickListener(view -> mListener.onClick(position));
+        searchViewHolder.container.setOnClickListener(view -> {
+            mListener.onClick(position);
+        });
     }
 
     @Override

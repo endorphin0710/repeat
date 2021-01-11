@@ -51,8 +51,8 @@ public class AddProblemActivity extends AppCompatActivity implements AddProblemC
     @Override
     public void onUploadSuccess() {
         Intent i = new Intent(AddProblemActivity.this, MainActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        i.putExtra("dataChanged", 1);
         startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 

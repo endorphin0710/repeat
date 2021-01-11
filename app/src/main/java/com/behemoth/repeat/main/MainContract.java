@@ -13,6 +13,9 @@ public interface MainContract {
         Context getContext();
         void addNewBook();
         void showChooseOptions(int position, Book book);
+        void showProgressBar();
+        void hideProgressBar();
+        void onDeleteSuccess(int position);
     }
 
     interface Presenter{

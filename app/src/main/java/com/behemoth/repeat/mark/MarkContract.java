@@ -11,6 +11,8 @@ public interface MarkContract {
     interface View{
         Context getContext();
         void goToMarkChapterActivity(Book b);
+        void showProgressBar();
+        void hideProgressBar();
     }
 
     interface Presenter{

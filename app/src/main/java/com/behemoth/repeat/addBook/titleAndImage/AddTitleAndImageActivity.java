@@ -17,7 +17,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -127,9 +126,9 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
     }
 
     private void showChooseOptions(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.Theme_AppCompat_Dialog_Alert);
-        String[] animals = getResources().getStringArray(R.array.image_options);
-        builder.setItems(animals, (dialog, which) -> {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, androidx.appcompat.R.style.Theme_AppCompat_Dialog_Alert);
+        String[] items = getResources().getStringArray(R.array.image_options);
+        builder.setItems(items, (dialog, which) -> {
             if(which == 0){
                 if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
                     presenter.getImageFromCamera();
@@ -173,10 +172,10 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
     }
 
     private void showSelectedImage(Uri imageUri){
-        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) btnImage.getLayoutParams();
-        layoutParams.width = Util.dpToPx(this, 168);
-        layoutParams.height = Util.dpToPx(this, 172);
-        btnImage.setLayoutParams(layoutParams);
+//        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) btnImage.getLayoutParams();
+//        layoutParams.width = Util.dpToPx(this, 168);
+//        layoutParams.height = Util.dpToPx(this, 172);
+//        btnImage.setLayoutParams(layoutParams);
         Glide.with(this)
                 .load(imageUri)
                 .into(btnImage);
@@ -184,17 +183,19 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
     }
 
     private void showSelectedImage(String imageUrl){
-        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) btnImage.getLayoutParams();
-        layoutParams.width = Util.dpToPx(this, 168);
-        layoutParams.height = Util.dpToPx(this, 172);
-        btnImage.setLayoutParams(layoutParams);
+//        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) btnImage.getLayoutParams();
+//        layoutParams.width = Util.dpToPx(this, 168);
+//        layoutParams.height = Util.dpToPx(this, 172);
+//        btnImage.setLayoutParams(layoutParams);
+
+        Glide.with(this).clear(btnImage);
         if(imageUrl.length() > 0){
             Glide.with(this)
                     .load(imageUrl)
                     .into(btnImage);
         }else{
             Glide.with(this)
-                    .load(ContextCompat.getDrawable(this, R.drawable.image_default))
+                    .load(ContextCompat.getDrawable(this, R.drawable.ic_default))
                     .into(btnImage);
         }
         btnRemove.setVisibility(View.VISIBLE);

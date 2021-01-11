@@ -2,6 +2,8 @@ package com.behemoth.repeat.addBook.SearchBook;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
 
 import android.content.Context;
 import android.content.Intent;
@@ -93,6 +95,6 @@ public class SearchBookActivity extends AppCompatActivity implements SearchBookC
     @Override
     public void finishWithSearchData(Intent i) {
         setResult(RESULT_OK, i);
-        finish();
+        finishAfterTransition();
     }
 }
