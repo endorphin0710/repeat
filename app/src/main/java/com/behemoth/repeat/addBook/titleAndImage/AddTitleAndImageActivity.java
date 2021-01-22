@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -93,7 +94,7 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
             } else {
                 requestPermissions(new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE }, Constants.PERMISSION_WRITE_EXTERNAL_STORAGE);
             }
-        }else if(id == R.id.ivRemove){
+        }else if(id == R.id.btnRemove){
             removeSelectedImage();
         }else if(id == R.id.btnNext){
             String title = etTitle.getText().toString();
@@ -172,10 +173,10 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
     }
 
     private void showSelectedImage(Uri imageUri){
-//        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) btnImage.getLayoutParams();
-//        layoutParams.width = Util.dpToPx(this, 168);
-//        layoutParams.height = Util.dpToPx(this, 172);
-//        btnImage.setLayoutParams(layoutParams);
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) btnImage.getLayoutParams();
+        layoutParams.width = Util.dpToPx(this, 168);
+        layoutParams.height = Util.dpToPx(this, 172);
+        btnImage.setLayoutParams(layoutParams);
         Glide.with(this)
                 .load(imageUri)
                 .into(btnImage);
@@ -183,10 +184,10 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
     }
 
     private void showSelectedImage(String imageUrl){
-//        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) btnImage.getLayoutParams();
-//        layoutParams.width = Util.dpToPx(this, 168);
-//        layoutParams.height = Util.dpToPx(this, 172);
-//        btnImage.setLayoutParams(layoutParams);
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) btnImage.getLayoutParams();
+        layoutParams.width = Util.dpToPx(this, 168);
+        layoutParams.height = Util.dpToPx(this, 172);
+        btnImage.setLayoutParams(layoutParams);
 
         Glide.with(this).clear(btnImage);
         if(imageUrl.length() > 0){
@@ -202,6 +203,7 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
     }
 
     private void removeSelectedImage(){
+        presenter.deleteImage(bookImage);
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) btnImage.getLayoutParams();
         layoutParams.width = Util.dpToPx(this, 46);
         layoutParams.height = Util.dpToPx(this, 46);
@@ -258,6 +260,12 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
     private void GoSearchBookActivity(){
         Intent i = new Intent(AddTitleAndImageActivity.this, SearchBookActivity.class);
         startActivityForResult(i, Constants.REQUEST_CODE_SEARCH, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(bookImage != null) Util.deleteImage(this, bookImage);
     }
 
 }

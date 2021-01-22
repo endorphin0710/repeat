@@ -36,13 +36,13 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/edittext_background"
+        android:hint="@string/hint_title_add"
+        android:inputType="textPersonName"
+        android:maxLength="20"
         android:paddingLeft="16dp"
         android:paddingTop="8dp"
         android:paddingBottom="8dp"
-        android:hint="@string/hint_title_add"
-        android:inputType="textPersonName"
         android:textSize="16sp"
-        android:maxLength="20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView"
@@ -73,8 +73,8 @@
 
     <ImageView
         android:id="@+id/btnImage"
-        android:layout_width="168dp"
-        android:layout_height="172dp"
+        android:layout_width="46dp"
+        android:layout_height="46dp"
         android:layout_marginStart="21dp"
         android:layout_marginTop="12dp"
         android:contentDescription="@string/desc_image"
@@ -99,12 +99,14 @@
         android:id="@+id/btnRemove"
         android:layout_width="24dp"
         android:layout_height="24dp"
+        android:contentDescription="@string/desc_remove"
         android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/btnImage"
         app:layout_constraintEnd_toEndOf="@+id/btnImage"
+        app:layout_constraintStart_toEndOf="@+id/btnImage"
         app:layout_constraintTop_toTopOf="@+id/btnImage"
         app:srcCompat="@drawable/ic_remove"
-        tools:visibility="visible"
-        android:contentDescription="@string/desc_remove" />
+        tools:visibility="visible" />
 
     <TextView
         android:id="@+id/searchBook"

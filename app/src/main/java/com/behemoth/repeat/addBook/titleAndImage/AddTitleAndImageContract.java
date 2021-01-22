@@ -21,6 +21,7 @@ public interface AddTitleAndImageContract {
         void getImageFromCamera();
         void cropGalleryImage(Intent data);
         void cropCameraImage();
+        void deleteImage(Uri uri);
     }
 
     interface Model{

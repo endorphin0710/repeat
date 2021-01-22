@@ -36,8 +36,12 @@ public class Util {
     public static Uri getImageUri(Context context, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
-        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "Title", null);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), inImage, "IMG_" + System.currentTimeMillis(), null);
         return Uri.parse(path);
+    }
+
+    public static void deleteImage(Context context, Uri uri){
+        context.getContentResolver().delete(uri, null, null);
     }
 
     public static Bitmap handleSamplingAndRotationBitmap(Context context, Uri selectedImage, String path) throws IOException {

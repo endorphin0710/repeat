@@ -7,6 +7,7 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -101,6 +102,7 @@ public class MarkActivity extends AppCompatActivity implements MarkContract.View
     }
 
     private void finishAll(){
+        Log.d("juntae", "finishAll");
         Intent i = new Intent(MarkActivity.this, MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);

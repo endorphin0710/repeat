@@ -106,6 +106,11 @@ public class AddTitleAndImagePresenter implements AddTitleAndImageContract.Prese
         }
     }
 
+    @Override
+    public void deleteImage(Uri uri) {
+        Util.deleteImage(viewContext, uri);
+    }
+
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "REPEAT_" + timeStamp + "_";

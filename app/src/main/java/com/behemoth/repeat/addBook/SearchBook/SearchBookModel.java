@@ -28,14 +28,14 @@ public class SearchBookModel extends AppCompatActivity implements SearchBookCont
     }
 
     @Override
-    public void searchBook(String apiKey, String title, int page) {
+    public void searchBook(String apiKey, String searchTitle, int page) {
         List<Search> searches = new ArrayList<>();
 
         String apiURL = "https://dapi.kakao.com/";
         Retrofit retrofit = RetrofitUtil.getRetrofitInstance(apiURL);
         RetrofitService retrofitService = retrofit.create(RetrofitService.class);
 
-        Call<JsonObject> call = retrofitService.searchBook(apiKey, title, page);
+        Call<JsonObject> call = retrofitService.searchBook(apiKey, searchTitle, page);
         call.enqueue(new retrofit2.Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {

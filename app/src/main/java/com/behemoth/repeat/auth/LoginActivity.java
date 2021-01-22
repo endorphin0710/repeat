@@ -94,9 +94,9 @@ public class LoginActivity extends AppCompatActivity {
         else {
             i = new Intent(LoginActivity.this, NaverLogin.class);
         }
-        startActivity(i,
-                ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        startActivity(i);
         finish();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
 }
