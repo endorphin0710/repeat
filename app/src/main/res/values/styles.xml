@@ -14,4 +14,10 @@
 
     </style>
 
+    <style name="dialogTheme" parent="Theme.MaterialComponents.Light.Dialog">
+        <item name="colorPrimary">@color/colorGradientStart</item>
+        <item name="colorPrimaryDark">@color/colorGradientStart</item>
+        <item name="colorAccent">@color/colorGradientEnd</item>
+    </style>
+
 </resources>

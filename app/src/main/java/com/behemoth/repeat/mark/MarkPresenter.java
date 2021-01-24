@@ -42,7 +42,7 @@ public class MarkPresenter implements MarkContract.Presenter{
         for(int i = books.size()-1; i >= 0; i--) {
             Book b = books.get(i);
             if(b.getState() == 0) {
-                mArrayList.add(new Book(b.getId(), b.getAuthor(), b.getTitle(), b.getImageName(), b.getThumbnail(), b.getUsingThumbnail(), b.getCreatedDate(), b.getChapter()));
+                mArrayList.add(new Book(b.getId(), b.getAuthor(), b.getTitle(), b.getImageName(), b.getThumbnail(), b.getIsUsingThumbnail(), b.getCreatedDate(), b.getChapter()));
             }
         }
         mAdapter.notifyDataSetChanged();

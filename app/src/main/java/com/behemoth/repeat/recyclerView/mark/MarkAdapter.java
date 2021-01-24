@@ -1,6 +1,7 @@
 package com.behemoth.repeat.recyclerView.mark;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -77,7 +78,7 @@ public class MarkAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         bookViewHolder.date.setText(Util.dateFormatting(book.getCreatedDate()));
         bookViewHolder.bookMenu.setVisibility(View.GONE);
 
-        if(book.getUsingThumbnail() > 0){
+        if(book.getIsUsingThumbnail() > 0){
             String thumbnailUrl = book.getThumbnail();
             if(thumbnailUrl.length() > 0){
                 Glide.with(mContext)
@@ -90,10 +91,15 @@ public class MarkAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         .into(bookViewHolder.image);
             }
         }else{
-            StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/"+book.getImageName());;
-            Glide.with(mContext)
-                    .load(storageReference)
-                    .into(bookViewHolder.image);
+            String imageName = book.getImageName();
+            if(imageName.equals("image_default.PNG")){
+                bookViewHolder.image.setImageResource(R.drawable.ic_default);
+            }else{
+                StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/"+book.getImageName());;
+                Glide.with(mContext)
+                        .load(storageReference)
+                        .into(bookViewHolder.image);
+            }
         }
     }
 

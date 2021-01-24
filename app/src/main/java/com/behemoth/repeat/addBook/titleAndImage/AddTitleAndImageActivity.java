@@ -203,7 +203,7 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
     }
 
     private void removeSelectedImage(){
-        presenter.deleteImage(bookImage);
+        if(bookImage != null) presenter.deleteImage(bookImage);
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) btnImage.getLayoutParams();
         layoutParams.width = Util.dpToPx(this, 46);
         layoutParams.height = Util.dpToPx(this, 46);

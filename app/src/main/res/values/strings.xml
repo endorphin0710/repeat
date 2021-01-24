@@ -26,6 +26,7 @@
     <string name="correct">맞음</string>
     <string name="incorrect">틀림</string>
     <string name="not_solved">미채점</string>
+    <string name="delete">삭제</string>
 
     <!-- content description -->
     <string name="desc_remove">remove contents</string>
@@ -33,6 +34,7 @@
 
     <!-- Main -->
     <string name="label_mainActivity">내 서재</string>
+    <string name="confirm_delete">해당 책을 삭제하시겠습니까?</string>
 
     <!-- Mark -->
     <string name="label_markActivity">채점하기</string>

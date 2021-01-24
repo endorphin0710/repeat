@@ -1,6 +1,7 @@
 package com.behemoth.repeat.addBook.problem;
 
 import android.net.Uri;
+import android.util.Log;
 
 import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.model.Chapter;
@@ -52,7 +53,7 @@ public class AddProblemModel implements AddProblemContract.Model{
 
         Uri file = newBook.getImageUri();
         newBook.setImageUri(null);
-        if(newBook.getUsingThumbnail() > 0){
+        if(newBook.getIsUsingThumbnail() > 0){
             ref.child(id).setValue(newBook);
             presenter.onUploadSuccess();
             return;
@@ -72,8 +73,8 @@ public class AddProblemModel implements AddProblemContract.Model{
         storage.setMaxUploadRetryTimeMillis(Constants.MAX_UPLOAD_RETRY_MILLIS);
 
         StorageReference storageRef = storage.getReference();
-        StorageReference riversRef = storageRef.child("images/"+imageId);
-        UploadTask uploadTask = riversRef.putFile(file);
+        StorageReference imageRef = storageRef.child("images/"+imageId);
+        UploadTask uploadTask = imageRef.putFile(file);
 
         uploadTask.addOnFailureListener(exception -> {
 

@@ -5,12 +5,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.app.ActivityOptions;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.addBook.titleAndImage.AddTitleAndImageActivity;
@@ -67,17 +70,37 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void showChooseOptions(int position, Book book){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.Theme_MaterialComponents_Light_Dialog);
+        AlertDialog.Builder optionBuilder = new AlertDialog.Builder(this, R.style.dialogTheme);
 
         String[] book_menu = getResources().getStringArray(R.array.book_menu);
-        builder.setItems(book_menu, (dialog, which) -> {
-            if(which == 0){
-                presenter.deleteBook(position, book);
+        optionBuilder.setTitle(book.getTitle());
+        optionBuilder.setItems(book_menu, (dialog, which) -> {
+            switch(which){
+                case 0:
+                    break;
+                case 1:
+                    break;
+                case 2:
+                    AlertDialog.Builder confirmBuilder = new AlertDialog.Builder(this,  R.style.dialogTheme);
+                    confirmBuilder.setMessage(getString(R.string.confirm_delete));
+                    confirmBuilder.setPositiveButton(getString(R.string.delete), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            presenter.deleteBook(position, book);
+                        }
+                    });
+                    confirmBuilder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) { }
+                    });
+                    confirmBuilder.create().show();
+                    break;
+                default:
+                    break;
             }
         });
 
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        optionBuilder.create().show();
     }
 
     @Override

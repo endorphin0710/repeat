@@ -100,7 +100,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             bookViewHolder.text.setText(book.getTitle());
             bookViewHolder.date.setText(Util.dateFormatting(book.getCreatedDate()));
 
-            if(book.getUsingThumbnail() > 0){
+            if(book.getIsUsingThumbnail() > 0){
                 String thumbnailUrl = book.getThumbnail();
                 if(thumbnailUrl.length() > 0){
                     Glide.with(mContext)
@@ -113,10 +113,15 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             .into(bookViewHolder.image);
                 }
             }else{
-                StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/"+book.getImageName());;
-                Glide.with(mContext)
-                        .load(storageReference)
-                        .into(bookViewHolder.image);
+                String imageName = book.getImageName();
+                if(imageName.equals("image_default.PNG")){
+                    bookViewHolder.image.setImageResource(R.drawable.ic_default);
+                }else{
+                    StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/"+book.getImageName());;
+                    Glide.with(mContext)
+                            .load(storageReference)
+                            .into(bookViewHolder.image);
+                }
             }
 
             bookViewHolder.container.setOnClickListener(view -> mListener.onClick(position));

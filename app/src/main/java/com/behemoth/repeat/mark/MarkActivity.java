@@ -102,7 +102,6 @@ public class MarkActivity extends AppCompatActivity implements MarkContract.View
     }
 
     private void finishAll(){
-        Log.d("juntae", "finishAll");
         Intent i = new Intent(MarkActivity.this, MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(i);

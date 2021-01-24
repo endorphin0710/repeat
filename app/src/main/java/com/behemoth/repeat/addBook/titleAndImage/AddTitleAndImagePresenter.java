@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
@@ -48,7 +47,7 @@ public class AddTitleAndImagePresenter implements AddTitleAndImageContract.Prese
         newBook.setTitle(title);
         newBook.setImageUri(bookImage);
         newBook.setThumbnail(thumbnail);
-        newBook.setUsingThumbnail(usingThumbnail);
+        newBook.setIsUsingThumbnail(usingThumbnail);
         return newBook;
     }
 
