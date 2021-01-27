@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetEnd="@+id/end"
+        motion:constraintSetStart="@id/start"
+        motion:duration="800"
+        motion:autoTransition="animateToEnd">
+       <KeyFrameSet>
+       </KeyFrameSet>
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/imageView"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="164dp"
+            android:layout_height="26dp"
+            motion:layout_constraintTop_toBottomOf="@+id/logo"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp"
+            android:translationY="10dp"
+            android:alpha="0" />
+        <Constraint
+            android:id="@+id/buttonKakaoLogin"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="328dp"
+            android:layout_height="48dp"
+            android:visibility="visible"
+            motion:layout_constraintTop_toBottomOf="@+id/imageView"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="114dp"
+            android:alpha="0"
+            android:translationY="10dp" />
+        <Constraint
+            android:id="@+id/buttonNaverLogin"
+            motion:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="328dp"
+            android:layout_height="48dp"
+            android:visibility="visible"
+            android:layout_marginEnd="30dp"
+            motion:layout_constraintTop_toBottomOf="@+id/buttonKakaoLogin"
+            android:layout_marginStart="30dp"
+            motion:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp"
+            android:alpha="0"
+            android:translationY="10dp" />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+    </ConstraintSet>
+</MotionScene>

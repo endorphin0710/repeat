@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -95,7 +96,7 @@ public class AddChapterActivity extends AppCompatActivity implements AddChapterC
         if(id == R.id.ivRemove){
             etChapter.setText("");
         }else if(id == R.id.chapterBtnNext){
-            String chapter = etChapter.getText().toString();
+            String chapter = etChapter.getText().toString().trim();
             presenter.validateInput(chapter, newBook);
         }
     }
@@ -107,6 +108,7 @@ public class AddChapterActivity extends AppCompatActivity implements AddChapterC
 
     @Override
     public void showToast(String message) {
+        Log.d("juntae", "message : " + message);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 

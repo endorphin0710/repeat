@@ -1,10 +1,12 @@
 package com.behemoth.repeat.recyclerView.problem;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -20,19 +22,23 @@ import java.util.ArrayList;
 public class ProblemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final ArrayList<Chapter> mList;
-    private AddProblemActivity parent;
+    private final AddProblemActivity parent;
 
     class ChapterViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView chapterNumber;
         protected TextView problemCnt;
         protected SeekBar seekBar;
+        protected ImageView plus;
+        protected ImageView minus;
 
         public ChapterViewHolder(View view) {
             super(view);
             this.chapterNumber = view.findViewById(R.id.chapterNumber);
             this.problemCnt = view.findViewById(R.id.problemCnt);
             this.seekBar = view.findViewById(R.id.seekBar);
+            this.plus = view.findViewById(R.id.problem_cnt_plus);
+            this.minus = view.findViewById(R.id.problem_cnt_minus);
         }
     }
 
@@ -74,9 +80,7 @@ public class ProblemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         if(holder.getItemViewType() >= mList.size()-1){
             CompleteViewHolder completeViewHolder = (CompleteViewHolder)holder;
-            completeViewHolder.btnComplete.setOnClickListener(view -> {
-                parent.upload();
-            });
+            completeViewHolder.btnComplete.setOnClickListener(view -> parent.upload());
         }else{
             ChapterViewHolder chapterViewHolder = (ChapterViewHolder)holder;
             chapterViewHolder.chapterNumber.setText(String.valueOf(mList.get(position).getChapterNumber()));
@@ -86,7 +90,7 @@ public class ProblemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             chapterViewHolder.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                    chapterViewHolder.problemCnt.setText(i+"");
+                    chapterViewHolder.problemCnt.setText(String.valueOf(i));
                     mList.get(position).setProblemCount(i);
                 }
 
@@ -94,11 +98,22 @@ public class ProblemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 public void onStartTrackingTouch(SeekBar seekBar) {
 
                 }
-
                 @Override
                 public void onStopTrackingTouch(SeekBar seekBar) {
 
                 }
+            });
+            chapterViewHolder.plus.setOnClickListener(v -> {
+                int cnt = Integer.parseInt(chapterViewHolder.problemCnt.getText().toString())+1;
+                if(cnt > 60) cnt = 60;
+                chapterViewHolder.problemCnt.setText(String.valueOf(cnt));
+                chapterViewHolder.seekBar.setProgress(cnt);
+            });
+            chapterViewHolder.minus.setOnClickListener(v -> {
+                int cnt = Integer.parseInt(chapterViewHolder.problemCnt.getText().toString())-1;
+                if(cnt < 1) cnt = 1;
+                chapterViewHolder.problemCnt.setText(String.valueOf(cnt));
+                chapterViewHolder.seekBar.setProgress(cnt);
             });
         }
     }

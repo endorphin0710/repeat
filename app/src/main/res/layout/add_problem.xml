@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -19,26 +20,61 @@
 
     <TextView
         android:id="@+id/problemCnt"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="10dp"
         android:text="0"
         android:textSize="16sp"
+        android:gravity="center"
         app:layout_constraintBottom_toBottomOf="@+id/chapterNumber"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/chapterNumber" />
+        app:layout_constraintEnd_toStartOf="@+id/problem_cnt_plus"
+        app:layout_constraintStart_toStartOf="@+id/textView8"
+        app:layout_constraintTop_toTopOf="@+id/chapterNumber"
+        app:layout_constraintVertical_bias="0.0" />
 
     <SeekBar
         android:id="@+id/seekBar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:padding="18dp"
-        android:min="1"
+        android:layout_marginStart="51dp"
+        android:layout_marginEnd="24dp"
         android:max="60"
+        android:min="1"
+        android:padding="18dp"
         app:layout_constraintBottom_toBottomOf="@+id/chapterNumber"
-        app:layout_constraintEnd_toStartOf="@+id/problemCnt"
+        app:layout_constraintEnd_toStartOf="@+id/problem_cnt_minus"
         app:layout_constraintStart_toEndOf="@+id/chapterNumber"
         app:layout_constraintTop_toTopOf="@+id/chapterNumber" />
+
+    <ImageView
+        android:id="@+id/problem_cnt_plus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_button_plus" />
+
+    <ImageView
+        android:id="@+id/problem_cnt_minus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/problemCnt"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.558"
+        app:srcCompat="@drawable/ic_button_minus" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        android:text="111"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/problem_cnt_plus"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
