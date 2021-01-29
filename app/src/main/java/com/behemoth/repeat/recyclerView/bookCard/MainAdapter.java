@@ -1,7 +1,6 @@
 package com.behemoth.repeat.recyclerView.bookCard;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +23,8 @@ import java.util.ArrayList;
 public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private final ArrayList<Book> mList;
-    private CardClickListener mListener;
-    private Context mContext;
+    private final CardClickListener mListener;
+    private final Context mContext;
 
     class BookViewHolder extends RecyclerView.ViewHolder {
 
@@ -87,12 +86,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         if(holder.getItemViewType() <= 0){
             AddViewHolder addViewHolder = (AddViewHolder)holder;
             addViewHolder.image.setImageResource(R.drawable.ic_add);
-            addViewHolder.container.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    mListener.onClick(position);
-                }
-            });
+            addViewHolder.container.setOnClickListener(v -> mListener.onClick(position));
         }else{
             BookViewHolder bookViewHolder = (BookViewHolder)holder;
             Book book = mList.get(position);
@@ -107,7 +101,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             .load(thumbnailUrl)
                             .into(bookViewHolder.image);
                 }else{
-                    StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/image_default.PNG");;
+                    StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/image_default.PNG");
                     Glide.with(mContext)
                             .load(storageReference)
                             .into(bookViewHolder.image);
@@ -117,7 +111,7 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 if(imageName.equals("image_default.PNG")){
                     bookViewHolder.image.setImageResource(R.drawable.ic_default);
                 }else{
-                    StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/"+book.getImageName());;
+                    StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/"+book.getImageName());
                     Glide.with(mContext)
                             .load(storageReference)
                             .into(bookViewHolder.image);

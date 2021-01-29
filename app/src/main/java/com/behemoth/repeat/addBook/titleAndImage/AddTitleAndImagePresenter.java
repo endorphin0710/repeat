@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.core.content.FileProvider;
@@ -15,6 +16,8 @@ import com.behemoth.repeat.addBook.crop.CropActivity;
 import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.Util;
+import com.bumptech.glide.Glide;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,12 +27,14 @@ import java.util.Date;
 public class AddTitleAndImagePresenter implements AddTitleAndImageContract.Presenter{
 
     private final AddTitleAndImageContract.View view;
+    private final AddTitleAndImageContract.Model model;
     private final Context viewContext;
     private String currentPhotoPath;
 
     public AddTitleAndImagePresenter(AddTitleAndImageContract.View view){
         this.view = view;
         this.viewContext = view.getContext();
+        this.model = new AddTitleAndImageModel(this);
     }
 
     @Override
@@ -49,6 +54,11 @@ public class AddTitleAndImagePresenter implements AddTitleAndImageContract.Prese
         newBook.setThumbnail(thumbnail);
         newBook.setIsUsingThumbnail(usingThumbnail);
         return newBook;
+    }
+
+    @Override
+    public StorageReference getImageReference(String name) {
+        return model.getImageReference(name);
     }
 
     @Override
@@ -108,6 +118,20 @@ public class AddTitleAndImagePresenter implements AddTitleAndImageContract.Prese
     @Override
     public void deleteImage(Uri uri) {
         Util.deleteImage(viewContext, uri);
+    }
+
+    @Override
+    public void updateTitleAndImage(Book book, Uri bookUri, String title, boolean isOriginal) {
+        if(isOriginal && book.getTitle().equals(title)) onUpdate(0);
+        else {
+            new Thread(() -> { Glide.get(viewContext).clearDiskCache();});
+            model.updateTitleAndImage(book, bookUri, title, isOriginal);
+        }
+    }
+
+    @Override
+    public void onUpdate(int i) {
+        view.onUpdate(i);
     }
 
     private File createImageFile() throws IOException {

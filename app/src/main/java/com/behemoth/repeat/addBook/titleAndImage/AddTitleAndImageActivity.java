@@ -17,7 +17,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,15 +30,22 @@ import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.Util;
 import com.bumptech.glide.Glide;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class AddTitleAndImageActivity extends AppCompatActivity implements AddTitleAndImageContract.View, View.OnClickListener, TextWatcher {
 
     private AddTitleAndImageContract.Presenter presenter;
+
+    private boolean change;
+    private Book book;
+
     private EditText etTitle;
     private ImageView btnImage;
     private Uri bookImage;
     private String bookThumbnail;
     private int usingThumbnail;
+    private boolean isOriginal;
     private ImageView btnRemove;
     private ImageView btnRemoveTitle;
 
@@ -47,13 +53,43 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title_and_image);
+        this.change = getIntent().getBooleanExtra("change", false);
+        if(this.change) {
+            this.isOriginal = true;
+            this.book = getIntent().getParcelableExtra("book");
+        }
 
         setToolbar();
-
         presenter = new AddTitleAndImagePresenter(this);
 
         setTextWatcher();
         setOnClickListener();
+        setLayout();
+    }
+
+    private void setLayout(){
+        if(this.change){
+            findViewById(R.id.divider).setVisibility(View.INVISIBLE);
+            findViewById(R.id.searchBook).setVisibility(View.INVISIBLE);
+
+            Button btnNext = findViewById(R.id.btnNext);
+            btnNext.setText(getString(R.string.complete));
+            getSupportActionBar().setTitle(getString(R.string.tv_title_change));
+
+            etTitle.setText(book.getTitle());
+            if(book.getIsUsingThumbnail() > 0){
+                this.usingThumbnail = 1;
+                showSelectedImage(book.getThumbnail());
+            }else{
+                String imageName = book.getImageName();
+                if(imageName.equals("image_default.PNG")){
+                    showSelectedImage("");
+                }else{
+                    StorageReference storageReference = presenter.getImageReference(book.getImageName());
+                    showSelectedImage(storageReference);
+                }
+            }
+        }
     }
 
     private void setTextWatcher(){
@@ -100,8 +136,12 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
             String title = etTitle.getText().toString();
             boolean validated = presenter.validateInput(title);
             if(validated){
-                Book book = presenter.getBook(title, bookImage, bookThumbnail, usingThumbnail);
-                nextStep(book);
+                if(this.change){
+                    presenter.updateTitleAndImage(book, bookImage, title, isOriginal);
+                }else{
+                    Book book = presenter.getBook(title, bookImage, bookThumbnail, usingThumbnail);
+                    nextStep(book);
+                }
             }
         }else if(id == R.id.btnRemovetitle){
             etTitle.setText("");
@@ -158,6 +198,7 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
                 this.bookImage = Uri.parse(strUri);
                 showSelectedImage(bookImage);
                 this.usingThumbnail = 0;
+                this.isOriginal = false;
             }
         }else if(requestCode == Constants.REQUEST_CODE_SEARCH && resultCode == RESULT_OK){
             if(data != null){
@@ -172,7 +213,8 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
 
     }
 
-    private void showSelectedImage(Uri imageUri){
+    @Override
+    public void showSelectedImage(Uri imageUri){
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) btnImage.getLayoutParams();
         layoutParams.width = Util.dpToPx(this, 168);
         layoutParams.height = Util.dpToPx(this, 172);
@@ -183,7 +225,20 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
         btnRemove.setVisibility(View.VISIBLE);
     }
 
-    private void showSelectedImage(String imageUrl){
+    @Override
+    public void showSelectedImage(StorageReference storageReference){
+        ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) btnImage.getLayoutParams();
+        layoutParams.width = Util.dpToPx(this, 168);
+        layoutParams.height = Util.dpToPx(this, 172);
+        btnImage.setLayoutParams(layoutParams);
+        Glide.with(this)
+                .load(storageReference)
+                .into(btnImage);
+        btnRemove.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void showSelectedImage(String imageUrl){
         ConstraintLayout.LayoutParams layoutParams = (ConstraintLayout.LayoutParams) btnImage.getLayoutParams();
         layoutParams.width = Util.dpToPx(this, 168);
         layoutParams.height = Util.dpToPx(this, 172);
@@ -210,13 +265,37 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
         btnImage.setLayoutParams(layoutParams);
         btnImage.setImageResource(R.drawable.ic_camera);
         bookImage = null;
+        usingThumbnail = 0;
+        isOriginal = false;
         btnRemove.setVisibility(View.GONE);
     }
 
-    private void nextStep(Book newBook){
+    @Override
+    public void nextStep(Book newBook){
         Intent i = new Intent(AddTitleAndImageActivity.this, AddChapterActivity.class);
         i.putExtra("book", newBook);
         startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    }
+
+    @Override
+    public void onUpdate(int state) {
+        Intent i = new Intent();
+        switch(state){
+            case -1:
+                i.putExtra("dataChanged", 0);
+                break;
+            case 0:
+                i.putExtra("dataChanged", 0);
+                break;
+            case 1:
+                i.putExtra("dataChanged", 1);
+                break;
+            default:
+                i.putExtra("dataChanged", 0);
+                break;
+        }
+        setResult(Constants.REQUEST_RELOAD, i);
+        finish();
     }
 
     @Override
@@ -249,15 +328,18 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
     @Override
     public void afterTextChanged(Editable editable) { }
 
-    private void showRemoveButton(){
+    @Override
+    public void showRemoveButton(){
         btnRemoveTitle.setVisibility(View.VISIBLE);
     }
 
-    private void hideRemoveButton(){
+    @Override
+    public void hideRemoveButton(){
         btnRemoveTitle.setVisibility(View.GONE);
     }
 
-    private void GoSearchBookActivity(){
+    @Override
+    public void GoSearchBookActivity(){
         Intent i = new Intent(AddTitleAndImageActivity.this, SearchBookActivity.class);
         startActivityForResult(i, Constants.REQUEST_CODE_SEARCH, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }

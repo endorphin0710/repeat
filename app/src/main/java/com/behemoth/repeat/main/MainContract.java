@@ -12,6 +12,7 @@ public interface MainContract {
     interface View{
         Context getContext();
         void addNewBook();
+        void modifyTitleAndImage(Book book);
         void showChooseOptions(int position, Book book);
         void showProgressBar();
         void hideProgressBar();

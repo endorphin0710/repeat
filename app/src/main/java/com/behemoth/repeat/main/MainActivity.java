@@ -1,5 +1,6 @@
 package com.behemoth.repeat.main;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -19,6 +21,7 @@ import com.behemoth.repeat.R;
 import com.behemoth.repeat.addBook.titleAndImage.AddTitleAndImageActivity;
 import com.behemoth.repeat.mark.MarkActivity;
 import com.behemoth.repeat.model.Book;
+import com.behemoth.repeat.util.Constants;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
@@ -77,22 +80,15 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         optionBuilder.setItems(book_menu, (dialog, which) -> {
             switch(which){
                 case 0:
+                    modifyTitleAndImage(book);
                     break;
                 case 1:
                     break;
                 case 2:
                     AlertDialog.Builder confirmBuilder = new AlertDialog.Builder(this,  R.style.dialogTheme);
                     confirmBuilder.setMessage(getString(R.string.confirm_delete));
-                    confirmBuilder.setPositiveButton(getString(R.string.delete), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            presenter.deleteBook(position, book);
-                        }
-                    });
-                    confirmBuilder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) { }
-                    });
+                    confirmBuilder.setPositiveButton(getString(R.string.delete), (dialog1, which1) -> presenter.deleteBook(position, book));
+                    confirmBuilder.setNegativeButton(getString(R.string.cancel), (dialog2, which2) -> { });
                     confirmBuilder.create().show();
                     break;
                 default:
@@ -115,8 +111,17 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     @Override
+    public void modifyTitleAndImage(Book book) {
+        Intent i = new Intent(MainActivity.this, AddTitleAndImageActivity.class);
+        i.putExtra("change", true);
+        i.putExtra("book", book);
+        startActivityForResult(i, Constants.REQUEST_RELOAD, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    }
+
+    @Override
     public void addNewBook() {
         Intent i = new Intent(MainActivity.this, AddTitleAndImageActivity.class);
+        i.putExtra("change", false);
         startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
@@ -133,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-
+        Log.d("juntae", "onNewIntent : " + intent.getIntExtra("dataChanged", 0));
         dataChanged = intent.getIntExtra("dataChanged", 0);
         if(dataChanged > 0) getBooks();
 
@@ -160,4 +165,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         dataChanged = 1;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == Constants.REQUEST_RELOAD) onNewIntent(data);
+    }
 }
