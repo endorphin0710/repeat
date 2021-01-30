@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private MainContract.Presenter presenter;
     private ProgressBar progressBar;
     private int dataChanged = -1;
+    private long time_back_button_pressed;
+    private static final long TIME_INTERVAL = 2000L;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         optionBuilder.setItems(book_menu, (dialog, which) -> {
             switch(which){
                 case 0:
-                    modifyTitleAndImage(book);
+                    updateTitleAndImage(book);
                     break;
                 case 1:
                     break;
@@ -95,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                     break;
             }
         });
+        optionBuilder.setNegativeButton(getString(R.string.cancel), (dialog2, which2) -> { });
 
         optionBuilder.create().show();
     }
@@ -111,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     @Override
-    public void modifyTitleAndImage(Book book) {
+    public void updateTitleAndImage(Book book) {
         Intent i = new Intent(MainActivity.this, AddTitleAndImageActivity.class);
         i.putExtra("change", true);
         i.putExtra("book", book);
@@ -132,7 +135,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         dataChanged = 0;
         startActivity(i);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-//        startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     @Override
@@ -140,14 +142,22 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         super.onNewIntent(intent);
         Log.d("juntae", "onNewIntent : " + intent.getIntExtra("dataChanged", 0));
         dataChanged = intent.getIntExtra("dataChanged", 0);
-        if(dataChanged > 0) getBooks();
-
+        if(dataChanged > 0) {
+            getBooks();
+            dataChanged = 0;
+        }
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        long t = System.currentTimeMillis();
+        if(t - time_back_button_pressed < TIME_INTERVAL){
+            finishAffinity();
+        }else{
+            time_back_button_pressed = t;
+            Toast.makeText(this, getString(R.string.confirm_finish), Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -168,6 +178,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == Constants.REQUEST_RELOAD) onNewIntent(data);
+        if(requestCode == Constants.REQUEST_RELOAD && resultCode == RESULT_OK ) onNewIntent(data);
     }
+
 }

@@ -11,12 +11,13 @@ import android.util.Log;
 
 import com.behemoth.repeat.main.MainActivity;
 import com.behemoth.repeat.R;
+import com.behemoth.repeat.model.User;
 import com.behemoth.repeat.retrofit.RetrofitService;
 import com.behemoth.repeat.retrofit.RetrofitUtil;
 import com.behemoth.repeat.util.Constants;
-import com.behemoth.repeat.util.ExecutorUtil;
 import com.behemoth.repeat.util.LogUtil;
 import com.behemoth.repeat.util.SharedPreference;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.JsonObject;
@@ -130,7 +131,6 @@ public class NaverLogin extends AppCompatActivity {
 
                         String id = Constants.NAVER_ID_PREFIX + obj.get("id").getAsString();
                         LogUtil.d(TAG, "naverId: " + id);
-
 
                         // SharedPreference
                         SharedPreference.getInstance().putString(Constants.LOGIN_TYPE, Constants.NAVER);

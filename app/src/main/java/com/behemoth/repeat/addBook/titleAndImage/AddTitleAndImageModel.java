@@ -33,6 +33,10 @@ public class AddTitleAndImageModel extends AppCompatActivity implements AddTitle
 
     @Override
     public void updateTitleAndImage(Book book, Uri bookUri,  String title, boolean isOriginal) {
+        Log.d("juntae", book.toString());
+        Log.d("juntae", "bookUri : " + bookUri);
+        Log.d("juntae", "title : " + title);
+        Log.d("juntae", "isOriginal : " + isOriginal);
         boolean updateTitle = !book.getTitle().equals(title);
         if(!isOriginal && updateTitle){
             updateBoth(book, bookUri, title);
@@ -56,19 +60,35 @@ public class AddTitleAndImageModel extends AppCompatActivity implements AddTitle
     }
 
     private void updateImage(Book book, Uri bookUri){
-        FirebaseStorage storage = FirebaseStorage.getInstance();
-        storage.setMaxUploadRetryTimeMillis(Constants.MAX_UPLOAD_RETRY_MILLIS);
+        String userId = SharedPreference.getInstance().getString(Constants.USER_ID, "");
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("book").child(userId).child(book.getId());
+        ref.child("isUsingThumbnail").setValue(0);
+        ref.child("thumbnail").setValue(null);
+        if(bookUri == null){
+            ref.child("imageName").setValue("image_default.PNG")
+                    .addOnSuccessListener(aVoid -> {
+                        presenter.onUpdate(1);
+                    })
+                    .addOnFailureListener(exception ->{
+                        presenter.onUpdate(-1);
+                    });
+        }else{
+            String imageName = "image_"+book.getId();
+            ref.child("imageName").setValue(imageName);
 
-        StorageReference storageRef = storage.getReference();
-        StorageReference imageRef = storageRef.child("images/"+book.getImageName());
-        UploadTask uploadTask = imageRef.putFile(bookUri);
+            FirebaseStorage storage = FirebaseStorage.getInstance();
+            storage.setMaxUploadRetryTimeMillis(Constants.MAX_UPLOAD_RETRY_MILLIS);
 
-        uploadTask.addOnSuccessListener(taskSnapshot -> {
-            presenter.onUpdate(1);
-        }).addOnFailureListener(exception -> {
-            presenter.onUpdate(-1);
-        });
+            StorageReference storageRef = storage.getReference();
+            StorageReference imageRef = storageRef.child("images/"+imageName);
+            UploadTask uploadTask = imageRef.putFile(bookUri);
 
+            uploadTask.addOnSuccessListener(taskSnapshot -> {
+                presenter.onUpdate(1);
+            }).addOnFailureListener(exception -> {
+                presenter.onUpdate(-1);
+            });
+        }
     }
 
     private void updateTitle(Book book, String title){

@@ -1,4 +1,4 @@
-package com.behemoth.repeat.auth;
+package com.behemoth.repeat.model;
 
 public class User {
 
@@ -28,4 +28,5 @@ public class User {
     public void setType(int type) {
         this.type = type;
     }
+
 }

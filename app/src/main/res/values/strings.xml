@@ -35,6 +35,7 @@
     <!-- Main -->
     <string name="label_mainActivity">내 서재</string>
     <string name="confirm_delete">해당 책을 삭제하시겠습니까?</string>
+    <string name="confirm_finish">\'뒤로\'버튼을 한 번 더 누르시면 종료됩니다.</string>
 
     <!-- Mark -->
     <string name="label_markActivity">채점하기</string>

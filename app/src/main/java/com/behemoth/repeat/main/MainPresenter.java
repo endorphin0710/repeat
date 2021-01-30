@@ -38,6 +38,11 @@ public class MainPresenter implements MainContract.Presenter{
 
     @Override
     public void onRetrieveBook(List<Book> books) {
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         mArrayList.clear();
         mArrayList.add(new Book(""));
         for(int i = books.size()-1; i >= 0; i--) {
@@ -85,7 +90,7 @@ public class MainPresenter implements MainContract.Presenter{
         mAdapter = new MainAdapter(mArrayList, cardClickListener, viewContext);
 
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addItemDecoration(new SpaceDecoration(20));
+        mRecyclerView.addItemDecoration(new SpaceDecoration(40));
         mAdapter.notifyDataSetChanged();
     }
 

@@ -101,13 +101,6 @@ public class MarkActivity extends AppCompatActivity implements MarkContract.View
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
-    private void finishAll(){
-        Intent i = new Intent(MarkActivity.this, MainActivity.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(i);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-    }
-
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -118,7 +111,7 @@ public class MarkActivity extends AppCompatActivity implements MarkContract.View
 
     @Override
     public void onBackPressed() {
-        finishAll();
+        goToMainActivity();
     }
 
 }

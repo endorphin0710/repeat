@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import com.behemoth.repeat.main.MainActivity;
 import com.behemoth.repeat.R;
+import com.behemoth.repeat.model.User;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.LogUtil;
 import com.behemoth.repeat.util.SharedPreference;

@@ -26,10 +26,12 @@ import android.widget.TextView;
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.addBook.SearchBook.SearchBookActivity;
 import com.behemoth.repeat.addBook.chapter.AddChapterActivity;
+import com.behemoth.repeat.main.MainActivity;
 import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.Util;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -233,6 +235,8 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
         btnImage.setLayoutParams(layoutParams);
         Glide.with(this)
                 .load(storageReference)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                .skipMemoryCache(true)
                 .into(btnImage);
         btnRemove.setVisibility(View.VISIBLE);
     }
@@ -294,7 +298,7 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
                 i.putExtra("dataChanged", 0);
                 break;
         }
-        setResult(Constants.REQUEST_RELOAD, i);
+        setResult(RESULT_OK, i);
         finish();
     }
 
@@ -350,4 +354,12 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
         if(bookImage != null) Util.deleteImage(this, bookImage);
     }
 
+    @Override
+    public void onBackPressed() {
+        if(this.change){
+            this.onUpdate(0);
+        }else{
+            super.onBackPressed();
+        }
+    }
 }

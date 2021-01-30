@@ -70,7 +70,7 @@ public class MarkPresenter implements MarkContract.Presenter{
         mAdapter = new MarkAdapter(mArrayList, cardClickListener, viewContext);
 
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addItemDecoration(new SpaceDecoration(20));
+        mRecyclerView.addItemDecoration(new SpaceDecoration(40));
         mAdapter.notifyDataSetChanged();
     }
 

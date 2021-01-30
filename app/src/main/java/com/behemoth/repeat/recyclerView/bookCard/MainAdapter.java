@@ -15,6 +15,7 @@ import com.behemoth.repeat.R;
 import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.util.Util;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -99,6 +100,8 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 if(thumbnailUrl.length() > 0){
                     Glide.with(mContext)
                             .load(thumbnailUrl)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true)
                             .into(bookViewHolder.image);
                 }else{
                     StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/image_default.PNG");
@@ -114,6 +117,8 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/"+book.getImageName());
                     Glide.with(mContext)
                             .load(storageReference)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true)
                             .into(bookViewHolder.image);
                 }
             }
