@@ -18,6 +18,7 @@ import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.LogUtil;
 import com.behemoth.repeat.util.SharedPreference;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.JsonObject;
@@ -39,7 +40,7 @@ public class NaverLogin extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_blank);
+        setContentView(R.layout.activity_splash);
         mContext = getApplicationContext();
 
         Thread thread = new Thread() {
@@ -78,6 +79,12 @@ public class NaverLogin extends AppCompatActivity {
                 public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
                     String resultCode = response.body().get("resultcode").getAsString();
                     if(!resultCode.equals("00")) return;
+
+                    FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                    firebaseAuth.signInAnonymously().addOnSuccessListener(authResult -> {
+                        FirebaseUser user = authResult.getUser();
+                        Log.d("juntae1", "uid : " + user.getUid());
+                    });
 
                     Intent i = new Intent(mContext, MainActivity.class);
                     startActivity(i);
@@ -136,9 +143,16 @@ public class NaverLogin extends AppCompatActivity {
                         SharedPreference.getInstance().putString(Constants.LOGIN_TYPE, Constants.NAVER);
                         SharedPreference.getInstance().putString(Constants.USER_ID, id);
 
+                        FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                        firebaseAuth.signInAnonymously().addOnSuccessListener(authResult -> {
+                            FirebaseUser user = authResult.getUser();
+                            Log.d("juntae2", "uid : " + user);
+                        });
+
                         // Firebase
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
                         ref.child("user").child(id).setValue(new User(id, Constants.USER_TYPE_SOCIAL));
+
 
                         Intent i = new Intent(parent, MainActivity.class);
                         parent.startActivity(i);

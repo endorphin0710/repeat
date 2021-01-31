@@ -23,6 +23,8 @@ import com.behemoth.repeat.mark.MarkActivity;
 import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.util.Constants;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 
@@ -57,6 +59,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         presenter.setRecyclerView();
 
         getBooks();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+//        Log.d("juntae3", "uid : " + user.getUid());
     }
 
     private void initViews(){

@@ -21,8 +21,12 @@ public class AddChapterPresenter implements AddChapterContract.Presenter{
         try{
             if(chapter.length() > 0){
                 int i = Integer.parseInt(chapter);
-                newBook.setChapterCount(i);
-                view.nextStep(newBook);
+                if(i <= 0) view.showToast(view.getContext().getString(R.string.add_chapter_validate_fail_number_format));
+                else if(i > 50) view.showToast(view.getContext().getString(R.string.add_chapter_validate_fail_number_exceed));
+                else{
+                    newBook.setChapterCount(i);
+                    view.nextStep(newBook);
+                }
             }else{
                 view.showToast(view.getContext().getString(R.string.add_chapter_validate_fail_empty));
             }

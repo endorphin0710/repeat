@@ -16,6 +16,7 @@
     <string name="nav_mark">채점하기</string>
     <string name="nav_stats">결과보기</string>
 
+    <string name="intro">당신의 공부 기록, 리핏</string>
     <string name="next">다음</string>
     <string name="complete">완료</string>
     <string name="confirm">확인</string>
@@ -57,7 +58,8 @@
     <string name="label_AddChapterActivity">단원수 입력</string>
     <string name="hint_chapter_add">총 몇 단원인가요?</string>
     <string name="add_chapter_validate_fail_empty">단원 수를 입력해주세요.</string>
-    <string name="add_chapter_validate_fail_number_format">단원 수를 입력해주세요.</string>
+    <string name="add_chapter_validate_fail_number_format">자연수를 입력해주세요.</string>
+    <string name="add_chapter_validate_fail_number_exceed">단원 수는 50개를 초과할 수 없습니다.</string>
 
     <!-- Add Problem -->
     <string name="label_AddProblemActivity">문제수 입력</string>

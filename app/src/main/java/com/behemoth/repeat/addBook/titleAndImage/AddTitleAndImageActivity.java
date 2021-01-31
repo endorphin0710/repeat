@@ -135,7 +135,7 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
         }else if(id == R.id.btnRemove){
             removeSelectedImage();
         }else if(id == R.id.btnNext){
-            String title = etTitle.getText().toString();
+            String title = etTitle.getText().toString().trim();
             boolean validated = presenter.validateInput(title);
             if(validated){
                 if(this.change){

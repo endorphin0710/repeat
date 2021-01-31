@@ -7,11 +7,14 @@ import androidx.annotation.NonNull;
 import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.SharedPreference;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,8 +57,18 @@ public class MainModel implements MainContract.Model{
     public void deleteBook(int position, Book book) {
         String userId = book.getAuthor();
         String bookId = book.getId();
+        String imageName = book.getImageName();
         FirebaseDatabase.getInstance().getReference().child("book").child(userId).child(bookId).removeValue()
-                .addOnSuccessListener(aVoid -> presenter.onDeleteSuccess(position))
+                .addOnSuccessListener(aVoid -> {
+                    if (imageName != null) {
+                        FirebaseStorage storage = FirebaseStorage.getInstance();
+                        storage.setMaxUploadRetryTimeMillis(Constants.MAX_UPLOAD_RETRY_MILLIS);
+                        StorageReference storageRef = storage.getReference();
+                        StorageReference imageRef = storageRef.child("images/"+imageName);
+                        imageRef.delete();
+                    }
+                    presenter.onDeleteSuccess(position);
+                })
                 .addOnFailureListener(e -> {
 
                 });
