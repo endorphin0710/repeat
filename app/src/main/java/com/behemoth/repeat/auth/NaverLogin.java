@@ -82,13 +82,11 @@ public class NaverLogin extends AppCompatActivity {
 
                     FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                     firebaseAuth.signInAnonymously().addOnSuccessListener(authResult -> {
-                        FirebaseUser user = authResult.getUser();
-                        Log.d("juntae1", "uid : " + user.getUid());
+                        Intent i = new Intent(mContext, MainActivity.class);
+                        startActivity(i);
+                        finish();
                     });
 
-                    Intent i = new Intent(mContext, MainActivity.class);
-                    startActivity(i);
-                    finish();
                 }
 
                 @Override
@@ -144,18 +142,21 @@ public class NaverLogin extends AppCompatActivity {
                         SharedPreference.getInstance().putString(Constants.USER_ID, id);
 
                         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
-                        firebaseAuth.signInAnonymously().addOnSuccessListener(authResult -> {
-                            FirebaseUser user = authResult.getUser();
-                            Log.d("juntae2", "uid : " + user);
-                        });
+                        firebaseAuth.signInAnonymously()
+                                .addOnSuccessListener(authResult -> {
+                                    String uid = authResult.getUser().getUid();
+                                    // Firebase
+                                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+                                    ref.child("user").child(id).setValue(new User(id, Constants.USER_TYPE_SOCIAL, uid));
 
-                        // Firebase
-                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                        ref.child("user").child(id).setValue(new User(id, Constants.USER_TYPE_SOCIAL));
+                                    Intent i = new Intent(parent, MainActivity.class);
+                                    parent.startActivity(i);
+                                })
+                                .addOnFailureListener( e -> {
+                                    LogUtil.e(TAG, "message : " + e.getMessage());
+                                    parent.finishAffinity();
+                                });
 
-
-                        Intent i = new Intent(parent, MainActivity.class);
-                        parent.startActivity(i);
                     }
 
                     @Override

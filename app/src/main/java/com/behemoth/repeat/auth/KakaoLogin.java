@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.behemoth.repeat.main.MainActivity;
 import com.behemoth.repeat.R;
@@ -12,6 +13,7 @@ import com.behemoth.repeat.model.User;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.LogUtil;
 import com.behemoth.repeat.util.SharedPreference;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.kakao.auth.AuthType;
@@ -69,6 +71,7 @@ public class KakaoLogin extends AppCompatActivity {
             if (exception != null) {
                 LogUtil.d(TAG, "exception : " + exception);
             }
+            startLoginActivity();
         }
     }
 
@@ -94,19 +97,29 @@ public class KakaoLogin extends AppCompatActivity {
                 LogUtil.d(TAG, "token -> " + token);
 
                 LogUtil.d(TAG, "reuqestMe -> onSuccess: ");
-                String id = Long.toString(response.getId());
-                saveUser(id);
-                startMainActivity();
+
+                FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                firebaseAuth.signInAnonymously()
+                        .addOnSuccessListener(authResult -> {
+                            String uid = authResult.getUser().getUid();
+                            String id = Long.toString(response.getId());
+                            saveUser(id, uid);
+                            startMainActivity();
+                        })
+                        .addOnFailureListener( e -> {
+                            LogUtil.e(TAG, "message : " + e.getMessage());
+                            finishAffinity();
+                        });
             }
         });
     }
 
-    private void saveUser(String id){
+    private void saveUser(String id, String uid){
         id = Constants.KAKAO_ID_PREFIX + id;
 
         /** firebase **/
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("user").child(id).setValue(new User(id, Constants.USER_TYPE_SOCIAL));
+        ref.child("user").child(id).setValue(new User(id, Constants.USER_TYPE_SOCIAL, uid));
 
         /** sharedPreference **/
         SharedPreference.getInstance().putString(Constants.LOGIN_TYPE, Constants.KAKAO);

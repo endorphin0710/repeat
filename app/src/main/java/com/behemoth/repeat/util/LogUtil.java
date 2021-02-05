@@ -12,4 +12,10 @@ public class LogUtil {
         }
     }
 
+    public static void e(String tag, String log){
+        if(BuildConfig.DEBUG){
+            Log.e(tag, log);
+        }
+    }
+
 }

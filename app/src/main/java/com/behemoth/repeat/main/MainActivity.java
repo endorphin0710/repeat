@@ -4,6 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.ActivityOptions;
 import android.app.Dialog;
@@ -17,11 +18,15 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.airbnb.lottie.Lottie;
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieDrawable;
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.addBook.titleAndImage.AddTitleAndImageActivity;
 import com.behemoth.repeat.mark.MarkActivity;
 import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.util.Constants;
+import com.behemoth.repeat.util.LogUtil;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,10 +34,13 @@ import com.google.firebase.auth.FirebaseUser;
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 
     private MainContract.Presenter presenter;
-    private ProgressBar progressBar;
+    private LottieAnimationView progressBar;
+    private ConstraintLayout loadingLayout;
+    private BottomNavigationView bottomNavigationView;
+
+    private static final long TIME_INTERVAL = 2000L;
     private int dataChanged = -1;
     private long time_back_button_pressed;
-    private static final long TIME_INTERVAL = 2000L;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
         initViews();
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             if(id == R.id.bottom_navigation_mark){
@@ -61,15 +69,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         getBooks();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-//        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-//        Log.d("juntae3", "uid : " + user.getUid());
-    }
-
     private void initViews(){
+        loadingLayout = findViewById(R.id.loading_layout);
+        loadingLayout.bringToFront();
+
         progressBar = findViewById(R.id.mainProgressBar);
+        progressBar.setRepeatCount(LottieDrawable.INFINITE);
+        progressBar.setRepeatMode(LottieDrawable.RESTART);
     }
 
     private void getBooks(){
@@ -149,11 +155,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        Log.d("juntae", "onNewIntent : " + intent.getIntExtra("dataChanged", 0));
         dataChanged = intent.getIntExtra("dataChanged", 0);
         if(dataChanged > 0) {
             getBooks();
-            dataChanged = 0;
         }
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
@@ -171,12 +175,18 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void showProgressBar(){
-        progressBar.setVisibility(View.VISIBLE);
+        getSupportActionBar().hide();
+        bottomNavigationView.setVisibility(View.INVISIBLE);
+        loadingLayout.setVisibility(View.VISIBLE);
+        progressBar.playAnimation();
     }
 
     @Override
     public void hideProgressBar(){
-        progressBar.setVisibility(View.GONE);
+        getSupportActionBar().show();
+        bottomNavigationView.setVisibility(View.VISIBLE);
+        loadingLayout.setVisibility(View.INVISIBLE);
+        progressBar.pauseAnimation();
     }
 
     @Override

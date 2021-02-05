@@ -2,6 +2,9 @@ package com.behemoth.repeat.util;
 
 public class Constants {
 
+    /** Constants **/
+    public static final int LIMIT_RECENT_MARKS = 20;
+
     /** 로그인 **/
     public static final String LOGIN_TYPE = "login_type";
     public static final String NAVER = "NAVER";

@@ -14,6 +14,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +31,10 @@ public class AddProblemModel implements AddProblemContract.Model{
         String userId = SharedPreference.getInstance().getString(Constants.USER_ID, "");
         newBook.setAuthor(userId);
         newBook.setState(0);
+        List<String> list = new ArrayList<>();
+        list.add("1");
+        list.add("2");
+        newBook.setRecentMarks(list);
 
         long currentTime = System.currentTimeMillis();
         newBook.setCreatedDate(currentTime);
@@ -38,7 +43,6 @@ public class AddProblemModel implements AddProblemContract.Model{
             Chapter c = chapters.get(i);
             List<Repeat> repeats = new ArrayList<>();
             repeats.add(new Repeat(c.getProblemCount()));
-            c.setRepeat(repeats);
             c.setRepeat(repeats);
         }
         newBook.setChapter(chapters);

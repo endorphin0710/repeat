@@ -38,11 +38,6 @@ public class MainPresenter implements MainContract.Presenter{
 
     @Override
     public void onRetrieveBook(List<Book> books) {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         mArrayList.clear();
         mArrayList.add(new Book(""));
         for(int i = books.size()-1; i >= 0; i--) {

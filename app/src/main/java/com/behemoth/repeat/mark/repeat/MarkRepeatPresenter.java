@@ -71,7 +71,6 @@ public class MarkRepeatPresenter implements MarkRepeatContract.Presenter{
 
         Chapter c = b.getChapter().get(chapterNumber);
         int repeatCount = c.getRepeatCount();
-        int problemCount = c.getProblemCount();
         Repeat r = c.getRepeat().get(repeatCount-1);
         r.setMark(marks);
         r.setFinished(finished);
