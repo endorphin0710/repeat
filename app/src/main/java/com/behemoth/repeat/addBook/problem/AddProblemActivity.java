@@ -4,11 +4,16 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieDrawable;
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.main.MainActivity;
 import com.behemoth.repeat.model.Book;
@@ -16,6 +21,8 @@ import com.behemoth.repeat.model.Book;
 public class AddProblemActivity extends AppCompatActivity implements AddProblemContract.View {
 
     private AddProblemContract.Presenter presenter;
+    private LottieAnimationView progressBar;
+    private ConstraintLayout loadingLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +37,17 @@ public class AddProblemActivity extends AppCompatActivity implements AddProblemC
         Book newBook = data.getParcelable("book");
 
         presenter.setRecyclerView(newBook);
+
+        initView();
+    }
+
+    private void initView(){
+        progressBar = findViewById(R.id.addBookProgressBar);
+        progressBar.setRepeatCount(LottieDrawable.INFINITE);
+        progressBar.setRepeatMode(LottieDrawable.RESTART);
+
+        loadingLayout = findViewById(R.id.loading_layout_add_book);
+        loadingLayout.bringToFront();
     }
 
     private void setToolbar() {
@@ -40,6 +58,7 @@ public class AddProblemActivity extends AppCompatActivity implements AddProblemC
     }
 
     public void upload() {
+        showProgressBar();
         presenter.upload();
     }
 
@@ -49,7 +68,7 @@ public class AddProblemActivity extends AppCompatActivity implements AddProblemC
     }
 
     @Override
-    public void onUploadSuccess() {
+    public void onUploadSuccess()  {
         Intent i = new Intent(AddProblemActivity.this, MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -58,7 +77,28 @@ public class AddProblemActivity extends AppCompatActivity implements AddProblemC
     }
 
     @Override
+    public void onUploadFailure() {
+        hideProgressBar();
+        Toast.makeText(this, getString(R.string.text_fail_add_book), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    @Override
+    public void showProgressBar(){
+        getSupportActionBar().hide();
+        loadingLayout.setVisibility(View.VISIBLE);
+        progressBar.playAnimation();
+    }
+
+    @Override
+    public void hideProgressBar(){
+        getSupportActionBar().show();
+        loadingLayout.setVisibility(View.GONE);
+        progressBar.pauseAnimation();
+    }
+
 }

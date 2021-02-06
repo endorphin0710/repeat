@@ -40,6 +40,8 @@
 
     <!-- Mark -->
     <string name="label_markActivity">채점하기</string>
+    <string name="text_loading_mark">잠시만 기다려주세요.\n채점중입니다.</string>
+    <string name="text_fail_mark">채점에 실패하였습니다.\n다시 시도해주세요.</string>
 
     <!-- Add title and image -->
     <string name="tv_title_add">책 제목 입력하기</string>
@@ -63,6 +65,8 @@
 
     <!-- Add Problem -->
     <string name="label_AddProblemActivity">문제수 입력</string>
+    <string name="text_loading_add_book">잠시만 기다려주세요.\n등록중입니다.</string>
+    <string name="text_fail_add_book">책 등록에 실패하였습니다.\n다시 시도해주세요.</string>
 
 
 </resources>

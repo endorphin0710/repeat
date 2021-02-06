@@ -32,7 +32,6 @@ public class MainPresenter implements MainContract.Presenter{
 
     @Override
     public void getBooks() {
-        view.showProgressBar();
         model.getBooks();
     }
 
@@ -57,9 +56,9 @@ public class MainPresenter implements MainContract.Presenter{
 
     @Override
     public void onDeleteSuccess(int position) {
-        view.onDeleteSuccess(position);
         mArrayList.remove(position);
         mAdapter.notifyDataSetChanged();
+        view.onDeleteSuccess(position);
     }
 
     @Override

@@ -83,4 +83,9 @@ public class MarkRepeatPresenter implements MarkRepeatContract.Presenter{
         view.onUpdateSuccess();
     }
 
+    @Override
+    public void onUpdateFailure() {
+        view.onUpdateFailure();
+    }
+
 }

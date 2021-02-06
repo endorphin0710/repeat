@@ -81,7 +81,7 @@ public class AddProblemModel implements AddProblemContract.Model{
         UploadTask uploadTask = imageRef.putFile(file);
 
         uploadTask.addOnFailureListener(exception -> {
-
+            presenter.onUploadFailure();
         }).addOnSuccessListener(taskSnapshot -> {
             presenter.onUploadSuccess();
             // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.

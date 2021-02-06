@@ -64,4 +64,9 @@ public class AddProblemPresenter implements AddProblemContract.Presenter{
     public void onUploadSuccess() {
         view.onUploadSuccess();
     }
+
+    @Override
+    public void onUploadFailure() {
+        view.onUploadFailure();
+    }
 }

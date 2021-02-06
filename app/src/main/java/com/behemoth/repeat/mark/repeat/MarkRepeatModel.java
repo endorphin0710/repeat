@@ -81,8 +81,7 @@ public class MarkRepeatModel implements MarkRepeatContract.Model{
                 }
 
                 @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
-                }
+                public void onCancelled(@NonNull DatabaseError databaseError) { }
             });
 
 
@@ -103,7 +102,7 @@ public class MarkRepeatModel implements MarkRepeatContract.Model{
                     presenter.onUpdateSuccess();
                 })
                 .addOnFailureListener(e -> {
-
+                    presenter.onUpdateFailure();
                 });
 
     }

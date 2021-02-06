@@ -7,18 +7,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.ActivityOptions;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.airbnb.lottie.Lottie;
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 import com.behemoth.repeat.R;
@@ -26,10 +21,8 @@ import com.behemoth.repeat.addBook.titleAndImage.AddTitleAndImageActivity;
 import com.behemoth.repeat.mark.MarkActivity;
 import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.util.Constants;
-import com.behemoth.repeat.util.LogUtil;
+import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
 
@@ -70,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void initViews(){
-        loadingLayout = findViewById(R.id.loading_layout);
+        loadingLayout = findViewById(R.id.loading_layout_main);
         loadingLayout.bringToFront();
 
         progressBar = findViewById(R.id.mainProgressBar);
@@ -79,6 +72,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void getBooks(){
+        this.showProgressBar();
         presenter.getBooks();
     }
 
@@ -104,7 +98,10 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                 case 2:
                     AlertDialog.Builder confirmBuilder = new AlertDialog.Builder(this,  R.style.dialogTheme);
                     confirmBuilder.setMessage(getString(R.string.confirm_delete));
-                    confirmBuilder.setPositiveButton(getString(R.string.delete), (dialog1, which1) -> presenter.deleteBook(position, book));
+                    confirmBuilder.setPositiveButton(getString(R.string.delete), (dialog1, which1) -> {
+                        this.showProgressBar();
+                        presenter.deleteBook(position, book);
+                    });
                     confirmBuilder.setNegativeButton(getString(R.string.cancel), (dialog2, which2) -> { });
                     confirmBuilder.create().show();
                     break;
@@ -113,7 +110,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             }
         });
         optionBuilder.setNegativeButton(getString(R.string.cancel), (dialog2, which2) -> { });
-
         optionBuilder.create().show();
     }
 
@@ -176,7 +172,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     public void showProgressBar(){
         getSupportActionBar().hide();
-        bottomNavigationView.setVisibility(View.INVISIBLE);
+        bottomNavigationView.setVisibility(View.GONE);
         loadingLayout.setVisibility(View.VISIBLE);
         progressBar.playAnimation();
     }
@@ -185,12 +181,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     public void hideProgressBar(){
         getSupportActionBar().show();
         bottomNavigationView.setVisibility(View.VISIBLE);
-        loadingLayout.setVisibility(View.INVISIBLE);
+        loadingLayout.setVisibility(View.GONE);
         progressBar.pauseAnimation();
     }
 
     @Override
     public void onDeleteSuccess(int position) {
+        this.hideProgressBar();
         dataChanged = 1;
     }
 

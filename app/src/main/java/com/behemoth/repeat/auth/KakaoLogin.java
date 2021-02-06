@@ -14,6 +14,7 @@ import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.LogUtil;
 import com.behemoth.repeat.util.SharedPreference;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.kakao.auth.AuthType;
@@ -101,10 +102,11 @@ public class KakaoLogin extends AppCompatActivity {
                 FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                 firebaseAuth.signInAnonymously()
                         .addOnSuccessListener(authResult -> {
-                            String uid = authResult.getUser().getUid();
+                            FirebaseUser user = authResult.getUser();
+                            String uid = "";
+                            if(user != null) uid = user.getUid();
                             String id = Long.toString(response.getId());
                             saveUser(id, uid);
-                            startMainActivity();
                         })
                         .addOnFailureListener( e -> {
                             LogUtil.e(TAG, "message : " + e.getMessage());
@@ -117,13 +119,14 @@ public class KakaoLogin extends AppCompatActivity {
     private void saveUser(String id, String uid){
         id = Constants.KAKAO_ID_PREFIX + id;
 
-        /** firebase **/
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("user").child(id).setValue(new User(id, Constants.USER_TYPE_SOCIAL, uid));
-
         /** sharedPreference **/
         SharedPreference.getInstance().putString(Constants.LOGIN_TYPE, Constants.KAKAO);
         SharedPreference.getInstance().putString(Constants.USER_ID, id);
+
+        /** firebase **/
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        ref.child("user").child(id).setValue(new User(id, Constants.USER_TYPE_SOCIAL, uid))
+                .addOnSuccessListener(aVoid -> startMainActivity());
     }
 
     private void startLoginActivity(){

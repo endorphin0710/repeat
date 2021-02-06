@@ -12,12 +12,16 @@ public interface MarkRepeatContract {
     interface View{
         Context getContext();
         void onUpdateSuccess();
+        void onUpdateFailure();
+        void showProgressBar();
+        void hideProgressBar();
     }
 
     interface Presenter{
         void setRecyclerView(Book b, int chapterNumber);
         void mark(Book b, int chapterNumber, List<Problem> problems);
         void onUpdateSuccess();
+        void onUpdateFailure();
     }
 
     interface Model{

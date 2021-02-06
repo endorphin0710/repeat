@@ -100,13 +100,13 @@ public class MainAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 if(thumbnailUrl.length() > 0){
                     Glide.with(mContext)
                             .load(thumbnailUrl)
-                            .diskCacheStrategy(DiskCacheStrategy.NONE)
-                            .skipMemoryCache(true)
                             .into(bookViewHolder.image);
                 }else{
                     StorageReference storageReference = FirebaseStorage.getInstance().getReference().child("images/image_default.PNG");
                     Glide.with(mContext)
                             .load(storageReference)
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .skipMemoryCache(true)
                             .into(bookViewHolder.image);
                 }
             }else{

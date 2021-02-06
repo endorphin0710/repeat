@@ -144,13 +144,17 @@ public class NaverLogin extends AppCompatActivity {
                         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                         firebaseAuth.signInAnonymously()
                                 .addOnSuccessListener(authResult -> {
-                                    String uid = authResult.getUser().getUid();
+                                    FirebaseUser user = authResult.getUser();
+                                    String uid = "";
+                                    if(user != null) uid = user.getUid();
                                     // Firebase
                                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                                    ref.child("user").child(id).setValue(new User(id, Constants.USER_TYPE_SOCIAL, uid));
-
-                                    Intent i = new Intent(parent, MainActivity.class);
-                                    parent.startActivity(i);
+                                    ref.child("user").child(id).setValue(new User(id, Constants.USER_TYPE_SOCIAL, uid))
+                                            .addOnSuccessListener(aVoid -> {
+                                                Intent i = new Intent(parent, MainActivity.class);
+                                                parent.startActivity(i);
+                                                parent.finish();
+                                            });
                                 })
                                 .addOnFailureListener( e -> {
                                     LogUtil.e(TAG, "message : " + e.getMessage());
@@ -171,10 +175,9 @@ public class NaverLogin extends AppCompatActivity {
 
                 Intent i = new Intent(parent, LoginActivity.class);
                 parent.startActivity(i);
+                parent.finish();
             }
-
             this.getLooper().quit();
-            parent.finish();
         }
 
     }

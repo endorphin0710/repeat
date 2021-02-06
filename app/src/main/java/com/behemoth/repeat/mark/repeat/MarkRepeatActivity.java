@@ -4,10 +4,15 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieDrawable;
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.addBook.problem.AddProblemActivity;
 import com.behemoth.repeat.main.MainActivity;
@@ -22,6 +27,8 @@ public class MarkRepeatActivity extends AppCompatActivity implements MarkRepeatC
     private MarkRepeatContract.Presenter presenter;
     private Book book;
     private int chapterNumber;
+    private LottieAnimationView progressBar;
+    private ConstraintLayout loadingLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +39,16 @@ public class MarkRepeatActivity extends AppCompatActivity implements MarkRepeatC
 
         Bundle data = getIntent().getExtras();
         setToolbar(data);
+        initView();
+    }
+
+    private void initView(){
+        progressBar = findViewById(R.id.markProgressBar);
+        progressBar.setRepeatCount(LottieDrawable.INFINITE);
+        progressBar.setRepeatMode(LottieDrawable.RESTART);
+
+        loadingLayout = findViewById(R.id.loading_layout_mark);
+        loadingLayout.bringToFront();
     }
 
     private void setToolbar(Bundle data){
@@ -48,6 +65,7 @@ public class MarkRepeatActivity extends AppCompatActivity implements MarkRepeatC
     }
 
     public void mark(List<Problem> problems){
+        showProgressBar();
         presenter.mark(book, chapterNumber, problems);
     }
 
@@ -63,6 +81,26 @@ public class MarkRepeatActivity extends AppCompatActivity implements MarkRepeatC
         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         i.putExtra("dataChanged", 1);
         startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    }
+
+    @Override
+    public void onUpdateFailure() {
+        hideProgressBar();
+        Toast.makeText(this, getString(R.string.text_fail_mark), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void showProgressBar(){
+        getSupportActionBar().hide();
+        loadingLayout.setVisibility(View.VISIBLE);
+        progressBar.playAnimation();
+    }
+
+    @Override
+    public void hideProgressBar(){
+        getSupportActionBar().show();
+        loadingLayout.setVisibility(View.GONE);
+        progressBar.pauseAnimation();
     }
 
 }
