@@ -68,5 +68,9 @@
     <string name="text_loading_add_book">잠시만 기다려주세요.\n등록중입니다.</string>
     <string name="text_fail_add_book">책 등록에 실패하였습니다.\n다시 시도해주세요.</string>
 
+    <!-- My Page -->
+    <string name="label_mypage_activity">마이페이지</string>
+    <string name="label_nickname">닉네임</string>
+    <string name="label_tutorial">리핏 사용 튜토리얼</string>
 
 </resources>

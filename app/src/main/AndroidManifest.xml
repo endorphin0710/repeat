@@ -22,7 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
-        <activity android:name=".addBook.SearchBook.SearchBookActivity"
+
+        <activity
+            android:name=".addBook.SearchBook.SearchBookActivity"
             android:label="@string/label_searchBookActivity" />
         <activity android:name=".addBook.crop.CropActivity" />
         <activity android:name=".auth.LoginActivity">
@@ -38,6 +40,9 @@
             android:name=".main.MainActivity"
             android:label="@string/label_mainActivity" />
         <activity
+            android:name=".mypage.MyPageActivity"
+            android:label="@string/label_mypage_activity"/>
+        <activity
             android:name=".addBook.titleAndImage.AddTitleAndImageActivity"
             android:label="@string/label_AddTitleAndImageActivity" />
         <activity
@@ -49,10 +54,8 @@
         <activity
             android:name=".mark.MarkActivity"
             android:label="@string/label_markActivity" />
-        <activity
-            android:name=".mark.chapter.MarkChapterActivity"/>
-        <activity
-            android:name=".mark.repeat.MarkRepeatActivity"/>
+        <activity android:name=".mark.chapter.MarkChapterActivity" />
+        <activity android:name=".mark.repeat.MarkRepeatActivity" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

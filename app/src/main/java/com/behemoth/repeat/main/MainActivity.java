@@ -20,6 +20,7 @@ import com.behemoth.repeat.R;
 import com.behemoth.repeat.addBook.titleAndImage.AddTitleAndImageActivity;
 import com.behemoth.repeat.mark.MarkActivity;
 import com.behemoth.repeat.model.Book;
+import com.behemoth.repeat.mypage.MyPageActivity;
 import com.behemoth.repeat.util.Constants;
 import com.bumptech.glide.Glide;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -80,6 +81,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_profile);
+        toolbar.setNavigationOnClickListener(view -> {
+            goToMyPage();
+        });
     }
 
     @Override
@@ -146,6 +150,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         dataChanged = 0;
         startActivity(i);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    private void goToMyPage(){
+        Intent i = new Intent(MainActivity.this, MyPageActivity.class);
+        startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     @Override
