@@ -21,6 +21,8 @@ public interface AddTitleAndImageContract {
         void finishActivity();
         void nextStep(Book newBook);
         void onUpdate(int i);
+        void showProgressBar();
+        void hideProgressBar();
     }
 
     interface Presenter{

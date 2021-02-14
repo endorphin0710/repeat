@@ -7,7 +7,6 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -16,6 +15,7 @@ import com.behemoth.repeat.R;
 import com.behemoth.repeat.main.MainActivity;
 import com.behemoth.repeat.mark.chapter.MarkChapterActivity;
 import com.behemoth.repeat.model.Book;
+import com.behemoth.repeat.recents.RecentsActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MarkActivity extends AppCompatActivity implements MarkContract.View{
@@ -40,7 +40,8 @@ public class MarkActivity extends AppCompatActivity implements MarkContract.View
             if(id == R.id.bottom_navigation_home){
                 goToMainActivity();
                 return false;
-            }else if(id == R.id.bottom_navigation_stats){
+            }else if(id == R.id.bottom_navigation_recents){
+                goToRecentsActivity();
                 return false;
             }
             return false;
@@ -96,6 +97,13 @@ public class MarkActivity extends AppCompatActivity implements MarkContract.View
 
     private void goToMainActivity(){
         Intent i = new Intent(MarkActivity.this, MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(i);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    private void goToRecentsActivity(){
+        Intent i = new Intent(MarkActivity.this, RecentsActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(i);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);

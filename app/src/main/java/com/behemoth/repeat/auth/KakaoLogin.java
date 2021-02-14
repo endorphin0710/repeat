@@ -13,6 +13,7 @@ import com.behemoth.repeat.model.User;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.LogUtil;
 import com.behemoth.repeat.util.SharedPreference;
+import com.behemoth.repeat.util.Util;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -118,14 +119,16 @@ public class KakaoLogin extends AppCompatActivity {
 
     private void saveUser(String id, String uid){
         id = Constants.KAKAO_ID_PREFIX + id;
+        String nickName = Util.generateNickname(6);
 
         /** sharedPreference **/
         SharedPreference.getInstance().putString(Constants.LOGIN_TYPE, Constants.KAKAO);
         SharedPreference.getInstance().putString(Constants.USER_ID, id);
+        SharedPreference.getInstance().putString(Constants.USER_NICKNAME, nickName);
 
         /** firebase **/
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("user").child(id).setValue(new User(id, Constants.USER_TYPE_SOCIAL, uid))
+        ref.child("user").child(id).setValue(new User(id, Constants.USER_TYPE_SOCIAL, uid, nickName))
                 .addOnSuccessListener(aVoid -> startMainActivity());
     }
 

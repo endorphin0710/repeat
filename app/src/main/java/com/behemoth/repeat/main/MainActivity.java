@@ -20,8 +20,9 @@ import com.behemoth.repeat.R;
 import com.behemoth.repeat.addBook.titleAndImage.AddTitleAndImageActivity;
 import com.behemoth.repeat.mark.MarkActivity;
 import com.behemoth.repeat.model.Book;
+import com.behemoth.repeat.recents.RecentsActivity;
 import com.behemoth.repeat.util.Constants;
-import com.bumptech.glide.Glide;
+import com.behemoth.repeat.util.Util;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
@@ -50,7 +51,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             if(id == R.id.bottom_navigation_mark){
                 goToMarkActivity();
                 return false;
-            }else if(id == R.id.bottom_navigation_stats){
+            }else if(id == R.id.bottom_navigation_recents){
+                goToRecentsActivity();
                 return false;
             }
             return false;
@@ -148,9 +150,33 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
+    private void goToRecentsActivity(){
+        Intent i = new Intent(MainActivity.this, RecentsActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(i);
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        String state = intent.getStringExtra("state");
+        if(state == null) state = "";
+        String message = "";
+        switch(state){
+            case "add" :
+                message = getString(R.string.text_success_add_book);
+                break;
+            case "update" :
+                message = getString(R.string.text_success_update_book);
+                break;
+            default:
+                break;
+        }
+        if(state.length() > 0){
+            Util.createAlertDialog(this, message, getString(R.string.confirm));
+        }
+
         dataChanged = intent.getIntExtra("dataChanged", 0);
         if(dataChanged > 0) {
             getBooks();
@@ -194,7 +220,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == Constants.REQUEST_RELOAD && resultCode == RESULT_OK ) onNewIntent(data);
+        if(requestCode == Constants.REQUEST_RELOAD && resultCode == RESULT_OK) onNewIntent(data);
     }
 
 }

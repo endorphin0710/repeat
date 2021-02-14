@@ -26,6 +26,7 @@ public class Constants {
     /** SHARED PREFERENCE **/
     public static final String SHARED_PREFERENCE_NAME = "shared_preference_repeat";
     public static final String USER_ID = "user_id";
+    public static final String USER_NICKNAME = "user_nickname";
 
     /** MAIN **/
     public static final int CARD_COLUMN_COUNT = 2;

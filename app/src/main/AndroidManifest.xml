@@ -22,9 +22,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
-        <activity android:name=".addBook.SearchBook.SearchBookActivity"
-            android:label="@string/label_searchBookActivity" />
-        <activity android:name=".addBook.crop.CropActivity" />
         <activity android:name=".auth.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,23 +33,29 @@
         <activity android:name=".auth.NaverLogin" />
         <activity
             android:name=".main.MainActivity"
-            android:label="@string/label_mainActivity" />
+            android:label="@string/label_main_activity" />
         <activity
             android:name=".addBook.titleAndImage.AddTitleAndImageActivity"
-            android:label="@string/label_AddTitleAndImageActivity" />
+            android:label="@string/label_add_title_image_activity" />
+        <activity
+            android:name=".addBook.SearchBook.SearchBookActivity"
+            android:label="@string/label_search_book_activity" />
+        <activity android:name=".addBook.crop.CropActivity" />
         <activity
             android:name=".addBook.chapter.AddChapterActivity"
-            android:label="@string/label_AddChapterActivity" />
+            android:label="@string/label_add_chapter_activity" />
         <activity
             android:name=".addBook.problem.AddProblemActivity"
-            android:label="@string/label_AddProblemActivity" />
+            android:label="@string/label_addproblem_activity" />
         <activity
             android:name=".mark.MarkActivity"
-            android:label="@string/label_markActivity" />
+            android:label="@string/label_mark_activity" />
+        <activity android:name=".mark.chapter.MarkChapterActivity" />
+        <activity android:name=".mark.repeat.MarkRepeatActivity" />
+
         <activity
-            android:name=".mark.chapter.MarkChapterActivity"/>
-        <activity
-            android:name=".mark.repeat.MarkRepeatActivity"/>
+            android:name=".recents.RecentsActivity"
+            android:label="@string/label_recents_activity"/>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

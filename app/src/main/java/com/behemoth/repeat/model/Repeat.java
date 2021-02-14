@@ -16,6 +16,7 @@ public class Repeat implements Parcelable {
      */
     private List<Integer> mark;
     private boolean finished;
+    private int score;
 
     public Repeat(){}
 
@@ -68,6 +69,9 @@ public class Repeat implements Parcelable {
 
     public boolean isFinished() { return finished; }
     public void setFinished(boolean finished) { this.finished = finished; }
+
+    public int getScore() { return score; }
+    public void setScore(int score) { this.score = score; }
 
     @Override
     public int describeContents() {

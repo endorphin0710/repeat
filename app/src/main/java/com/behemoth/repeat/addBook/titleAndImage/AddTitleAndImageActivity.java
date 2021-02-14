@@ -23,6 +23,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieDrawable;
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.addBook.SearchBook.SearchBookActivity;
 import com.behemoth.repeat.addBook.chapter.AddChapterActivity;
@@ -50,6 +52,8 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
     private boolean isOriginal;
     private ImageView btnRemove;
     private ImageView btnRemoveTitle;
+    private LottieAnimationView progressBar;
+    private ConstraintLayout loadingLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +71,16 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
         setTextWatcher();
         setOnClickListener();
         setLayout();
+        initView();
+    }
+
+    private void initView(){
+        progressBar = findViewById(R.id.add_title_progressbar);
+        progressBar.setRepeatCount(LottieDrawable.INFINITE);
+        progressBar.setRepeatMode(LottieDrawable.RESTART);
+
+        loadingLayout = findViewById(R.id.loading_layout_add_title);
+        loadingLayout.bringToFront();
     }
 
     private void setLayout(){
@@ -139,6 +153,7 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
             boolean validated = presenter.validateInput(title);
             if(validated){
                 if(this.change){
+                    showProgressBar();
                     presenter.updateTitleAndImage(book, bookImage, title, isOriginal);
                 }else{
                     Book book = presenter.getBook(title, bookImage, bookThumbnail, usingThumbnail);
@@ -292,6 +307,7 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
                 i.putExtra("dataChanged", 0);
                 break;
             case 1:
+                i.putExtra("state", "update");
                 i.putExtra("dataChanged", 1);
                 break;
             default:
@@ -362,4 +378,23 @@ public class AddTitleAndImageActivity extends AppCompatActivity implements AddTi
             super.onBackPressed();
         }
     }
+
+    @Override
+    public void showProgressBar(){
+        Button btnNext = findViewById(R.id.btnNext);
+        btnNext.setVisibility(View.GONE);
+
+        getSupportActionBar().hide();
+
+        loadingLayout.setVisibility(View.VISIBLE);
+        progressBar.playAnimation();
+    }
+
+    @Override
+    public void hideProgressBar(){
+        getSupportActionBar().show();
+        loadingLayout.setVisibility(View.GONE);
+        progressBar.pauseAnimation();
+    }
+
 }

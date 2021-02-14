@@ -63,10 +63,12 @@ public class MarkRepeatPresenter implements MarkRepeatContract.Presenter{
         boolean finished = true;
 
         List<Integer> marks = new ArrayList<>();
+        int score = 0;
         for(Problem p : problems){
             int state = p.getState();
             if(state == -1) finished = false;
             marks.add(state);
+            score += state;
         }
 
         Chapter c = b.getChapter().get(chapterNumber);
@@ -74,6 +76,7 @@ public class MarkRepeatPresenter implements MarkRepeatContract.Presenter{
         Repeat r = c.getRepeat().get(repeatCount-1);
         r.setMark(marks);
         r.setFinished(finished);
+        r.setScore(score);
 
         model.mark(b, chapterNumber, finished);
     }

@@ -42,7 +42,7 @@ public class AddProblemActivity extends AppCompatActivity implements AddProblemC
     }
 
     private void initView(){
-        progressBar = findViewById(R.id.addBookProgressBar);
+        progressBar = findViewById(R.id.add_book_progressbar);
         progressBar.setRepeatCount(LottieDrawable.INFINITE);
         progressBar.setRepeatMode(LottieDrawable.RESTART);
 
@@ -73,6 +73,7 @@ public class AddProblemActivity extends AppCompatActivity implements AddProblemC
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         i.putExtra("dataChanged", 1);
+        i.putExtra("state", "add");
         startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 

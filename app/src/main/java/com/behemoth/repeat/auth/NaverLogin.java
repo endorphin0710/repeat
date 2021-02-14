@@ -17,6 +17,7 @@ import com.behemoth.repeat.retrofit.RetrofitUtil;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.LogUtil;
 import com.behemoth.repeat.util.SharedPreference;
+import com.behemoth.repeat.util.Util;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -137,9 +138,12 @@ public class NaverLogin extends AppCompatActivity {
                         String id = Constants.NAVER_ID_PREFIX + obj.get("id").getAsString();
                         LogUtil.d(TAG, "naverId: " + id);
 
+                        String nickName = Util.generateNickname(6);
+
                         // SharedPreference
                         SharedPreference.getInstance().putString(Constants.LOGIN_TYPE, Constants.NAVER);
                         SharedPreference.getInstance().putString(Constants.USER_ID, id);
+                        SharedPreference.getInstance().putString(Constants.USER_NICKNAME, nickName);
 
                         FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                         firebaseAuth.signInAnonymously()
@@ -149,7 +153,7 @@ public class NaverLogin extends AppCompatActivity {
                                     if(user != null) uid = user.getUid();
                                     // Firebase
                                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                                    ref.child("user").child(id).setValue(new User(id, Constants.USER_TYPE_SOCIAL, uid))
+                                    ref.child("user").child(id).setValue(new User(id, Constants.USER_TYPE_SOCIAL, uid, nickName))
                                             .addOnSuccessListener(aVoid -> {
                                                 Intent i = new Intent(parent, MainActivity.class);
                                                 parent.startActivity(i);

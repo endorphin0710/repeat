@@ -48,20 +48,21 @@
         android:layout_height="match_parent"
         android:background="#FFFFFF"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="@+id/mainRecyclerView"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/addBookProgressBar"
+            android:id="@+id/add_book_progressbar"
             android:layout_width="wrap_content"
             android:layout_height="150dp"
-            android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.57"
+            app:layout_constraintVertical_bias="0.55"
             app:lottie_fileName="loading.json" />
 
         <TextView
@@ -71,10 +72,10 @@
             android:gravity="center"
             android:text="@string/text_loading_add_book"
             android:textSize="16sp"
-            app:layout_constraintBottom_toTopOf="@+id/addBookProgressBar"
+            app:layout_constraintBottom_toTopOf="@+id/add_book_progressbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/addBookProgressBar" />
+            app:layout_constraintTop_toTopOf="@+id/add_book_progressbar" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

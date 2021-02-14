@@ -11,7 +11,7 @@
         android:title="@string/nav_mark" />
 
     <item
-        android:id="@+id/bottom_navigation_stats"
+        android:id="@+id/bottom_navigation_recents"
         android:icon="@drawable/ic_nav_stats"
         android:title="@string/nav_stats"/>
 </menu>

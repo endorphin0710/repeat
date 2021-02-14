@@ -8,10 +8,15 @@ import android.media.ExifInterface;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import androidx.appcompat.app.AlertDialog;
+
+import com.behemoth.repeat.R;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
+import java.util.Random;
 
 public class Util {
 
@@ -124,6 +129,26 @@ public class Util {
         Bitmap rotatedImg = Bitmap.createBitmap(img, 0, 0, img.getWidth(), img.getHeight(), matrix, true);
         img.recycle();
         return rotatedImg;
+    }
+
+    public static String generateNickname(int len){
+        String candidates = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcdefghijklmnopqrstuvwxyz1234567890";
+
+        StringBuilder sb = new StringBuilder();
+        Random r = new Random();
+        for (int i = 0; i < len; i++) {
+            int k = r.nextInt(82);
+            sb.append(candidates.charAt(k));
+        }
+
+        return sb.toString();
+    }
+
+    public static void createAlertDialog(Context ctx, String message, String positive){
+        androidx.appcompat.app.AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(ctx, R.style.dialogTheme);
+        dialogBuilder.setMessage(message);
+        dialogBuilder.setPositiveButton(positive, (d, w) -> { });
+        dialogBuilder.show();
     }
 
 }

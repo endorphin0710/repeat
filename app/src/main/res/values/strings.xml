@@ -34,12 +34,12 @@
     <string name="desc_image">image</string>
 
     <!-- Main -->
-    <string name="label_mainActivity">내 서재</string>
+    <string name="label_main_activity">내 서재</string>
     <string name="confirm_delete">해당 책을 삭제하시겠습니까?</string>
     <string name="confirm_finish">\'뒤로\'버튼을 한 번 더 누르시면 종료됩니다.</string>
 
     <!-- Mark -->
-    <string name="label_markActivity">채점하기</string>
+    <string name="label_mark_activity">채점하기</string>
     <string name="text_loading_mark">잠시만 기다려주세요.\n채점중입니다.</string>
     <string name="text_fail_mark">채점에 실패하였습니다.\n다시 시도해주세요.</string>
 
@@ -49,24 +49,29 @@
     <string name="hint_title_add">도서명을 입력해주세요.</string>
     <string name="tv_image_add">책 이미지 추가하기</string>
     <string name="search_book">웹으로 찾아보기</string>
+    <string name="text_success_update_book">수정이 완료되었습니다.</string>
 
     <!-- Search Book -->
-    <string name="label_searchBookActivity">도서 검색</string>
+    <string name="label_search_book_activity">도서 검색</string>
     <string name="hint_search_title_add">어떤 책을 찾으시나요?</string>
     <string name="desc_book_cover_image">book cover image</string>
 
     <!-- Add Chapter -->
-    <string name="label_AddTitleAndImageActivity">책 제목 입력</string>
-    <string name="label_AddChapterActivity">단원수 입력</string>
+    <string name="label_add_title_image_activity">책 제목 입력</string>
+    <string name="label_add_chapter_activity">단원수 입력</string>
     <string name="hint_chapter_add">총 몇 단원인가요?</string>
     <string name="add_chapter_validate_fail_empty">단원 수를 입력해주세요.</string>
     <string name="add_chapter_validate_fail_number_format">자연수를 입력해주세요.</string>
     <string name="add_chapter_validate_fail_number_exceed">단원 수는 50개를 초과할 수 없습니다.</string>
 
     <!-- Add Problem -->
-    <string name="label_AddProblemActivity">문제수 입력</string>
+    <string name="label_addproblem_activity">문제수 입력</string>
     <string name="text_loading_add_book">잠시만 기다려주세요.\n등록중입니다.</string>
+    <string name="text_success_add_book">등록이 완료되었습니다.</string>
     <string name="text_fail_add_book">책 등록에 실패하였습니다.\n다시 시도해주세요.</string>
+
+    <!-- Recents -->
+    <string name="label_recents_activity">최근기록</string>
 
 
 </resources>

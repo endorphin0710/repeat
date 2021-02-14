@@ -33,10 +33,6 @@ public class AddTitleAndImageModel extends AppCompatActivity implements AddTitle
 
     @Override
     public void updateTitleAndImage(Book book, Uri bookUri,  String title, boolean isOriginal) {
-        Log.d("juntae", book.toString());
-        Log.d("juntae", "bookUri : " + bookUri);
-        Log.d("juntae", "title : " + title);
-        Log.d("juntae", "isOriginal : " + isOriginal);
         boolean updateTitle = !book.getTitle().equals(title);
         if(!isOriginal && updateTitle){
             updateBoth(book, bookUri, title);
