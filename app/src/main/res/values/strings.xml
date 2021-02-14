@@ -70,8 +70,15 @@
     <string name="text_success_add_book">등록이 완료되었습니다.</string>
     <string name="text_fail_add_book">책 등록에 실패하였습니다.\n다시 시도해주세요.</string>
 
+<<<<<<< HEAD
     <!-- Recents -->
     <string name="label_recents_activity">최근기록</string>
 
+=======
+    <!-- My Page -->
+    <string name="label_mypage_activity">마이페이지</string>
+    <string name="label_nickname">닉네임</string>
+    <string name="label_tutorial">리핏 사용 튜토리얼</string>
+>>>>>>> c4f121ec3fab197b113be373fb1fec3c6606301a
 
 </resources>
