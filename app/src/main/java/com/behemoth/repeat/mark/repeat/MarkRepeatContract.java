@@ -25,7 +25,7 @@ public interface MarkRepeatContract {
     }
 
     interface Model{
-        void mark(Book b, int chapterNumber, boolean finished);
+        void mark(Book b, int chapterNumber, boolean finished, int score, int problemCnt);
     }
 
 }

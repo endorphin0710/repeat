@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 public class SharedPreference {
 
     private static volatile SharedPreference instance;
-    private SharedPreferences sharedPreferences;
+    private final SharedPreferences sharedPreferences;
 
     public static void init(Context ctx){
         instance = new SharedPreference(ctx);
@@ -30,6 +30,27 @@ public class SharedPreference {
 
     public String getString(String key, String def){
         return this.sharedPreferences.getString(key, def);
+    }
+
+    public void setRefresh(String key, int value){
+        this.sharedPreferences.edit().putInt(key, value).commit();
+        int main = getRefresh(Constants.REFRESH_MAIN, 0);
+        int mark = getRefresh(Constants.REFRESH_MARK, 0);
+        int recents = getRefresh(Constants.REFRESH_RECENTS, 0);
+        if(main + mark + recents >= 3){
+            this.sharedPreferences.edit().putInt(Constants.DATA_CHANGED, 0).apply();
+        }
+    }
+
+    public int getRefresh(String key, int def){
+        return this.sharedPreferences.getInt(key, def);
+    }
+
+    public void onDataChanged(){
+        setRefresh(Constants.DATA_CHANGED, 1);
+        setRefresh(Constants.REFRESH_MAIN, 0);
+        setRefresh(Constants.REFRESH_MARK, 0);
+        setRefresh(Constants.REFRESH_RECENTS, 0);
     }
 
 }

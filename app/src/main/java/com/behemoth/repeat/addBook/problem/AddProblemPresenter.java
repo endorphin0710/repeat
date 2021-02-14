@@ -16,8 +16,8 @@ public class AddProblemPresenter implements AddProblemContract.Presenter{
 
     private static final String TAG = "AddProblemPresenter";
 
-    private final AddProblemContract.View view;
     private final Context viewContext;
+    private final AddProblemContract.View view;
     private final AddProblemContract.Model model;
 
     private Book newBook;

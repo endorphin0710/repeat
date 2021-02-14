@@ -23,6 +23,7 @@ import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.recents.RecentsActivity;
 import com.behemoth.repeat.mypage.MyPageActivity;
 import com.behemoth.repeat.util.Constants;
+import com.behemoth.repeat.util.SharedPreference;
 import com.behemoth.repeat.util.Util;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -34,14 +35,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private BottomNavigationView bottomNavigationView;
 
     private static final long TIME_INTERVAL = 2000L;
-    private int dataChanged = -1;
     private long time_back_button_pressed;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setToolbar();
 
         initViews();
@@ -63,6 +62,18 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         presenter.setRecyclerView();
 
         getBooks();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int dataChanged = SharedPreference.getInstance().getRefresh(Constants.DATA_CHANGED, 0);
+        int mainRefreshed = SharedPreference.getInstance().getRefresh(Constants.REFRESH_MAIN, 0);
+        if(dataChanged > 0 && mainRefreshed == 0) {
+            SharedPreference.getInstance().setRefresh(Constants.REFRESH_MAIN, 1);
+            getBooks();
+        }
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     private void initViews(){
@@ -148,8 +159,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private void goToMarkActivity(){
         Intent i = new Intent(MainActivity.this, MarkActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-        i.putExtra("dataChanged", dataChanged);
-        dataChanged = 0;
         startActivity(i);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
@@ -160,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         startActivity(i);
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
-    
+
     private void goToMyPage(){
         Intent i = new Intent(MainActivity.this, MyPageActivity.class);
         startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
@@ -185,12 +194,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         if(state.length() > 0){
             Util.createAlertDialog(this, message, getString(R.string.confirm));
         }
-
-        dataChanged = intent.getIntExtra("dataChanged", 0);
-        if(dataChanged > 0) {
-            getBooks();
-        }
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override
@@ -222,8 +225,9 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void onDeleteSuccess(int position) {
+        SharedPreference.getInstance().onDataChanged();
+        SharedPreference.getInstance().setRefresh(Constants.REFRESH_MAIN, 1);
         this.hideProgressBar();
-        dataChanged = 1;
     }
 
     @Override

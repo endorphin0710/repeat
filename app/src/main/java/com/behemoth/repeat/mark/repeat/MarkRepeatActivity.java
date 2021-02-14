@@ -19,6 +19,7 @@ import com.behemoth.repeat.main.MainActivity;
 import com.behemoth.repeat.mark.MarkActivity;
 import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.model.Problem;
+import com.behemoth.repeat.util.SharedPreference;
 
 import java.util.List;
 
@@ -76,10 +77,10 @@ public class MarkRepeatActivity extends AppCompatActivity implements MarkRepeatC
 
     @Override
     public void onUpdateSuccess() {
+        SharedPreference.getInstance().onDataChanged();
         Intent i = new Intent(MarkRepeatActivity.this, MarkActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        i.putExtra("dataChanged", 1);
         startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 

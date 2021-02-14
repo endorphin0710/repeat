@@ -28,6 +28,11 @@ public class Constants {
     public static final String USER_ID = "user_id";
     public static final String USER_NICKNAME = "user_nickname";
 
+    public static final String DATA_CHANGED = "data_changed";
+    public static final String REFRESH_MAIN = "refersh_main";
+    public static final String REFRESH_MARK = "refresh_mark";
+    public static final String REFRESH_RECENTS = "refresh_recents";
+
     /** MAIN **/
     public static final int CARD_COLUMN_COUNT = 2;
     public static final long MAX_UPLOAD_RETRY_MILLIS = 10 * 1000;

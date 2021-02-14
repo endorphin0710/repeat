@@ -19,7 +19,6 @@ public class Book implements Parcelable {
     private int isUsingThumbnail;
     private int chapterCount;
     private List<Chapter> chapter;
-    private List<String> recentMarks;
     /**
      * 0 --> normal
      * 1 --> keep
@@ -133,10 +132,6 @@ public class Book implements Parcelable {
 
     public int getState() { return state; }
     public void setState(int state) { this.state = state; }
-
-    public List<String> getRecentMarks() { return recentMarks; }
-
-    public void setRecentMarks(List<String> recentMarks) { this.recentMarks = recentMarks; }
 
     @Override
     public int describeContents() {

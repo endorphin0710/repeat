@@ -78,7 +78,7 @@ public class MarkRepeatPresenter implements MarkRepeatContract.Presenter{
         r.setFinished(finished);
         r.setScore(score);
 
-        model.mark(b, chapterNumber, finished);
+        model.mark(b, chapterNumber, finished, score, r.getProblemCount());
     }
 
     @Override

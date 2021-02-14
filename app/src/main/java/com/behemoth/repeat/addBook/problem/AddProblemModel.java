@@ -31,10 +31,6 @@ public class AddProblemModel implements AddProblemContract.Model{
         String userId = SharedPreference.getInstance().getString(Constants.USER_ID, "");
         newBook.setAuthor(userId);
         newBook.setState(0);
-        List<String> list = new ArrayList<>();
-        list.add("1");
-        list.add("2");
-        newBook.setRecentMarks(list);
 
         long currentTime = System.currentTimeMillis();
         newBook.setCreatedDate(currentTime);
@@ -87,4 +83,5 @@ public class AddProblemModel implements AddProblemContract.Model{
             // taskSnapshot.getMetadata() contains file metadata such as size, content-type, etc.
         });
     }
+
 }

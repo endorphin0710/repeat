@@ -17,6 +17,7 @@ import com.airbnb.lottie.LottieDrawable;
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.main.MainActivity;
 import com.behemoth.repeat.model.Book;
+import com.behemoth.repeat.util.SharedPreference;
 
 public class AddProblemActivity extends AppCompatActivity implements AddProblemContract.View {
 
@@ -69,10 +70,10 @@ public class AddProblemActivity extends AppCompatActivity implements AddProblemC
 
     @Override
     public void onUploadSuccess()  {
+        SharedPreference.getInstance().onDataChanged();
         Intent i = new Intent(AddProblemActivity.this, MainActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        i.putExtra("dataChanged", 1);
         i.putExtra("state", "add");
         startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
