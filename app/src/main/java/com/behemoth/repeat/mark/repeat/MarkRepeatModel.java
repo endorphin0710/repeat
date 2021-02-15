@@ -61,7 +61,15 @@ public class MarkRepeatModel implements MarkRepeatContract.Model{
                     .child(userId)
                     .child("recentMarks");
 
-            Mark mark = new Mark(b.getId(), chapterNumber, repeatCount, score, problemCnt, System.currentTimeMillis());
+            int usingThumbnail = b.getIsUsingThumbnail();
+            String thumbnail = "";
+            String imageName = "";
+            if(usingThumbnail > 0){
+                thumbnail = b.getThumbnail();
+            }else{
+                imageName = b.getImageName();
+            }
+            Mark mark = new Mark(b.getId(), b.getTitle(), chapterNumber, repeatCount, score, problemCnt, System.currentTimeMillis(), usingThumbnail, thumbnail, imageName);
 
             List<Mark> recentMarks = new ArrayList<>();
             recentRef.addListenerForSingleValueEvent(new ValueEventListener() {

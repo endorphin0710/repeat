@@ -8,7 +8,7 @@
     android:layout_marginBottom="8dp">
 
     <ImageView
-        android:id="@+id/search_image"
+        android:id="@+id/recent_thumbnail"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="12dp"
@@ -27,10 +27,10 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="@+id/search_image"
+        app:layout_constraintBottom_toBottomOf="@+id/recent_thumbnail"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/search_image"
-        app:layout_constraintTop_toTopOf="@+id/search_image" />
+        app:layout_constraintStart_toEndOf="@+id/recent_thumbnail"
+        app:layout_constraintTop_toTopOf="@+id/recent_thumbnail" />
 
     <View
         android:id="@+id/divider2"
@@ -40,6 +40,6 @@
         android:background="?android:attr/listDivider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/search_image" />
+        app:layout_constraintStart_toEndOf="@+id/recent_thumbnail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

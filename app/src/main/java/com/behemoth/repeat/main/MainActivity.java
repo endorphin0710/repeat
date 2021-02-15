@@ -10,6 +10,7 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Toast;
@@ -69,6 +70,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         super.onResume();
         int dataChanged = SharedPreference.getInstance().getRefresh(Constants.DATA_CHANGED, 0);
         int mainRefreshed = SharedPreference.getInstance().getRefresh(Constants.REFRESH_MAIN, 0);
+        Log.d("juntae1", "dataChanged : " + dataChanged);
+        Log.d("juntae1", "mainRefreshed : " + mainRefreshed);
         if(dataChanged > 0 && mainRefreshed == 0) {
             SharedPreference.getInstance().setRefresh(Constants.REFRESH_MAIN, 1);
             getBooks();
@@ -80,7 +83,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         loadingLayout = findViewById(R.id.loading_layout_main);
         loadingLayout.bringToFront();
 
-        progressBar = findViewById(R.id.mainProgressBar);
+        progressBar = findViewById(R.id.main_progressbar);
         progressBar.setRepeatCount(LottieDrawable.INFINITE);
         progressBar.setRepeatMode(LottieDrawable.RESTART);
     }
@@ -200,6 +203,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     public void onBackPressed() {
         long t = System.currentTimeMillis();
         if(t - time_back_button_pressed < TIME_INTERVAL){
+            SharedPreference.getInstance().initializeRefresh();
             finishAffinity();
         }else{
             time_back_button_pressed = t;

@@ -56,13 +56,13 @@
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/add_book_progressbar"
             android:layout_width="wrap_content"
-            android:layout_height="150dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="30dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.55"
+            app:layout_constraintTop_toBottomOf="@+id/textView10"
             app:lottie_fileName="loading.json" />
 
         <TextView
@@ -74,8 +74,10 @@
             android:textSize="16sp"
             app:layout_constraintBottom_toTopOf="@+id/add_book_progressbar"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/add_book_progressbar" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

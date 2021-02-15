@@ -2,22 +2,33 @@ package com.behemoth.repeat.recents;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 
+import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieDrawable;
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.main.MainActivity;
 import com.behemoth.repeat.mark.MarkActivity;
 import com.behemoth.repeat.mypage.MyPageActivity;
+import com.behemoth.repeat.util.Constants;
+import com.behemoth.repeat.util.SharedPreference;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class RecentsActivity extends AppCompatActivity implements RecentsContract.View {
 
     private RecentsContract.Presenter presenter;
+
+    private BottomNavigationView bottomNavigationView;
+    private LottieAnimationView progressBar;
+    private ConstraintLayout loadingLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +36,9 @@ public class RecentsActivity extends AppCompatActivity implements RecentsContrac
         setContentView(R.layout.activity_recents);
 
         setToolbar();
+        initViews();
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
         bottomNavigationView.setSelectedItemId(R.id.bottom_navigation_recents);
         bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
@@ -42,6 +54,53 @@ public class RecentsActivity extends AppCompatActivity implements RecentsContrac
 
         presenter = new RecentsPresenter(this);
         presenter.setRecyclerView();
+
+        getRecentMarks();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int dataChanged = SharedPreference.getInstance().getRefresh(Constants.DATA_CHANGED, 0);
+        int recentsRefreshed = SharedPreference.getInstance().getRefresh(Constants.REFRESH_RECENTS, 0);
+        Log.d("juntae2", "dataChanged : " + dataChanged);
+        Log.d("juntae2", "recentsRefreshed : " + recentsRefreshed);
+        if(dataChanged > 0 && recentsRefreshed == 0) {
+            SharedPreference.getInstance().setRefresh(Constants.REFRESH_RECENTS, 1);
+            getRecentMarks();
+        }
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    private void initViews(){
+        loadingLayout = findViewById(R.id.loading_layout_recents);
+        loadingLayout.bringToFront();
+
+        progressBar = findViewById(R.id.recents_progresbar);
+        progressBar.setRepeatCount(LottieDrawable.INFINITE);
+        progressBar.setRepeatMode(LottieDrawable.RESTART);
+    }
+
+    @Override
+    public void getRecentMarks(){
+        this.showProgressBar();
+        presenter.getRecentMarks();
+    }
+
+    @Override
+    public void showProgressBar() {
+        getSupportActionBar().hide();
+        bottomNavigationView.setVisibility(View.GONE);
+        loadingLayout.setVisibility(View.VISIBLE);
+        progressBar.playAnimation();
+    }
+
+    @Override
+    public void hideProgressBar() {
+        getSupportActionBar().show();
+        bottomNavigationView.setVisibility(View.VISIBLE);
+        loadingLayout.setVisibility(View.GONE);
+        progressBar.pauseAnimation();
     }
 
     private void setToolbar(){
@@ -76,12 +135,6 @@ public class RecentsActivity extends AppCompatActivity implements RecentsContrac
     private void goToMyPage(){
         Intent i = new Intent(RecentsActivity.this, MyPageActivity.class);
         startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
 
     @Override

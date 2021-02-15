@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.behemoth.repeat.model.Book;
+import com.behemoth.repeat.model.Mark;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.SharedPreference;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -59,19 +60,36 @@ public class MainModel implements MainContract.Model{
         String bookId = book.getId();
         String imageName = book.getImageName();
         FirebaseDatabase.getInstance().getReference().child("book").child(userId).child(bookId).removeValue()
-                .addOnSuccessListener(aVoid -> {
-                    if (imageName != null) {
-                        FirebaseStorage storage = FirebaseStorage.getInstance();
-                        storage.setMaxUploadRetryTimeMillis(Constants.MAX_UPLOAD_RETRY_MILLIS);
-                        StorageReference storageRef = storage.getReference();
-                        StorageReference imageRef = storageRef.child("images/"+imageName);
-                        imageRef.delete();
-                    }
-                    presenter.onDeleteSuccess(position);
-                })
-                .addOnFailureListener(e -> {
+            .addOnSuccessListener(aVoid -> {
+                if (imageName != null) {
+                    FirebaseStorage storage = FirebaseStorage.getInstance();
+                    storage.setMaxUploadRetryTimeMillis(Constants.MAX_UPLOAD_RETRY_MILLIS);
+                    StorageReference storageRef = storage.getReference();
+                    StorageReference imageRef = storageRef.child("images/"+imageName);
+                    imageRef.delete();
+                }
 
+                List<Mark> marks = new ArrayList<>();
+                DatabaseReference recentRef = FirebaseDatabase.getInstance().getReference().child("user").child(userId).child("recentMarks");
+                recentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot markSnapshot : dataSnapshot.getChildren()){
+                            Mark m = (Mark)markSnapshot.getValue(Mark.class);
+                            if(m == null || m.getId().equals(bookId)) continue;
+                            marks.add(m);
+                        }
+
+                        recentRef.setValue(marks).addOnSuccessListener(v -> {
+                            presenter.onDeleteSuccess(position);
+                        });
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) { }
                 });
+            });
     }
 
 }

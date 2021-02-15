@@ -108,7 +108,6 @@ public class AddChapterActivity extends AppCompatActivity implements AddChapterC
 
     @Override
     public void showToast(String message) {
-        Log.d("juntae", "message : " + message);
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 

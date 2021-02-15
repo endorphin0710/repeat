@@ -38,12 +38,19 @@ public class SharedPreference {
         int mark = getRefresh(Constants.REFRESH_MARK, 0);
         int recents = getRefresh(Constants.REFRESH_RECENTS, 0);
         if(main + mark + recents >= 3){
-            this.sharedPreferences.edit().putInt(Constants.DATA_CHANGED, 0).apply();
+            initializeRefresh();
         }
     }
 
     public int getRefresh(String key, int def){
         return this.sharedPreferences.getInt(key, def);
+    }
+
+    public void initializeRefresh(){
+        this.sharedPreferences.edit().putInt(Constants.DATA_CHANGED, 0).apply();
+        this.sharedPreferences.edit().putInt(Constants.REFRESH_MAIN, 0).apply();
+        this.sharedPreferences.edit().putInt(Constants.REFRESH_MARK, 0).apply();
+        this.sharedPreferences.edit().putInt(Constants.REFRESH_RECENTS, 0).apply();
     }
 
     public void onDataChanged(){
