@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
-
+        <activity android:name=".recents.markDetail.MarkDetailActivity"></activity>
         <activity android:name=".auth.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,14 +30,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".auth.KakaoLogin" />
         <activity android:name=".auth.NaverLogin" />
-
         <activity
             android:name=".main.MainActivity"
             android:label="@string/label_main_activity" />
-
         <activity
             android:name=".addBook.titleAndImage.AddTitleAndImageActivity"
             android:label="@string/label_add_title_image_activity" />
@@ -51,20 +48,17 @@
         <activity
             android:name=".addBook.problem.AddProblemActivity"
             android:label="@string/label_addproblem_activity" />
-
         <activity
             android:name=".mark.MarkActivity"
             android:label="@string/label_mark_activity" />
         <activity android:name=".mark.chapter.MarkChapterActivity" />
         <activity android:name=".mark.repeat.MarkRepeatActivity" />
-
         <activity
             android:name=".recents.RecentsActivity"
-            android:label="@string/label_recents_activity"/>
-
+            android:label="@string/label_recents_activity" />
         <activity
             android:name=".mypage.MyPageActivity"
-            android:label="@string/label_mypage_activity"/>
+            android:label="@string/label_mypage_activity" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

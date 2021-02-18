@@ -14,6 +14,7 @@ public interface RecentsContract {
         void getRecentMarks();
         void showProgressBar();
         void hideProgressBar();
+        void viewMarkDetail(Mark m);
     }
 
     interface Presenter{

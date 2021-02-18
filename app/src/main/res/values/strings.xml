@@ -72,6 +72,8 @@
 
     <!-- Recents -->
     <string name="label_recents_activity">최근기록</string>
+    <string name="label_recents_problem_number">문항</string>
+    <string name="label_recents_mark">정오답</string>
 
     <!-- My Page -->
     <string name="label_mypage_activity">마이페이지</string>

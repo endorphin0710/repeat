@@ -37,10 +37,10 @@ public class MarkRepeatModel implements MarkRepeatContract.Model{
         String userId = SharedPreference.getInstance().getString(Constants.USER_ID, "");
 
         Chapter c = b.getChapter().get(chapterNumber);
-        int repeatCount = c.getRepeatCount();
+        int repeatCount = c.getRepeatCount()-1;
 
         if(finished) {
-            c.setRepeatCount(repeatCount+1);
+            c.setRepeatCount(c.getRepeatCount()+1);
             List<Repeat> repeats = c.getRepeat();
 
             Repeat newRepeat = new Repeat();

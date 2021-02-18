@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.behemoth.repeat.R;
@@ -24,9 +25,11 @@ public class RecentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     private final ArrayList<Mark> mList;
     private final Context mContext;
+    private RecentsClickListener mListener;
 
     class RecentsViewHolder extends RecyclerView.ViewHolder {
 
+        protected ConstraintLayout container;
         protected TextView tvTitle;
         protected TextView tvDate;
         protected TextView tvChapter;
@@ -37,6 +40,7 @@ public class RecentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
         public RecentsViewHolder(View view) {
             super(view);
+            this.container = view.findViewById(R.id.container_search);
             this.tvTitle = view.findViewById(R.id.recent_title);
             this.tvDate = view.findViewById(R.id.recent_date);
             this.tvChapter = view.findViewById(R.id.recent_chapter);
@@ -47,8 +51,9 @@ public class RecentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }
     }
 
-    public RecentsAdapter(Context ctx, ArrayList<Mark> list) {
+    public RecentsAdapter(Context ctx, RecentsClickListener listener, ArrayList<Mark> list) {
         this.mContext = ctx;
+        this.mListener = listener;
         this.mList = list;
     }
 
@@ -65,6 +70,9 @@ public class RecentsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         RecentsViewHolder recentsViewHolder = (RecentsViewHolder)holder;
         Mark m = mList.get(position);
 
+        recentsViewHolder.container.setOnClickListener(v -> {
+            mListener.onClick(position);
+        });
         recentsViewHolder.tvTitle.setText(m.getTitle());
         recentsViewHolder.tvDate.setText(Util.dateFormatting(m.getCreatedDate()));
         recentsViewHolder.tvChapter.setText(String.valueOf(m.getChatper()+1));

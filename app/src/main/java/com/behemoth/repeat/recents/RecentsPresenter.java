@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.behemoth.repeat.R;
-import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.model.Mark;
 import com.behemoth.repeat.recyclerView.recents.RecentsAdapter;
+import com.behemoth.repeat.recyclerView.recents.RecentsClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +30,21 @@ public class RecentsPresenter implements RecentsContract.Presenter{
 
     @Override
     public void setRecyclerView() {
-        RecyclerView mRecyclerView = ((RecentsActivity)view).findViewById(R.id.recentsRecyclerView);
+        RecyclerView mRecyclerView = ((RecentsActivity)view).findViewById(R.id.recents_recyclerview);
 
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(viewContext);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
         mArrayList = new ArrayList<>();
 
-        mAdapter = new RecentsAdapter(viewContext, mArrayList);
+        RecentsClickListener recentsClickListener = new RecentsClickListener() {
+            @Override
+            public void onClick(int position) {
+                viewMarkDetail(mArrayList.get(position));
+            }
+        };
+
+        mAdapter = new RecentsAdapter(viewContext, recentsClickListener, mArrayList);
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
@@ -53,6 +60,10 @@ public class RecentsPresenter implements RecentsContract.Presenter{
         mArrayList.addAll(marks);
         mAdapter.notifyDataSetChanged();
         view.hideProgressBar();
+    }
+
+    private void viewMarkDetail(Mark m){
+        view.viewMarkDetail(m);
     }
 
 }

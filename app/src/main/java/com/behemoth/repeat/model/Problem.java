@@ -1,6 +1,6 @@
 package com.behemoth.repeat.model;
 
-public class Problem {
+public class Problem implements Comparable<Problem>{
 
     private int problemNumber;
     private int state;
@@ -24,6 +24,11 @@ public class Problem {
     }
     public void setState(int state) {
         this.state = state;
+    }
+
+    @Override
+    public int compareTo(Problem o) {
+        return 0;
     }
 
 }

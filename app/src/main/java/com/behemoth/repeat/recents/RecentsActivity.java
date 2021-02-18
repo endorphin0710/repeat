@@ -17,7 +17,9 @@ import com.airbnb.lottie.LottieDrawable;
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.main.MainActivity;
 import com.behemoth.repeat.mark.MarkActivity;
+import com.behemoth.repeat.model.Mark;
 import com.behemoth.repeat.mypage.MyPageActivity;
+import com.behemoth.repeat.recents.markDetail.MarkDetailActivity;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.SharedPreference;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -63,8 +65,6 @@ public class RecentsActivity extends AppCompatActivity implements RecentsContrac
         super.onResume();
         int dataChanged = SharedPreference.getInstance().getRefresh(Constants.DATA_CHANGED, 0);
         int recentsRefreshed = SharedPreference.getInstance().getRefresh(Constants.REFRESH_RECENTS, 0);
-        Log.d("juntae2", "dataChanged : " + dataChanged);
-        Log.d("juntae2", "recentsRefreshed : " + recentsRefreshed);
         if(dataChanged > 0 && recentsRefreshed == 0) {
             SharedPreference.getInstance().setRefresh(Constants.REFRESH_RECENTS, 1);
             getRecentMarks();
@@ -101,6 +101,13 @@ public class RecentsActivity extends AppCompatActivity implements RecentsContrac
         bottomNavigationView.setVisibility(View.VISIBLE);
         loadingLayout.setVisibility(View.GONE);
         progressBar.pauseAnimation();
+    }
+
+    @Override
+    public void viewMarkDetail(Mark m) {
+        Intent i = new Intent(RecentsActivity.this, MarkDetailActivity.class);
+        i.putExtra("mark", m);
+        startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     private void setToolbar(){
