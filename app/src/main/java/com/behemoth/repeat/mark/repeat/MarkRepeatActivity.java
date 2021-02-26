@@ -14,10 +14,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
 import com.behemoth.repeat.R;
-import com.behemoth.repeat.addBook.problem.AddProblemActivity;
-import com.behemoth.repeat.main.MainActivity;
 import com.behemoth.repeat.mark.MarkActivity;
 import com.behemoth.repeat.model.Book;
+import com.behemoth.repeat.model.Chapter;
 import com.behemoth.repeat.model.Problem;
 import com.behemoth.repeat.util.SharedPreference;
 
@@ -59,10 +58,11 @@ public class MarkRepeatActivity extends AppCompatActivity implements MarkRepeatC
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
         book = data.getParcelable("markBook");
+        List<Chapter> chapters = book.getChapter();
         chapterNumber = data.getInt("chapterNumber");
         getSupportActionBar().setTitle((chapterNumber+1)+"단원");
 
-        presenter.setRecyclerView(book, chapterNumber);
+        presenter.getBook(book.getId());
     }
 
     public void mark(List<Problem> problems){
@@ -102,6 +102,12 @@ public class MarkRepeatActivity extends AppCompatActivity implements MarkRepeatC
         getSupportActionBar().show();
         loadingLayout.setVisibility(View.GONE);
         progressBar.pauseAnimation();
+    }
+
+    @Override
+    public void onRetrieveBook(Book b) {
+        this.book = b;
+        presenter.setRecyclerView(book, chapterNumber);
     }
 
 }

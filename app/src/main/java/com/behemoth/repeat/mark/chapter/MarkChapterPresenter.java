@@ -1,7 +1,6 @@
 package com.behemoth.repeat.mark.chapter;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,12 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.model.Chapter;
-import com.behemoth.repeat.recyclerView.bookCard.SpaceDecoration;
 import com.behemoth.repeat.recyclerView.mark.MarkChapterAdapter;
 import com.behemoth.repeat.recyclerView.mark.MarkClickListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class MarkChapterPresenter implements MarkChapterContract.Presenter{
 

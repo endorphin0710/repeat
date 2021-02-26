@@ -11,7 +11,6 @@ import com.behemoth.repeat.recyclerView.bookCard.MainAdapter;
 import com.behemoth.repeat.recyclerView.bookCard.CardClickListener;
 import com.behemoth.repeat.recyclerView.bookCard.SpaceDecoration;
 import com.behemoth.repeat.util.Constants;
-import com.behemoth.repeat.util.SharedPreference;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,6 +91,8 @@ public class MainPresenter implements MainContract.Presenter{
     public void onCardClick(int position) {
         if(position == 0){
             view.addNewBook();
+        }else{
+            view.viewStats(mArrayList.get(position));
         }
     }
 

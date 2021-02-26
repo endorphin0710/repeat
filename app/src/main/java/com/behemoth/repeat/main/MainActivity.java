@@ -1,19 +1,18 @@
 package com.behemoth.repeat.main;
 
+import android.app.ActivityOptions;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.View;
+import android.widget.Toast;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.constraintlayout.widget.ConstraintLayout;
-
-import android.app.ActivityOptions;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.View;
-import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
@@ -21,8 +20,9 @@ import com.behemoth.repeat.R;
 import com.behemoth.repeat.addBook.titleAndImage.AddTitleAndImageActivity;
 import com.behemoth.repeat.mark.MarkActivity;
 import com.behemoth.repeat.model.Book;
-import com.behemoth.repeat.recents.RecentsActivity;
 import com.behemoth.repeat.mypage.MyPageActivity;
+import com.behemoth.repeat.recents.RecentsActivity;
+import com.behemoth.repeat.stats.book.BookStatsActivity;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.SharedPreference;
 import com.behemoth.repeat.util.Util;
@@ -70,8 +70,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         super.onResume();
         int dataChanged = SharedPreference.getInstance().getRefresh(Constants.DATA_CHANGED, 0);
         int mainRefreshed = SharedPreference.getInstance().getRefresh(Constants.REFRESH_MAIN, 0);
-        Log.d("juntae1", "dataChanged : " + dataChanged);
-        Log.d("juntae1", "mainRefreshed : " + mainRefreshed);
         if(dataChanged > 0 && mainRefreshed == 0) {
             SharedPreference.getInstance().setRefresh(Constants.REFRESH_MAIN, 1);
             getBooks();
@@ -232,6 +230,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
         SharedPreference.getInstance().onDataChanged();
         SharedPreference.getInstance().setRefresh(Constants.REFRESH_MAIN, 1);
         this.hideProgressBar();
+    }
+
+    @Override
+    public void viewStats(Book b) {
+        Intent i = new Intent(MainActivity.this, BookStatsActivity.class);
+        i.putExtra("book", b);
+        startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     @Override

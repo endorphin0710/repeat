@@ -15,6 +15,7 @@ public interface MarkRepeatContract {
         void onUpdateFailure();
         void showProgressBar();
         void hideProgressBar();
+        void onRetrieveBook(Book b);
     }
 
     interface Presenter{
@@ -22,9 +23,12 @@ public interface MarkRepeatContract {
         void mark(Book b, int chapterNumber, List<Problem> problems);
         void onUpdateSuccess();
         void onUpdateFailure();
+        void getBook(String id);
+        void onRetrieveBook(Book b);
     }
 
     interface Model{
+        void getBook(String id);
         void mark(Book b, int chapterNumber, boolean finished, int score, int problemCnt);
     }
 

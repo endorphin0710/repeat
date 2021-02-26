@@ -2,42 +2,35 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/repeat_container"
     android:layout_width="match_parent"
     android:layout_height="48dp"
     android:layout_marginBottom="8dp">
 
-
     <TextView
-        android:id="@+id/tv_problem_number"
+        android:id="@+id/tv_repeat_number"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:gravity="center"
         android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/view3"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toStartOf="@+id/tv_percent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <View
-        android:id="@+id/view3"
+    <TextView
+        android:id="@+id/tv_percent"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/tv_problem_number"
+        app:layout_constraintStart_toEndOf="@+id/tv_repeat_number"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/iv_mark"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        app:layout_constraintBottom_toBottomOf="@+id/view3"
-        app:layout_constraintEnd_toEndOf="@+id/view3"
-        app:layout_constraintStart_toEndOf="@+id/tv_problem_number"
-        app:layout_constraintTop_toTopOf="@+id/view3" />
 
     <View
         android:id="@+id/divider2"

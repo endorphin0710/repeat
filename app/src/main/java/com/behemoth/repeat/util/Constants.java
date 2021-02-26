@@ -43,4 +43,9 @@ public class Constants {
     public static final String LABEL_SEARCHED_TITLE = "searched_title";
     public static final String LABEL_SEARCHED_THUMBNAIL = "searched_thumbnail";
 
+    /** LABEL **/
+    public static final String LABEL_AVERAGE_SCORE = "AVR_SCORE";
+    public static final String LABEL_MIN_SCORE = "MIN_SCORE";
+    public static final String LABEL_MAX_SCORE = "MAX_SCORE";
+
 }

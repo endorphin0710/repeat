@@ -17,6 +17,7 @@ public interface MainContract {
         void showProgressBar();
         void hideProgressBar();
         void onDeleteSuccess(int position);
+        void viewStats(Book b);
     }
 
     interface Presenter{

@@ -59,6 +59,10 @@
         <activity
             android:name=".mypage.MyPageActivity"
             android:label="@string/label_mypage_activity" />
+        <activity
+            android:name=".stats.book.BookStatsActivity"/>
+        <activity
+            android:name=".stats.chapter.ChapterStatsActivity"/>
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

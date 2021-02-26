@@ -1,8 +1,5 @@
 package com.behemoth.repeat.auth;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -10,8 +7,11 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
 
-import com.behemoth.repeat.main.MainActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.behemoth.repeat.R;
+import com.behemoth.repeat.main.MainActivity;
 import com.behemoth.repeat.model.User;
 import com.behemoth.repeat.retrofit.RetrofitService;
 import com.behemoth.repeat.retrofit.RetrofitUtil;
@@ -179,12 +179,28 @@ public class NaverLogin extends AppCompatActivity {
                                     if(user != null) uid = user.getUid();
                                     // Firebase
                                     DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-                                    ref.child("user").child(id).setValue(new User(id, Constants.USER_TYPE_SOCIAL, uid, nickName))
-                                            .addOnSuccessListener(aVoid -> {
-                                                Intent i = new Intent(parent, MainActivity.class);
-                                                parent.startActivity(i);
-                                                parent.finish();
-                                            });
+                                    String finalUid = uid;
+                                    ref.child("user").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            if(dataSnapshot.getChildrenCount() == 0) {
+                                                ref.child("user").child(id).setValue(new User(id, Constants.USER_TYPE_SOCIAL, finalUid, nickName))
+                                                        .addOnSuccessListener(aVoid -> {
+                                                            Intent i = new Intent(parent, MainActivity.class);
+                                                            parent.startActivity(i);
+                                                            parent.finish();
+                                                        });
+                                            }else{
+                                                ref.child("user").child(id).child("uid").setValue(finalUid).addOnSuccessListener(aVoid -> {
+                                                    Intent i = new Intent(parent, MainActivity.class);
+                                                    parent.startActivity(i);
+                                                    parent.finish();
+                                                });
+                                            }
+                                        }
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) { }
+                                    });
                                 })
                                 .addOnFailureListener( e -> {
                                     LogUtil.e(TAG, "message : " + e.getMessage());

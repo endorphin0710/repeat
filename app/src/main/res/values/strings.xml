@@ -79,5 +79,14 @@
     <string name="label_mypage_activity">마이페이지</string>
     <string name="label_nickname">닉네임</string>
     <string name="label_tutorial">리핏 사용 튜토리얼</string>
+    <string name="label_opinion">의견 보내기</string>
+    <string name="label_faq">FAQ</string>
+    <string name="label_terms">서비스 이용약관</string>
+    <string name="label_policy">개인정보 정책</string>
+    <string name="label_version">버전정보</string>
+    <string name="label_init">내 서재 초기화</string>
+    <string name="label_logout">로그아웃</string>
+    <string name="label_unregister">회원탈퇴</string>
+
 
 </resources>

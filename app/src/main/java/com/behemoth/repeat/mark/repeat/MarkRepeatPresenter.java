@@ -1,7 +1,6 @@
 package com.behemoth.repeat.mark.repeat;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -89,6 +88,16 @@ public class MarkRepeatPresenter implements MarkRepeatContract.Presenter{
     @Override
     public void onUpdateFailure() {
         view.onUpdateFailure();
+    }
+
+    @Override
+    public void getBook(String id) {
+        model.getBook(id);
+    }
+
+    @Override
+    public void onRetrieveBook(Book b) {
+        view.onRetrieveBook(b);
     }
 
 }

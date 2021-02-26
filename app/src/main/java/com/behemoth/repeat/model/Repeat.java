@@ -17,6 +17,8 @@ public class Repeat implements Parcelable {
     private List<Integer> mark;
     private boolean finished;
     private int score;
+    private int percent;
+    private int repeatNumber;
 
     public Repeat(){}
 
@@ -40,6 +42,8 @@ public class Repeat implements Parcelable {
         mark = new ArrayList<>();
         in.readList(mark, ClassLoader.getSystemClassLoader());
         finished = in.readByte() != 0;
+        percent = in.readInt();
+        repeatNumber = in.readInt();
     }
 
     @Override
@@ -47,6 +51,8 @@ public class Repeat implements Parcelable {
         parcel.writeInt(problemCount);
         parcel.writeList(mark);
         parcel.writeByte((byte) (finished ? 1 : 0));
+        parcel.writeInt(percent);
+        parcel.writeInt(repeatNumber);
     }
 
     public static final Creator<Repeat> CREATOR = new Creator<Repeat>() {
@@ -72,6 +78,12 @@ public class Repeat implements Parcelable {
 
     public int getScore() { return score; }
     public void setScore(int score) { this.score = score; }
+
+    public int getPercent() { return percent; }
+    public void setPercent(int percent) { this.percent = percent; }
+
+    public int getRepeatNumber() { return repeatNumber; }
+    public void setRepeatNumber(int repeatNumber) { this.repeatNumber = repeatNumber; }
 
     @Override
     public int describeContents() {
