@@ -1,14 +1,14 @@
 package com.behemoth.repeat.auth;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
-import com.behemoth.repeat.main.MainActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.behemoth.repeat.R;
+import com.behemoth.repeat.main.MainActivity;
 import com.behemoth.repeat.model.User;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.LogUtil;
@@ -16,8 +16,11 @@ import com.behemoth.repeat.util.SharedPreference;
 import com.behemoth.repeat.util.Util;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.kakao.auth.AuthType;
 import com.kakao.auth.ISessionCallback;
 import com.kakao.auth.Session;
@@ -127,9 +130,25 @@ public class KakaoLogin extends AppCompatActivity {
         SharedPreference.getInstance().putString(Constants.USER_NICKNAME, nickName);
 
         /** firebase **/
+        String finalId = id;
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
-        ref.child("user").child(id).setValue(new User(id, Constants.USER_TYPE_SOCIAL, uid, nickName))
-                .addOnSuccessListener(aVoid -> startMainActivity());
+        ref.child("user").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.getChildrenCount() == 0) {
+                    ref.child("user").child(finalId).setValue(new User(finalId, Constants.USER_TYPE_SOCIAL, uid, nickName))
+                            .addOnSuccessListener(aVoid -> {
+                                startMainActivity();
+                            });
+                }else{
+                    ref.child("user").child(finalId).child("uid").setValue(uid).addOnSuccessListener(aVoid -> {
+                        startMainActivity();
+                    });
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
     }
 
     private void startLoginActivity(){

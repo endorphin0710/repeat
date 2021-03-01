@@ -1,6 +1,8 @@
 package com.behemoth.repeat.util;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -149,6 +151,18 @@ public class Util {
         dialogBuilder.setMessage(message);
         dialogBuilder.setPositiveButton(positive, (d, w) -> { });
         dialogBuilder.show();
+    }
+
+    public static String getVersionName(Context ctx){
+        String version = "1.0";
+        try {
+            PackageInfo pInfo = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0);
+            version = pInfo.versionName;
+            return version;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return version;
     }
 
 }

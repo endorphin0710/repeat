@@ -60,4 +60,14 @@ public class SharedPreference {
         setRefresh(Constants.REFRESH_RECENTS, 0);
     }
 
+    public void resetAll(){
+        SharedPreference.getInstance().putString(Constants.LOGIN_TYPE, "");
+        SharedPreference.getInstance().putString(Constants.USER_ID, "");
+        SharedPreference.getInstance().putString(Constants.USER_NICKNAME, "");
+        setRefresh(Constants.DATA_CHANGED, 0);
+        setRefresh(Constants.REFRESH_MAIN, 0);
+        setRefresh(Constants.REFRESH_MARK, 0);
+        setRefresh(Constants.REFRESH_RECENTS, 0);
+    }
+
 }

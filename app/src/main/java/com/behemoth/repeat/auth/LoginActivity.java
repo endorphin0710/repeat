@@ -1,8 +1,5 @@
 package com.behemoth.repeat.auth;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,11 +7,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.LogUtil;
 import com.behemoth.repeat.util.SharedPreference;
-import com.google.firebase.auth.FirebaseAuth;
 import com.kakao.auth.Session;
 import com.nhn.android.naverlogin.OAuthLogin;
 import com.nhn.android.naverlogin.data.OAuthLoginState;
@@ -23,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
     private Context mContext;
+    private boolean ongoing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +73,10 @@ public class LoginActivity extends AppCompatActivity {
         naverLoginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                if(ongoing) return;
+                Log.d("juntae", "1");
                 startLogin(Constants.NAVER);
+                ongoing = true;
             }
         });
 
@@ -83,7 +85,10 @@ public class LoginActivity extends AppCompatActivity {
         kakaoLoginButton.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
+                if(ongoing) return;
+                Log.d("juntae", "2");
                 startLogin(Constants.KAKAO);
+                ongoing = true;
             }
         });
     }

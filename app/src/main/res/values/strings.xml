@@ -21,6 +21,7 @@
     <string name="complete">완료</string>
     <string name="confirm">확인</string>
     <string name="cancel">취소</string>
+    <string name="close">닫기</string>
     <string name="chapter">단원</string>
     <string name="repeat">회차</string>
     <string name="number">번호</string>
@@ -87,6 +88,17 @@
     <string name="label_init">내 서재 초기화</string>
     <string name="label_logout">로그아웃</string>
     <string name="label_unregister">회원탈퇴</string>
+
+    <string name="logout">로그아웃</string>
+    <string name="confirm_logout">정말 로그아웃을 하시겠습니까?</string>
+
+    <string name="btn_unregister">탈퇴하기</string>
+    <string name="confirm_unregister">정말 탈퇴하시겠어요..?</string>
+    <string name="desc_unregister1">- 회원 탈퇴시 저장된 정보(저장된 도서 및채점 내역)들은 모두 삭제됩니다.</string>
+    <string name="desc_unregister2">- 탈퇴 후 재가입이 가능합니다.</string>
+
+    <string name="complete_unregister">회원 탈퇴 처리가 완료되었습니다.</string>
+    <string name="complete_desc_unregister">그 동안 공부하느라 고생하셨습니다.\n앞으로 꽃길만 가득하시길 기원합니다.</string>
 
 
 </resources>

@@ -22,7 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
-        <activity android:name=".recents.markDetail.MarkDetailActivity"></activity>
+        <activity android:name=".mypage.unregister.GoodByeActivity"/>
+        <activity android:name=".mypage.unregister.UnregisterActivity" />
+        <activity android:name=".recents.markDetail.MarkDetailActivity" />
         <activity android:name=".auth.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -59,10 +61,8 @@
         <activity
             android:name=".mypage.MyPageActivity"
             android:label="@string/label_mypage_activity" />
-        <activity
-            android:name=".stats.book.BookStatsActivity"/>
-        <activity
-            android:name=".stats.chapter.ChapterStatsActivity"/>
+        <activity android:name=".stats.book.BookStatsActivity" />
+        <activity android:name=".stats.chapter.ChapterStatsActivity" />
 
         <meta-data
             android:name="com.kakao.sdk.AppKey"

@@ -90,8 +90,12 @@ public class BookStatsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_book_stats, container, false);
+
+        int chapterNumber = chapters.size();
         // Inflate the layout for this fragment
         lineChart = rootView.findViewById(R.id.lineChart);
+        lineChart.setMinimumWidth(chapterNumber * 120);
+
         lineChart.getDescription().setEnabled(false);
         lineChart.getLegend().setEnabled(false);
         lineChart.setHorizontalScrollBarEnabled(true);

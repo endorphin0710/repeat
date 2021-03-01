@@ -88,6 +88,7 @@ public class ChapterStatsFragment extends Fragment {
 
         markData = new TreeMap<>();
         for(Repeat r : repeats){
+            if(!r.isFinished()) continue;
             List<Integer> marks = r.getMark();
             for(int i = 0; i < marks.size(); i++){
                 if(marks.get(i) <= 0){

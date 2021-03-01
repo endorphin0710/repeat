@@ -216,4 +216,55 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view_logout" />
 
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/view3"
+        app:layout_constraintEnd_toEndOf="@+id/view_profile"
+        app:layout_constraintTop_toBottomOf="@+id/view2"
+        app:srcCompat="@drawable/ic_nav_mark_666" />
+
+    <TextView
+        android:id="@+id/tv_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+        app:layout_constraintEnd_toStartOf="@+id/imageView6"
+        app:layout_constraintTop_toTopOf="@+id/imageView6" />
+
+    <TextView
+        android:id="@+id/tv_latest_versioncode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textSize="16sp"
+        android:text=""
+        app:layout_constraintBottom_toTopOf="@+id/view5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view_policy" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="/"
+        android:textSize="16sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_latest_versioncode"
+        app:layout_constraintEnd_toStartOf="@+id/tv_latest_versioncode" />
+
+    <TextView
+        android:id="@+id/tv_current_versioncode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text=""
+        android:textSize="16sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_latest_versioncode"
+        app:layout_constraintEnd_toStartOf="@+id/textView22" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
