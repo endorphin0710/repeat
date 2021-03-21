@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private void goToMyPage(){
         Intent i = new Intent(MainActivity.this, MyPageActivity.class);
-        startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        startActivityForResult(i, Constants.REQUEST_MYPAGE, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     @Override
@@ -243,6 +243,11 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == Constants.REQUEST_RELOAD && resultCode == RESULT_OK) onNewIntent(data);
+        if(requestCode == Constants.REQUEST_MYPAGE && resultCode == RESULT_OK) {
+            SharedPreference.getInstance().onDataChanged();
+            SharedPreference.getInstance().setRefresh(Constants.REFRESH_MAIN, 1);
+            getBooks();
+        }
     }
 
 }

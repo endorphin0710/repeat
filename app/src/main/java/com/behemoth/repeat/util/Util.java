@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Calendar;
 import java.util.Random;
+import java.util.regex.Pattern;
 
 public class Util {
 
@@ -163,6 +164,11 @@ public class Util {
             e.printStackTrace();
         }
         return version;
+    }
+
+    public static boolean containsOnlyKorEngDigit(String s){
+        String regex = "^[a-zA-Z가-힣0-9]+$";;
+        return Pattern.matches(regex, s);
     }
 
 }

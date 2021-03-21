@@ -1,16 +1,16 @@
 package com.behemoth.repeat.mark;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ProgressBar;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.main.MainActivity;
@@ -129,7 +129,7 @@ public class MarkActivity extends AppCompatActivity implements MarkContract.View
 
     private void goToMyPage(){
         Intent i = new Intent(MarkActivity.this, MyPageActivity.class);
-        startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        startActivityForResult(i, Constants.REQUEST_MYPAGE, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     @Override
@@ -142,4 +142,13 @@ public class MarkActivity extends AppCompatActivity implements MarkContract.View
         goToMainActivity();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == Constants.REQUEST_MYPAGE && resultCode == RESULT_OK) {
+            SharedPreference.getInstance().onDataChanged();
+            SharedPreference.getInstance().setRefresh(Constants.REFRESH_MARK, 1);
+            getBooks();
+        }
+    }
 }

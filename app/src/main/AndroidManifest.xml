@@ -22,9 +22,16 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
-        <activity android:name=".mypage.unregister.GoodByeActivity"/>
-        <activity android:name=".mypage.unregister.UnregisterActivity" />
-        <activity android:name=".recents.markDetail.MarkDetailActivity" />
+        <activity
+            android:name=".mypage.faq.FaqActivity"
+            android:label="@string/label_faq_activity"></activity>
+        <activity
+            android:name=".mypage.nickname.NicknameActivity"
+            android:label="@string/label_nickname_activity" />
+        <activity android:name=".mypage.unregister.GoodByeActivity" />
+        <activity
+            android:name=".mypage.unregister.UnregisterActivity"
+            android:label="@string/label_unregister_activity" />
         <activity android:name=".auth.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -58,6 +65,7 @@
         <activity
             android:name=".recents.RecentsActivity"
             android:label="@string/label_recents_activity" />
+        <activity android:name=".recents.markDetail.MarkDetailActivity" />
         <activity
             android:name=".mypage.MyPageActivity"
             android:label="@string/label_mypage_activity" />

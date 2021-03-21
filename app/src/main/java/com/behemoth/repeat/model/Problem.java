@@ -3,6 +3,11 @@ package com.behemoth.repeat.model;
 public class Problem implements Comparable<Problem>{
 
     private int problemNumber;
+    /**
+     * -1 -> unmarked
+     * 0 -> wrong
+     * 1 -> correct
+     */
     private int state;
 
     public Problem(){}

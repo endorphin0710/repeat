@@ -16,11 +16,28 @@ public class MyPagePresenter implements MyPageContract.Presenter{
 
     @Override
     public void getData() {
+        view.showProgressBar();
         model.getData();
     }
 
     @Override
     public void onRetrieveData(String nickName, String versionName) {
         view.onRetrieveData(nickName, versionName);
+        view.hideProgressBar();
+    }
+
+    @Override
+    public void initialize() {
+        model.initialize();
+    }
+
+    @Override
+    public void onDeleteSuccess() {
+        view.onDeleteSuccess();
+    }
+
+    @Override
+    public void onDeleteFailure() {
+        view.onDeleteFailure();
     }
 }

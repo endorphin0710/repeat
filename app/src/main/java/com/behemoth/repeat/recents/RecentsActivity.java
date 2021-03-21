@@ -1,16 +1,16 @@
 package com.behemoth.repeat.recents;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.airbnb.lottie.LottieDrawable;
@@ -141,7 +141,7 @@ public class RecentsActivity extends AppCompatActivity implements RecentsContrac
 
     private void goToMyPage(){
         Intent i = new Intent(RecentsActivity.this, MyPageActivity.class);
-        startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+        startActivityForResult(i, Constants.REQUEST_MYPAGE, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
     @Override
@@ -152,5 +152,15 @@ public class RecentsActivity extends AppCompatActivity implements RecentsContrac
     @Override
     public Context getContext() {
         return this;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == Constants.REQUEST_MYPAGE && resultCode == RESULT_OK) {
+            SharedPreference.getInstance().onDataChanged();
+            SharedPreference.getInstance().setRefresh(Constants.REFRESH_RECENTS, 1);
+            getRecentMarks();
+        }
     }
 }

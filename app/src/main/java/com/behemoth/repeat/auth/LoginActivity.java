@@ -74,7 +74,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(ongoing) return;
-                Log.d("juntae", "1");
                 startLogin(Constants.NAVER);
                 ongoing = true;
             }

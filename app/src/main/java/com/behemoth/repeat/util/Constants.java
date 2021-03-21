@@ -19,6 +19,8 @@ public class Constants {
     public static final int REQUEST_CROP_IMAGE = 2;
     public static final int REQUEST_CODE_SEARCH = 3;
     public static final int REQUEST_RELOAD = 4;
+    public static final int REQUEST_NICKNAME_CHANGE = 5;
+    public static final int REQUEST_MYPAGE = 6;
 
     public static final int PERMISSION_WRITE_EXTERNAL_STORAGE = 3;
     public static final int PERMISSION_CAMERA = 4;

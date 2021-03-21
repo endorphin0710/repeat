@@ -1,7 +1,6 @@
 package com.behemoth.repeat.recyclerView.problem;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,10 +44,12 @@ public class ProblemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     class CompleteViewHolder extends RecyclerView.ViewHolder {
 
         protected Button btnComplete;
+        protected Button btnSaveTemp;
 
         public CompleteViewHolder(View view) {
             super(view);
-            this.btnComplete = view.findViewById(R.id.problemBtnNext);
+            this.btnComplete = view.findViewById(R.id.problem_btn_next);
+            this.btnSaveTemp = view.findViewById(R.id.problem_btn_save_temp);
         }
     }
 
@@ -80,7 +81,9 @@ public class ProblemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, final int position) {
         if(holder.getItemViewType() >= mList.size()-1){
             CompleteViewHolder completeViewHolder = (CompleteViewHolder)holder;
+
             completeViewHolder.btnComplete.setOnClickListener(view -> parent.upload());
+            completeViewHolder.btnSaveTemp.setVisibility(View.GONE);
         }else{
             ChapterViewHolder chapterViewHolder = (ChapterViewHolder)holder;
             chapterViewHolder.chapterNumber.setText(String.valueOf(mList.get(position).getChapterNumber()));

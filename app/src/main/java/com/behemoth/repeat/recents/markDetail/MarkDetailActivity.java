@@ -1,15 +1,14 @@
 package com.behemoth.repeat.recents.markDetail;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import com.behemoth.repeat.R;
-import com.behemoth.repeat.mark.chapter.MarkChapterContract;
 import com.behemoth.repeat.model.Mark;
 
 public class MarkDetailActivity extends AppCompatActivity implements MarkDetailContract.View{
@@ -55,7 +54,8 @@ public class MarkDetailActivity extends AppCompatActivity implements MarkDetailC
     private void setToolbar(){
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_profile);
+        toolbar.setNavigationIcon(R.drawable.ic_nav_back);
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
     @Override

@@ -20,16 +20,20 @@ public interface MarkRepeatContract {
 
     interface Presenter{
         void setRecyclerView(Book b, int chapterNumber);
-        void mark(Book b, int chapterNumber, List<Problem> problems);
+        void mark(Book b, int chapterNumber, List<Problem> problems, boolean temp);
         void onUpdateSuccess();
         void onUpdateFailure();
         void getBook(String id);
         void onRetrieveBook(Book b);
+        void allCorrect();
+        void allWrong();
+        void allReset();
     }
 
     interface Model{
         void getBook(String id);
         void mark(Book b, int chapterNumber, boolean finished, int score, int problemCnt);
+        void markTemp(Book b, int chapterNumber, int score, int problemCnt);
     }
 
 }

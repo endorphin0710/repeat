@@ -109,6 +109,29 @@ public class MarkRepeatModel implements MarkRepeatContract.Model{
 
     }
 
+    @Override
+    public void markTemp(Book b, int chapterNumber, int score, int problemCnt) {
+        String userId = SharedPreference.getInstance().getString(Constants.USER_ID, "");
+        Chapter c = b.getChapter().get(chapterNumber);
+        // firebase
+        DatabaseReference markRef = FirebaseDatabase.getInstance().getReference()
+                .child("book")
+                .child(userId)
+                .child(b.getId())
+                .child("chapter");
+
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put(String.valueOf(chapterNumber), c);
+
+        markRef.updateChildren(childUpdates)
+                .addOnSuccessListener(aVoid -> {
+                    presenter.onUpdateSuccess();
+                })
+                .addOnFailureListener(e -> {
+                    presenter.onUpdateFailure();
+                });
+    }
+
     public void getBook(String bookId){
         String userId = SharedPreference.getInstance().getString(Constants.USER_ID, "");
 

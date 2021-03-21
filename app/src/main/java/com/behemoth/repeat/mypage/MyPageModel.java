@@ -52,4 +52,22 @@ public class MyPageModel implements MyPageContract.Model {
         });
     }
 
+    @Override
+    public void initialize() {
+        String userId = SharedPreference.getInstance().getString(Constants.USER_ID, "");
+
+        DatabaseReference bookRef = FirebaseDatabase.getInstance().getReference().child("book").child(userId);
+
+        bookRef.removeValue().addOnSuccessListener(bv -> {
+            DatabaseReference recentsRef = FirebaseDatabase.getInstance().getReference().child("user").child(userId).child("recentMarks");
+            recentsRef.removeValue().addOnSuccessListener(rv -> {
+                presenter.onDeleteSuccess();
+            }).addOnFailureListener(fl -> {
+                presenter.onDeleteFailure();
+            });
+        }).addOnFailureListener(fl -> {
+            presenter.onDeleteFailure();
+        });
+    }
+
 }

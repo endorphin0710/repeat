@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -49,6 +50,21 @@ public class MarkRepeatActivity extends AppCompatActivity implements MarkRepeatC
 
         loadingLayout = findViewById(R.id.loading_layout_mark);
         loadingLayout.bringToFront();
+
+        RadioGroup rg = findViewById(R.id.radioGroupAll);
+        rg.setOnCheckedChangeListener((group, checkedId) -> {
+            switch(checkedId){
+                case R.id.radioAllCorrect:
+                    presenter.allCorrect();
+                    break;
+                case R.id.radioAllWrong:
+                    presenter.allWrong();
+                    break;
+                case R.id.radioAllReset:
+                    presenter.allReset();
+                    break;
+            }
+        });
     }
 
     private void setToolbar(Bundle data){
@@ -65,9 +81,9 @@ public class MarkRepeatActivity extends AppCompatActivity implements MarkRepeatC
         presenter.getBook(book.getId());
     }
 
-    public void mark(List<Problem> problems){
+    public void mark(List<Problem> problems, boolean temp){
         showProgressBar();
-        presenter.mark(book, chapterNumber, problems);
+        presenter.mark(book, chapterNumber, problems, temp);
     }
 
     @Override

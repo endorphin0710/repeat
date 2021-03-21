@@ -10,8 +10,9 @@
         android:id="@+id/radioGroup"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_gravity="center_horizontal"
+        android:layout_marginStart="2dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/guideline2"
@@ -29,8 +30,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="@null"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:text="@null" />
 
         <RadioButton
             android:layout_width="0dp"
@@ -44,7 +45,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_weight="1"/>
+            android:layout_weight="1" />
 
         <RadioButton
             android:layout_width="0dp"
@@ -59,7 +60,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:checked="true"/>
+            android:checked="true" />
 
         <RadioButton
             android:layout_width="0dp"

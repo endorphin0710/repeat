@@ -10,6 +10,7 @@ import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.model.Chapter;
 import com.behemoth.repeat.model.Problem;
 import com.behemoth.repeat.model.Repeat;
+import com.behemoth.repeat.recyclerView.mark.MarkClickListener;
 import com.behemoth.repeat.recyclerView.mark.MarkRepeatAdapter;
 
 import java.util.ArrayList;
@@ -51,14 +52,37 @@ public class MarkRepeatPresenter implements MarkRepeatContract.Presenter{
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(viewContext);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-        mAdapter = new MarkRepeatAdapter(viewContext, mArrayList);
+        MarkClickListener markClickListener = new MarkClickListener() {
+            @Override
+            public void onClick(int position) {
+                if(checkCompletable()){
+                    mAdapter.activateButton();
+                }else{
+                    mAdapter.inactivateButton();
+                }
+            }
+        };
+
+        mAdapter = new MarkRepeatAdapter(viewContext, markClickListener,  mArrayList);
 
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
     }
 
+    private boolean checkCompletable(){
+        boolean completable = true;
+        for(Problem p : mArrayList){
+            int state = p.getState();
+            if(state == -1) {
+                completable = false;
+                break;
+            }
+        }
+        return completable;
+    }
+
     @Override
-    public void mark(Book b, int chapterNumber, List<Problem> problems) {
+    public void mark(Book b, int chapterNumber, List<Problem> problems, boolean temp) {
         boolean finished = true;
 
         List<Integer> marks = new ArrayList<>();
@@ -74,10 +98,14 @@ public class MarkRepeatPresenter implements MarkRepeatContract.Presenter{
         int repeatCount = c.getRepeatCount();
         Repeat r = c.getRepeat().get(repeatCount-1);
         r.setMark(marks);
-        r.setFinished(finished);
+        if(!temp) r.setFinished(finished);
         r.setScore(score);
 
-        model.mark(b, chapterNumber, finished, score, r.getProblemCount());
+        if(temp){
+            model.markTemp(b, chapterNumber, score, r.getProblemCount());
+        }else{
+            model.mark(b, chapterNumber, finished, score, r.getProblemCount());
+        }
     }
 
     @Override
@@ -98,6 +126,21 @@ public class MarkRepeatPresenter implements MarkRepeatContract.Presenter{
     @Override
     public void onRetrieveBook(Book b) {
         view.onRetrieveBook(b);
+    }
+
+    @Override
+    public void allCorrect() {
+        mAdapter.allCorrect();
+    }
+
+    @Override
+    public void allWrong() {
+        mAdapter.allWrong();
+    }
+
+    @Override
+    public void allReset() {
+        mAdapter.allReset();
     }
 
 }
