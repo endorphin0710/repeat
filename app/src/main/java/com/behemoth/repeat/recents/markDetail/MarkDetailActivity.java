@@ -55,7 +55,8 @@ public class MarkDetailActivity extends AppCompatActivity implements MarkDetailC
     private void setToolbar(){
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setNavigationIcon(R.drawable.ic_profile);
+        toolbar.setNavigationIcon(R.drawable.ic_nav_back);
+        toolbar.setNavigationOnClickListener(view -> onBackPressed());
     }
 
     @Override
