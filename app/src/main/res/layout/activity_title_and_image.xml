@@ -119,12 +119,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnImage" />
 
-    <View
+    <ImageView
         android:id="@+id/divider"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:background="?android:attr/listDivider"
+        android:background="@drawable/ic_or"
         app:layout_constraintTop_toBottomOf="@+id/btnNext"
         tools:layout_editor_absoluteX="2dp" />
 

@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.widget.TextView;
 
 import com.behemoth.repeat.R;
@@ -18,6 +19,7 @@ public class MarkDetailActivity extends AppCompatActivity implements MarkDetailC
 
     private boolean ascendingQ = false;
     private boolean ascendingM = false;
+    private boolean fromStats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,7 @@ public class MarkDetailActivity extends AppCompatActivity implements MarkDetailC
 
         Intent i = getIntent();
         Mark mark = i.getParcelableExtra("mark");
+        this.fromStats = i.getBooleanExtra("fromStats", false);
 
         initView();
         setToolbar();
@@ -57,6 +60,16 @@ public class MarkDetailActivity extends AppCompatActivity implements MarkDetailC
         setSupportActionBar(toolbar);
         toolbar.setNavigationIcon(R.drawable.ic_nav_back);
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if(this.fromStats){
+            getMenuInflater().inflate(R.menu.main_menu_with_home, menu);
+        }else{
+            getMenuInflater().inflate(R.menu.main_menu, menu);
+        }
+        return true;
     }
 
     @Override
