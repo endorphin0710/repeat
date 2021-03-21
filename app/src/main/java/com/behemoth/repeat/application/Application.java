@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -56,7 +55,6 @@ public class Application extends android.app.Application {
 
             @Override
             public void onActivityResumed(@NonNull Activity activity) {
-                Log.d("juntae", activity.getClass().getSimpleName());
                 if(activity.getClass().getSimpleName().equals("LoginActivity")
                         || activity.getClass().getSimpleName().equals("OAuthLoginActivity")
                         || activity.getClass().getSimpleName().equals("NaverLogin")

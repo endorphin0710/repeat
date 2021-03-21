@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
@@ -42,8 +43,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setToolbar();
 
+        setToolbar();
         initViews();
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
@@ -58,11 +59,27 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
             }
             return false;
         });
-
         presenter = new MainPresenter(this);
         presenter.setRecyclerView();
 
-        getBooks();
+        showTutorial();
+    }
+
+    private void showTutorial(){
+        boolean fisrtLaunch = SharedPreference.getInstance().getBoolean(Constants.FIRST_LAUNCH, true);
+        if(fisrtLaunch){
+            ImageView tutorial = findViewById(R.id.tutorial);
+            tutorial.setVisibility(View.VISIBLE);
+            tutorial.setOnClickListener(v -> {
+                tutorial.setVisibility(View.GONE);
+                bottomNavigationView.setVisibility(View.VISIBLE);
+                getBooks();
+                SharedPreference.getInstance().putBoolean(Constants.FIRST_LAUNCH, false);
+            });
+        }else{
+            bottomNavigationView.setVisibility(View.VISIBLE);
+            getBooks();
+        }
     }
 
     @Override
@@ -94,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private void setToolbar(){
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.inflateMenu(R.menu.main_menu);
         toolbar.setNavigationIcon(R.drawable.ic_profile);
         toolbar.setNavigationOnClickListener(view -> {
             goToMyPage();

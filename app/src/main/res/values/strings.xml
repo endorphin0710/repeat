@@ -78,6 +78,13 @@
     <string name="label_recents_problem_number">문항</string>
     <string name="label_recents_mark">정오답</string>
 
+    <!-- Stats -->
+    <string name="label_title_pie_chart">오답 수 비중</string>
+    <string name="label_title_line_chart">단원별 정답률</string>
+    <string name="label_percent_correct_accum">누적평균 정답률(%)</string>
+    <string name="label_percent__correct_max">회차중 최고 정답률(%)</string>
+    <string name="label_percent_correct_min">회차중 최저 정답률(%)</string>
+
     <!-- My Page -->
     <string name="label_mypage_activity">마이페이지</string>
     <string name="label_nickname">닉네임</string>

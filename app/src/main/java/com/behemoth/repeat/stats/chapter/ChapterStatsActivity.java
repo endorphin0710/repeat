@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.behemoth.repeat.R;
+import com.behemoth.repeat.main.MainActivity;
 import com.behemoth.repeat.model.Chapter;
 import com.behemoth.repeat.model.Mark;
 import com.behemoth.repeat.model.Repeat;
@@ -69,6 +71,15 @@ public class ChapterStatsActivity extends AppCompatActivity implements ChapterSt
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu_with_home, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.menuHome){
+            goToHomeActivity();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setChapterStatsFragment(){
@@ -143,6 +154,13 @@ public class ChapterStatsActivity extends AppCompatActivity implements ChapterSt
         m.setRepeat(repeat.getRepeatNumber()-1);
         i.putExtra("mark", m);
         i.putExtra("fromStats", true);
+        startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    }
+
+    private void goToHomeActivity(){
+        Intent i = new Intent(ChapterStatsActivity.this, MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 

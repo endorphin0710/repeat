@@ -29,6 +29,7 @@ public class Constants {
     public static final String SHARED_PREFERENCE_NAME = "shared_preference_repeat";
     public static final String USER_ID = "user_id";
     public static final String USER_NICKNAME = "user_nickname";
+    public static final String FIRST_LAUNCH = "first_launch";
 
     public static final String DATA_CHANGED = "data_changed";
     public static final String REFRESH_MAIN = "refersh_main";

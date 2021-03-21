@@ -6,6 +6,17 @@
     android:layout_height="wrap_content">
 
     <Button
+        android:id="@+id/problem_btn_save_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="53dp"
+        android:background="@drawable/yellow_border"
+        android:text="@string/save_temp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
         android:id="@+id/problem_btn_next"
         android:layout_width="88dp"
         android:layout_height="40dp"
@@ -17,16 +28,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/problem_btn_save_temp" />
-
-    <Button
-        android:id="@+id/problem_btn_save_temp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="53dp"
-        android:text="@string/save_temp"
-        android:background="@drawable/yellow_border"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.behemoth.repeat.R;
 import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.recyclerView.bookCard.CardClickListener;
-import com.behemoth.repeat.recyclerView.mark.MarkAdapter;
 import com.behemoth.repeat.recyclerView.bookCard.SpaceDecoration;
+import com.behemoth.repeat.recyclerView.mark.MarkAdapter;
 import com.behemoth.repeat.util.Constants;
 
 import java.util.ArrayList;

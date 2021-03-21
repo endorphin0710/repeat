@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.behemoth.repeat.R;
+import com.behemoth.repeat.main.MainActivity;
 import com.behemoth.repeat.model.Book;
 import com.behemoth.repeat.model.Chapter;
 import com.behemoth.repeat.stats.chapter.ChapterStatsActivity;
@@ -63,6 +65,15 @@ public class BookStatsActivity extends AppCompatActivity implements BookStatsCon
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main_menu_with_home, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.menuHome){
+            goToHomeActivity();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setBookStatsFragment(){
@@ -148,6 +159,13 @@ public class BookStatsActivity extends AppCompatActivity implements BookStatsCon
         i.putExtra("id", book.getId());
         i.putExtra("chapter", c);
         i.putExtra("repeats", repeats);
+        startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    }
+
+    private void goToHomeActivity(){
+        Intent i = new Intent(BookStatsActivity.this, MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 

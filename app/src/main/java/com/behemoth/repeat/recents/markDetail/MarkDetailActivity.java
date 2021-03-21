@@ -1,15 +1,18 @@
 package com.behemoth.repeat.recents.markDetail;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.behemoth.repeat.R;
+import com.behemoth.repeat.main.MainActivity;
 import com.behemoth.repeat.model.Mark;
 
 public class MarkDetailActivity extends AppCompatActivity implements MarkDetailContract.View{
@@ -72,7 +75,24 @@ public class MarkDetailActivity extends AppCompatActivity implements MarkDetailC
     }
 
     @Override
+    public boolean onOptionsItemSelected (MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.menuHome){
+            goToHomeActivity();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     public Context getContext() {
         return this;
     }
+
+    private void goToHomeActivity(){
+        Intent i = new Intent(MarkDetailActivity.this, MainActivity.class);
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    }
+
 }

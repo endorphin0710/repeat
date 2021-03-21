@@ -3,14 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/miHome"
+        android:id="@+id/menuHome"
         android:icon="@drawable/ic_nav_home_gray"
         app:showAsAction="ifRoom"
         android:title="">
     </item>
 
     <item
-        android:id="@+id/miCompose"
+        android:id="@+id/menuCapture"
         android:icon="@drawable/ic_capture"
         app:showAsAction="ifRoom"
         android:title="">

@@ -15,7 +15,6 @@ import com.behemoth.repeat.stats.mpandroid.CustomBarDataSet;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarEntry;
@@ -43,6 +42,7 @@ public class ChapterStatsFragment extends Fragment {
     private TreeMap<Integer, Integer> markData;
     private TreeMap<Integer, Integer> distribution;
     private int maxIncorrects;
+    private int repeatCnt;
 
     private PieChart pieChart;
     private BarChart barChart;
@@ -87,8 +87,10 @@ public class ChapterStatsFragment extends Fragment {
         repeats = gson.fromJson(jsonRepeats, userListType);
 
         markData = new TreeMap<>();
+        int repeatCnt = 0;
         for(Repeat r : repeats){
             if(!r.isFinished()) continue;
+            repeatCnt += 1;
             List<Integer> marks = r.getMark();
             for(int i = 0; i < marks.size(); i++){
                 if(marks.get(i) <= 0){
@@ -102,6 +104,7 @@ public class ChapterStatsFragment extends Fragment {
                 }
             }
         }
+        this.repeatCnt = repeatCnt;
 
         maxIncorrects = Integer.MIN_VALUE;
         distribution = new TreeMap<>();
@@ -120,16 +123,14 @@ public class ChapterStatsFragment extends Fragment {
     private void setPieChart(){
         pieChart.setMinimumHeight(-50);
         pieChart.animateX(600, Easing.EaseInCubic); //애니메이션
-        Description description = new Description();
-        description.setText("오답 수 비중");
-        description.setTextSize(10);
-        pieChart.setDescription(description);
+        pieChart.setDescription(null);
+        pieChart.setDrawEntryLabels(false);
 
         ArrayList<PieEntry> values = new ArrayList<>();
         int total = markData.size();
         for(Map.Entry<Integer, Integer> e : distribution.entrySet()){
             float p = Math.round((e.getValue()/(float)total)*1000)/(float)10;
-            values.add(new PieEntry(p, e.getKey()+"회"));
+            values.add(new PieEntry(p, "오답 " + e.getKey()+"회"));
         }
 
         PieDataSet dataSet = new PieDataSet(values, "");
@@ -151,6 +152,7 @@ public class ChapterStatsFragment extends Fragment {
 
     private void setBarChart(){
         barChart.setDescription(null);
+        barChart.setMinimumHeight(this.repeatCnt * 120);
 
         barChart.getAxisLeft().setLabelCount(maxIncorrects);
         barChart.getAxisLeft().setGranularity(1f);
@@ -163,7 +165,6 @@ public class ChapterStatsFragment extends Fragment {
         barChart.getXAxis().setGranularity(1f);
         barChart.getXAxis().setLabelCount(markData.size());
         //barChart.getXAxis().setEnabled(false);
-        //barChart.getXAxis().setDrawLabels(false);
         barChart.getXAxis().setDrawGridLines(false);
 
         ArrayList<BarEntry> values = new ArrayList<>();
@@ -171,11 +172,11 @@ public class ChapterStatsFragment extends Fragment {
             values.add(new BarEntry((float)e.getKey(), (float)e.getValue()));
         }
 
-        CustomBarDataSet barDataSet = new CustomBarDataSet(values, null);
+        CustomBarDataSet barDataSet = new CustomBarDataSet(values, "오답 횟수");
         barDataSet.setColors(REPEAT_COLORS);
 
         BarData barData = new BarData(barDataSet);
-        barData.setBarWidth(0.5f);
+        barData.setBarWidth(0.3f);
 
         barChart.setData(barData);
     }

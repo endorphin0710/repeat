@@ -32,6 +32,14 @@ public class SharedPreference {
         return this.sharedPreferences.getString(key, def);
     }
 
+    public void putBoolean(String key, boolean b){
+        this.sharedPreferences.edit().putBoolean(key, b).apply();
+    }
+
+    public boolean getBoolean(String key, boolean defaultValue){
+        return this.sharedPreferences.getBoolean(key, defaultValue);
+    }
+
     public void setRefresh(String key, int value){
         this.sharedPreferences.edit().putInt(key, value).commit();
         int main = getRefresh(Constants.REFRESH_MAIN, 0);

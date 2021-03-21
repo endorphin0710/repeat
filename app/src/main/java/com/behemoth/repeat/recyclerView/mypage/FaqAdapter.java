@@ -25,6 +25,8 @@ public class FaqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     class FaqViewHolder extends RecyclerView.ViewHolder {
 
         protected ConstraintLayout faqContainer;
+
+        protected ConstraintLayout questionContainer;
         protected TextView tvMainQuestion;
         protected ImageView ivExpand;
 
@@ -34,6 +36,8 @@ public class FaqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         public FaqViewHolder(View view) {
             super(view);
             this.faqContainer = view.findViewById(R.id.faq_container);
+
+            this.questionContainer = view.findViewById(R.id.question_container);
             this.tvMainQuestion = view.findViewById(R.id.tv_main_question);
             this.ivExpand = view.findViewById(R.id.iv_expand);
 
@@ -63,15 +67,14 @@ public class FaqAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         faqViewHolder.tvMainQuestion.setText(faq.getQuestion());
         faqViewHolder.tvMainAnswer.setText(faq.getAnswer());
 
-
-        faqViewHolder.ivExpand.setOnClickListener(v -> {
+        faqViewHolder.questionContainer.setOnClickListener(v -> {
             if(faq.isExpanded()){
                 faq.setExpanded(false);
-                ((ImageView)v).setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_expand));
+                faqViewHolder.ivExpand.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_expand));
                 faqViewHolder.answerContainer.setVisibility(View.GONE);
             }else{
                 faq.setExpanded(true);
-                ((ImageView)v).setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_shrink));
+                faqViewHolder.ivExpand.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.ic_shrink));
                 faqViewHolder.answerContainer.setVisibility(View.VISIBLE);
             }
         });

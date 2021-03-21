@@ -135,6 +135,8 @@ public class MarkActivity extends AppCompatActivity implements MarkContract.View
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        boolean marked = intent.getBooleanExtra("mark_completed", false);
+        if(marked) goToRecentsActivity();
     }
 
     @Override

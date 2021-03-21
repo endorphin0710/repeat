@@ -3,7 +3,6 @@ package com.behemoth.repeat.auth;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -85,7 +84,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(ongoing) return;
-                Log.d("juntae", "2");
                 startLogin(Constants.KAKAO);
                 ongoing = true;
             }
