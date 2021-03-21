@@ -4,7 +4,7 @@
 
     <!-- fill/color -->
     <solid
-        android:color="#EAEAEA"/>
+        android:color="#f5f5f5"/>
 
     <!-- Control the radius of each corners -->
     <corners

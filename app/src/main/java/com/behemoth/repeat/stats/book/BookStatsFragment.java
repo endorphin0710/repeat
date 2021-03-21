@@ -107,7 +107,12 @@ public class BookStatsFragment extends Fragment {
         lineChart.getAxisLeft().setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return Math.round(value) + "%";
+                int p = Math.round(value);
+                if(p <= 0){
+                    return "단원";
+                }else{
+                    return Math.round(value) + "%";
+                }
             }
         });
 
@@ -126,7 +131,7 @@ public class BookStatsFragment extends Fragment {
         lineChart.getXAxis().setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return (int)value + "단원";
+                return String.valueOf((int)value);
             }
         });
 

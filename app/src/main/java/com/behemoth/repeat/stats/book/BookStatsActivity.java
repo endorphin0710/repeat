@@ -61,7 +61,7 @@ public class BookStatsActivity extends AppCompatActivity implements BookStatsCon
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main_menu, menu);
+        getMenuInflater().inflate(R.menu.main_menu_with_home, menu);
         return true;
     }
 

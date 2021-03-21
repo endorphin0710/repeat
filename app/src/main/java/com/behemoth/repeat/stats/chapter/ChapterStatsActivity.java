@@ -4,6 +4,7 @@ import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.TextView;
 
@@ -62,6 +63,12 @@ public class ChapterStatsActivity extends AppCompatActivity implements ChapterSt
         toolbar.setNavigationIcon(R.drawable.ic_nav_back);
         toolbar.setNavigationOnClickListener(view -> onBackPressed());
         getSupportActionBar().setTitle(chapter.getChapterNumber()+"단원");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu_with_home, menu);
+        return true;
     }
 
     private void setChapterStatsFragment(){
@@ -135,6 +142,7 @@ public class ChapterStatsActivity extends AppCompatActivity implements ChapterSt
         m.setChatper(chapter.getChapterNumber()-1);
         m.setRepeat(repeat.getRepeatNumber()-1);
         i.putExtra("mark", m);
+        i.putExtra("fromStats", true);
         startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 

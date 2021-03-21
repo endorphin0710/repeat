@@ -5,12 +5,14 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorGradientStart</item>
         <item name="colorPrimaryDark">@color/colorGradientStart</item>
-        <item name="colorAccent">@color/colorGradientEnd</item>
+        <item name="colorAccent">@color/colorGradientStart</item>
 
         <item name="android:windowActivityTransitions">true</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowEnterTransition">@android:transition/fade</item>
         <item name="android:windowExitTransition">@android:transition/fade</item>
+
+        <item name="android:fontFamily">@font/app_font</item>
 
     </style>
 

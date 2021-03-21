@@ -112,8 +112,6 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                     updateTitleAndImage(book);
                     break;
                 case 1:
-                    break;
-                case 2:
                     AlertDialog.Builder confirmBuilder = new AlertDialog.Builder(this,  R.style.dialogTheme);
                     confirmBuilder.setMessage(getString(R.string.confirm_delete));
                     confirmBuilder.setPositiveButton(getString(R.string.delete), (dialog1, which1) -> {
