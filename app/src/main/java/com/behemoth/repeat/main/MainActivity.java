@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     private static final long TIME_INTERVAL = 2000L;
     private long time_back_button_pressed;
+    private static int tutorialCnt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,13 +69,22 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private void showTutorial(){
         boolean fisrtLaunch = SharedPreference.getInstance().getBoolean(Constants.FIRST_LAUNCH, true);
         if(fisrtLaunch){
+            tutorialCnt = 1;
             ImageView tutorial = findViewById(R.id.tutorial);
             tutorial.setVisibility(View.VISIBLE);
             tutorial.setOnClickListener(v -> {
-                tutorial.setVisibility(View.GONE);
-                bottomNavigationView.setVisibility(View.VISIBLE);
-                getBooks();
-                SharedPreference.getInstance().putBoolean(Constants.FIRST_LAUNCH, false);
+                if(tutorialCnt == 1){
+                    tutorialCnt += 1;
+                    tutorial.setImageResource(R.drawable.tutorial2);
+                }else if(tutorialCnt == 2){
+                    tutorialCnt += 1;
+                    tutorial.setImageResource(R.drawable.tutorial3);
+                }else{
+                    tutorial.setVisibility(View.GONE);
+                    bottomNavigationView.setVisibility(View.VISIBLE);
+                    getBooks();
+                    SharedPreference.getInstance().putBoolean(Constants.FIRST_LAUNCH, false);
+                }
             });
         }else{
             bottomNavigationView.setVisibility(View.VISIBLE);

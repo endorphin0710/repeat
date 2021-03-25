@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.behemoth.repeat.R;
@@ -28,20 +29,16 @@ public class BookStatsFragment extends Fragment {
 
     private static final String ARG_BOOK = "book";
 
-    private LineChart lineChart;
-
     private List<Chapter> chapters;
 
-    private LineData lineData;
     private LineDataSet avrDataSet;
     private LineDataSet minDataSet;
     private LineDataSet maxDataSet;
 
-    // TODO: Rename and change types of parameters
     private Book book;
+    private boolean noStats;
 
-    public BookStatsFragment() {
-    }
+    public BookStatsFragment() { }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,6 +81,8 @@ public class BookStatsFragment extends Fragment {
             avrDataSet = new LineDataSet(avrData, Constants.LABEL_AVERAGE_SCORE);
             maxDataSet = new LineDataSet(maxData, Constants.LABEL_MAX_SCORE);
             minDataSet = new LineDataSet(minData, Constants.LABEL_MIN_SCORE);
+
+            if(avrData.size() <= 0) noStats = true;
         }
     }
 
@@ -91,10 +90,16 @@ public class BookStatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_book_stats, container, false);
 
+        if(noStats){
+            ConstraintLayout noStats = rootView.findViewById(R.id.noStats);
+            noStats.setVisibility(View.VISIBLE);
+            return rootView;
+        }
+
         int chapterNumber = chapters.size();
         // Inflate the layout for this fragment
-        lineChart = rootView.findViewById(R.id.lineChart);
-        lineChart.setMinimumWidth(chapterNumber * 120);
+        LineChart lineChart = rootView.findViewById(R.id.lineChart);
+        lineChart.setMinimumWidth(chapterNumber * 150);
 
         lineChart.getDescription().setEnabled(false);
         lineChart.getLegend().setEnabled(false);
@@ -120,22 +125,24 @@ public class BookStatsFragment extends Fragment {
         lineChart.getAxisRight().setDrawLabels(false);
         lineChart.getAxisRight().setDrawGridLines(false);
 
+        lineChart.getXAxis().setGranularityEnabled(true);
         lineChart.getXAxis().setAxisMaximum(book.getChapterCount());
         lineChart.getXAxis().setDrawGridLines(false);
-        lineChart.getXAxis().setLabelCount(4, true);
+        lineChart.getXAxis().setLabelCount(book.getChapterCount(), true);
         lineChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         lineChart.getXAxis().setGranularity(1f);
         lineChart.getXAxis().setLabelCount(book.getChapterCount());
-        lineChart.getXAxis().setSpaceMax(0.3f);
-        lineChart.getXAxis().setSpaceMin(0.3f);
+        lineChart.getXAxis().setSpaceMax(0.6f);
+        lineChart.getXAxis().setSpaceMin(0.6f);
         lineChart.getXAxis().setValueFormatter(new ValueFormatter() {
             @Override
             public String getFormattedValue(float value) {
-                return String.valueOf((int)value);
+                if((int)value <= 0) return "";
+                else return String.valueOf((int)value);
             }
         });
 
-        lineData = new LineData();
+        LineData lineData = new LineData();
 
         maxDataSet.setValueTextSize(10);
         maxDataSet.setValueTextColor(Color.parseColor("#FB3535"));

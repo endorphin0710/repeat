@@ -27,6 +27,8 @@ public class MarkRepeatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private final MarkClickListener mListener;
     private Button btnComplete;
     private List<RadioGroup> radioGroups;
+    //-1 -> none, 1 -> correct, 0 -> wrong
+    private int defaultCheck = -99;
 
     class ProblemViewHolder extends RecyclerView.ViewHolder {
 
@@ -90,21 +92,22 @@ public class MarkRepeatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if(holder.getItemViewType() >= mList.size()-1){
             CompleteViewHolder completeViewHolder = (CompleteViewHolder)holder;
 
+            completeViewHolder.btnSaveTemp.setOnClickListener(view -> {
+                mList.remove(mList.size()-1);
+                parent.mark(mList, true);
+            });
+
             btnComplete = completeViewHolder.btnComplete;
             if(checkCompletable()){
                 activateButton();
             }else{
                 inactivateButton();
             }
-            completeViewHolder.btnComplete.setOnClickListener(view -> {
+
+            btnComplete.setOnClickListener(view -> {
                 if(!checkCompletable()) return;
                 mList.remove(mList.size()-1);
                 parent.mark(mList, false);
-            });
-
-            completeViewHolder.btnSaveTemp.setOnClickListener(view -> {
-                mList.remove(mList.size()-1);
-                parent.mark(mList, true);
             });
 
         }else{
@@ -123,6 +126,14 @@ public class MarkRepeatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
 
             radioGroups.add(problemViewHolder.radioGroup);
+            if(defaultCheck == -1){
+                problemViewHolder.radioNotSolved.setChecked(true);
+            }else if(defaultCheck == 1){
+                problemViewHolder.radioCorrect.setChecked(true);
+            }else if(defaultCheck == 0){
+                problemViewHolder.radioIncorrect.setChecked(true);
+            }
+
             problemViewHolder.radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
                 switch(checkedId){
                     case R.id.radioCorrect:
@@ -141,12 +152,14 @@ public class MarkRepeatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public void activateButton(){
+        if(btnComplete == null) return;
         btnComplete.setBackground(ContextCompat.getDrawable(parent, R.drawable.button_background_yellow));
         btnComplete.setTextColor(ContextCompat.getColor(parent, R.color.black));
         btnComplete.setClickable(true);
     }
 
     public void inactivateButton(){
+        if(btnComplete == null) return;
         btnComplete.setBackground(ContextCompat.getDrawable(parent, R.drawable.button_background_gray));
         btnComplete.setTextColor(ContextCompat.getColor(parent, R.color.black66));
         btnComplete.setClickable(false);
@@ -165,18 +178,30 @@ public class MarkRepeatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     }
 
     public void allCorrect(){
+        defaultCheck = 1;
+        for(Problem p : mList){
+            p.setState(1);
+        }
         for(RadioGroup rg : radioGroups){
             rg.check(R.id.radioCorrect);
         }
     }
 
     public void allWrong(){
+        defaultCheck = 0;
+        for(Problem p : mList){
+            p.setState(0);
+        }
         for(RadioGroup rg : radioGroups){
             rg.check(R.id.radioIncorrect);
         }
     }
 
     public void allReset(){
+        defaultCheck = -1;
+        for(Problem p : mList){
+            p.setState(-1);
+        }
         for(RadioGroup rg : radioGroups){
             rg.check(R.id.radioNotSolved);
         }

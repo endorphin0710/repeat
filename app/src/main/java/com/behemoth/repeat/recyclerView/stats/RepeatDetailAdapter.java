@@ -54,7 +54,7 @@ public class RepeatDetailAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         Repeat r = mList.get(position);
 
         repeatDetailViewHolder.tvRepeatNum.setText(String.valueOf(r.getRepeatNumber()));
-        repeatDetailViewHolder.tvPercent.setText(String.valueOf(r.getPercent()));
+        repeatDetailViewHolder.tvPercent.setText(r.getPercent() + "%");
 
         repeatDetailViewHolder.container.setOnClickListener(v -> {
             parent.goToMarkDetailActivity(mList.get(position));

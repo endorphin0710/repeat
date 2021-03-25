@@ -101,7 +101,7 @@ public class MarkRepeatModel implements MarkRepeatContract.Model{
 
         markRef.updateChildren(childUpdates)
                 .addOnSuccessListener(aVoid -> {
-                    presenter.onUpdateSuccess();
+                    presenter.onUpdateSuccess(true);
                 })
                 .addOnFailureListener(e -> {
                     presenter.onUpdateFailure();
@@ -125,7 +125,7 @@ public class MarkRepeatModel implements MarkRepeatContract.Model{
 
         markRef.updateChildren(childUpdates)
                 .addOnSuccessListener(aVoid -> {
-                    presenter.onUpdateSuccess();
+                    presenter.onUpdateSuccess(false);
                 })
                 .addOnFailureListener(e -> {
                     presenter.onUpdateFailure();

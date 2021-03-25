@@ -109,8 +109,8 @@ public class MarkRepeatPresenter implements MarkRepeatContract.Presenter{
     }
 
     @Override
-    public void onUpdateSuccess() {
-        view.onUpdateSuccess();
+    public void onUpdateSuccess(boolean goToRecents) {
+        view.onUpdateSuccess(goToRecents);
     }
 
     @Override

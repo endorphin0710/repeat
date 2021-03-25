@@ -11,7 +11,7 @@ public interface MarkRepeatContract {
 
     interface View{
         Context getContext();
-        void onUpdateSuccess();
+        void onUpdateSuccess(boolean goToRecents);
         void onUpdateFailure();
         void showProgressBar();
         void hideProgressBar();
@@ -21,7 +21,7 @@ public interface MarkRepeatContract {
     interface Presenter{
         void setRecyclerView(Book b, int chapterNumber);
         void mark(Book b, int chapterNumber, List<Problem> problems, boolean temp);
-        void onUpdateSuccess();
+        void onUpdateSuccess(boolean goToRecents);
         void onUpdateFailure();
         void getBook(String id);
         void onRetrieveBook(Book b);

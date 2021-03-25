@@ -74,6 +74,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/toolbar"
-        app:srcCompat="@drawable/tutorial" />
+        app:srcCompat="@drawable/tutorial1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

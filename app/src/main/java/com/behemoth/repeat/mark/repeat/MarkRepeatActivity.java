@@ -92,12 +92,12 @@ public class MarkRepeatActivity extends AppCompatActivity implements MarkRepeatC
     }
 
     @Override
-    public void onUpdateSuccess() {
+    public void onUpdateSuccess(boolean goToRecents) {
         SharedPreference.getInstance().onDataChanged();
         Intent i = new Intent(MarkRepeatActivity.this, MarkActivity.class);
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         i.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        i.putExtra("mark_completed", true);
+        if(goToRecents) i.putExtra("mark_completed", true);
         startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 
@@ -125,6 +125,8 @@ public class MarkRepeatActivity extends AppCompatActivity implements MarkRepeatC
     public void onRetrieveBook(Book b) {
         this.book = b;
         presenter.setRecyclerView(book, chapterNumber);
+        RadioGroup rg = findViewById(R.id.radioGroupAll);
+        rg.setVisibility(View.VISIBLE);
     }
 
 }

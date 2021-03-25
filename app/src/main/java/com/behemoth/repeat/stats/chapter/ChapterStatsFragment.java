@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.behemoth.repeat.R;
@@ -71,6 +72,12 @@ public class ChapterStatsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_chapter_stats, container, false);
+
+        if(this.repeatCnt <= 0){
+            ConstraintLayout noStats = rootView.findViewById(R.id.noStats);
+            noStats.setVisibility(View.VISIBLE);
+            return rootView;
+        }
 
         pieChart = rootView.findViewById(R.id.pie_chart);
         setPieChart();
@@ -152,7 +159,7 @@ public class ChapterStatsFragment extends Fragment {
 
     private void setBarChart(){
         barChart.setDescription(null);
-        barChart.setMinimumHeight(this.repeatCnt * 120);
+        barChart.setMinimumHeight(this.repeatCnt * 300);
 
         barChart.getAxisLeft().setLabelCount(maxIncorrects);
         barChart.getAxisLeft().setGranularity(1f);

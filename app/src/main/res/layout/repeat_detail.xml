@@ -5,7 +5,7 @@
     android:id="@+id/repeat_container"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:layout_marginBottom="8dp">
+    android:layout_marginBottom="2dp">
 
     <TextView
         android:id="@+id/tv_repeat_number"
@@ -18,7 +18,8 @@
         app:layout_constraintEnd_toStartOf="@+id/tv_percent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:text="1" />
 
     <TextView
         android:id="@+id/tv_percent"
@@ -30,7 +31,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_repeat_number"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="60" />
 
     <View
         android:id="@+id/divider2"
@@ -39,8 +41,9 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_repeat_number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_repeat_number" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

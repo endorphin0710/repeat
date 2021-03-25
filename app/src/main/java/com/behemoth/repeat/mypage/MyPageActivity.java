@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +22,7 @@ import com.behemoth.repeat.R;
 import com.behemoth.repeat.auth.LoginActivity;
 import com.behemoth.repeat.mypage.faq.FaqActivity;
 import com.behemoth.repeat.mypage.nickname.NicknameActivity;
+import com.behemoth.repeat.mypage.terms.TermsActivity;
 import com.behemoth.repeat.mypage.unregister.UnregisterActivity;
 import com.behemoth.repeat.util.Constants;
 import com.behemoth.repeat.util.SharedPreference;
@@ -36,6 +38,7 @@ public class MyPageActivity extends AppCompatActivity implements MyPageContract.
     private TextView tvCurrentVersionCode;
     private TextView tvLatestVersionCode;
     private TextView tvNickName;
+    private static int tutorialCnt = 1;
 
     private LottieAnimationView progressBar;
     private ConstraintLayout loadingLayout;
@@ -68,8 +71,14 @@ public class MyPageActivity extends AppCompatActivity implements MyPageContract.
         TextView viewNickname = findViewById(R.id.view_nickname);
         viewNickname.setOnClickListener(this);
 
+        TextView viewTutorial = findViewById(R.id.view_tutorial);
+        viewTutorial.setOnClickListener(this);
+
         TextView viewFaq = findViewById(R.id.view_faq);
         viewFaq.setOnClickListener(this);
+
+        TextView viewTerms = findViewById(R.id.view_terms);
+        viewTerms.setOnClickListener(this);
 
         TextView viewInit = findViewById(R.id.view_init);
         viewInit.setOnClickListener(this);
@@ -119,14 +128,16 @@ public class MyPageActivity extends AppCompatActivity implements MyPageContract.
 
     @Override
     public void onDeleteSuccess() {
-        Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.desc_success_init), Toast.LENGTH_SHORT).show();
         setResult(RESULT_OK);
         finish();
     }
 
     @Override
     public void onDeleteFailure() {
-
+        Toast.makeText(this, getString(R.string.desc_fail_init), Toast.LENGTH_SHORT).show();
+        setResult(RESULT_CANCELED);
+        finish();
     }
 
     @Override
@@ -136,8 +147,12 @@ public class MyPageActivity extends AppCompatActivity implements MyPageContract.
             showLogoutDialog();
         }else if(id == R.id.view_init){
             showInitDialog();
+        }else if(id == R.id.view_tutorial){
+            showTutorial();
         }else if(id == R.id.view_faq){
             goToFaqActivity();
+        }else if(id == R.id.view_terms){
+            goToTermsActivity();
         }else if(id == R.id.view_unregister){
             goToUnregisterActivity();
         }else if(id == R.id.view_nickname){
@@ -183,6 +198,24 @@ public class MyPageActivity extends AppCompatActivity implements MyPageContract.
         dialog.getButton(dialog.BUTTON_POSITIVE).setTextColor(Color.parseColor("#B00020"));
     }
 
+    private void showTutorial(){
+        ImageView tutorial = findViewById(R.id.tutorial);
+        tutorial.setVisibility(View.VISIBLE);
+        tutorial.setOnClickListener(v -> {
+            if(tutorialCnt == 1){
+                tutorialCnt += 1;
+                tutorial.setImageResource(R.drawable.tutorial2);
+            }else if(tutorialCnt == 2){
+                tutorialCnt += 1;
+                tutorial.setImageResource(R.drawable.tutorial3);
+            }else{
+                tutorialCnt = 1;
+                tutorial.setImageResource(R.drawable.tutorial1);
+                tutorial.setVisibility(View.GONE);
+            }
+        });
+    }
+
     private void logout(){
         SharedPreference.getInstance().resetAll();
 
@@ -204,6 +237,11 @@ public class MyPageActivity extends AppCompatActivity implements MyPageContract.
 
     private void goToFaqActivity(){
         Intent i = new Intent(MyPageActivity.this, FaqActivity.class);
+        startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
+    }
+
+    private void goToTermsActivity(){
+        Intent i = new Intent(MyPageActivity.this, TermsActivity.class);
         startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 

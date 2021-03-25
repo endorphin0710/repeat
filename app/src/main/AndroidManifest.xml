@@ -23,8 +23,11 @@
         android:theme="@style/AppTheme"
         tools:replace="android:supportsRtl">
         <activity
+            android:name=".mypage.terms.TermsActivity"
+            android:label="@string/label_terms" />
+        <activity
             android:name=".mypage.faq.FaqActivity"
-            android:label="@string/label_faq_activity"></activity>
+            android:label="@string/label_faq" />
         <activity
             android:name=".mypage.nickname.NicknameActivity"
             android:label="@string/label_nickname_activity" />
