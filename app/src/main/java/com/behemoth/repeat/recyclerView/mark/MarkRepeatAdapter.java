@@ -110,10 +110,19 @@ public class MarkRepeatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 parent.mark(mList, false);
             });
 
-        }else{
+        }else {
             ProblemViewHolder problemViewHolder = (ProblemViewHolder)holder;
             Problem p = mList.get(position);
             problemViewHolder.problemNumber.setText(String.valueOf(p.getProblemNumber()));
+
+            radioGroups.add(problemViewHolder.radioGroup);
+//            if(defaultCheck == -1){
+//                problemViewHolder.radioNotSolved.setChecked(true);
+//            }else if(defaultCheck == 1){
+//                problemViewHolder.radioCorrect.setChecked(true);
+//            }else if(defaultCheck == 0){
+//                problemViewHolder.radioIncorrect.setChecked(true);
+//            }
 
             int state = mList.get(position).getState();
             switch(state){
@@ -123,15 +132,11 @@ public class MarkRepeatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 case 1:
                     problemViewHolder.radioCorrect.setChecked(true);
                     break;
-            }
-
-            radioGroups.add(problemViewHolder.radioGroup);
-            if(defaultCheck == -1){
-                problemViewHolder.radioNotSolved.setChecked(true);
-            }else if(defaultCheck == 1){
-                problemViewHolder.radioCorrect.setChecked(true);
-            }else if(defaultCheck == 0){
-                problemViewHolder.radioIncorrect.setChecked(true);
+                case -1:
+                    problemViewHolder.radioNotSolved.setChecked(true);
+                    break;
+                default:
+                    break;
             }
 
             problemViewHolder.radioGroup.setOnCheckedChangeListener((group, checkedId) -> {

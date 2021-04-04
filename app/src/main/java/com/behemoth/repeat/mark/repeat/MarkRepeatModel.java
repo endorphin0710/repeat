@@ -147,7 +147,9 @@ public class MarkRepeatModel implements MarkRepeatContract.Model{
                 presenter.onRetrieveBook(book);
             }
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+
         });
     }
 

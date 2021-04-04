@@ -20,16 +20,17 @@
                 android:layout_height="250dp"
                 android:layout_marginStart="40dp"
                 android:layout_marginTop="58dp"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.github.mikephil.charting.charts.HorizontalBarChart
                 android:id="@+id/bar_chart"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
-                android:layout_marginStart="40dp"
+                android:layout_height="120dp"
+                android:layout_marginStart="24dp"
                 android:layout_marginTop="50dp"
-                android:layout_marginEnd="80dp"
+                android:layout_marginEnd="24dp"
                 android:layout_marginBottom="50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -44,6 +45,7 @@
                 android:text="@string/label_title_pie_chart"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/pie_chart"
                 app:layout_constraintEnd_toEndOf="@+id/pie_chart"
                 app:layout_constraintStart_toStartOf="@+id/pie_chart" />

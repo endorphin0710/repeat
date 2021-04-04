@@ -42,7 +42,9 @@ public class AddProblemPresenter implements AddProblemContract.Presenter{
 
         int cnt = newBook.getChapterCount();
         for(int i = 1; i <= cnt; i++){
-            mArrayList.add(new Chapter(i));
+            Chapter c = new Chapter(i);
+            c.setProblemCount(1);
+            mArrayList.add(c);
         }
         mArrayList.add(new Chapter(-1));
 

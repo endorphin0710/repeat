@@ -39,8 +39,9 @@ public class MarkRepeatActivity extends AppCompatActivity implements MarkRepeatC
         presenter = new MarkRepeatPresenter(this);
 
         Bundle data = getIntent().getExtras();
-        setToolbar(data);
         initView();
+        setToolbar(data);
+        presenter.setRecyclerView(chapterNumber);
     }
 
     private void initView(){
@@ -123,10 +124,9 @@ public class MarkRepeatActivity extends AppCompatActivity implements MarkRepeatC
 
     @Override
     public void onRetrieveBook(Book b) {
-        this.book = b;
-        presenter.setRecyclerView(book, chapterNumber);
         RadioGroup rg = findViewById(R.id.radioGroupAll);
         rg.setVisibility(View.VISIBLE);
+        this.book = b;
     }
 
 }

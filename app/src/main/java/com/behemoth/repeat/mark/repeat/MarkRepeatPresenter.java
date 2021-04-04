@@ -24,6 +24,7 @@ public class MarkRepeatPresenter implements MarkRepeatContract.Presenter{
 
     private ArrayList<Problem> mArrayList;
     private MarkRepeatAdapter mAdapter;
+    private int chapterNumber;
 
     public MarkRepeatPresenter(MarkRepeatContract.View view){
         this.view = view;
@@ -32,34 +33,21 @@ public class MarkRepeatPresenter implements MarkRepeatContract.Presenter{
     }
 
     @Override
-    public void setRecyclerView(Book b, int chapterNumber) {
+    public void setRecyclerView(int chapterNumber) {
+        this.chapterNumber = chapterNumber;
+
         mArrayList = new ArrayList<>();
-
-        Chapter c = b.getChapter().get(chapterNumber);
-
-        int repeatCount = c.getRepeatCount();
-        List<Integer> marks = c.getRepeat().get(repeatCount-1).getMark();
-
-        int problemCount = c.getProblemCount();
-        for(int i = 0; i < problemCount; i++){
-            int state = marks.get(i);
-            mArrayList.add(new Problem(i+1, state));
-        }
-        mArrayList.add(new Problem());
 
         RecyclerView mRecyclerView = ((MarkRepeatActivity)view).findViewById(R.id.markRepeatRecyclerView);
 
         LinearLayoutManager mLinearLayoutManager = new LinearLayoutManager(viewContext);
         mRecyclerView.setLayoutManager(mLinearLayoutManager);
 
-        MarkClickListener markClickListener = new MarkClickListener() {
-            @Override
-            public void onClick(int position) {
-                if(checkCompletable()){
-                    mAdapter.activateButton();
-                }else{
-                    mAdapter.inactivateButton();
-                }
+        MarkClickListener markClickListener = position -> {
+            if(checkCompletable()){
+                mAdapter.activateButton();
+            }else{
+                mAdapter.inactivateButton();
             }
         };
 
@@ -120,12 +108,27 @@ public class MarkRepeatPresenter implements MarkRepeatContract.Presenter{
 
     @Override
     public void getBook(String id) {
+        view.showProgressBar();
         model.getBook(id);
     }
 
     @Override
     public void onRetrieveBook(Book b) {
+        view.hideProgressBar();
         view.onRetrieveBook(b);
+
+        Chapter c = b.getChapter().get(chapterNumber);
+
+        int repeatCount = c.getRepeatCount();
+        List<Integer> marks = c.getRepeat().get(repeatCount-1).getMark();
+
+        int problemCount = c.getProblemCount();
+        for(int i = 0; i < problemCount; i++){
+            int state = marks.get(i);
+            mArrayList.add(new Problem(i+1, state));
+        }
+        mArrayList.add(new Problem());
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override

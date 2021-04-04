@@ -44,6 +44,7 @@ public class ChapterStatsFragment extends Fragment {
     private TreeMap<Integer, Integer> distribution;
     private int maxIncorrects;
     private int repeatCnt;
+    private int problemCnt;
 
     private PieChart pieChart;
     private BarChart barChart;
@@ -80,7 +81,7 @@ public class ChapterStatsFragment extends Fragment {
         }
 
         pieChart = rootView.findViewById(R.id.pie_chart);
-        setPieChart();
+//        setPieChart();
 
         barChart = rootView.findViewById(R.id.bar_chart);
         setBarChart();
@@ -94,6 +95,10 @@ public class ChapterStatsFragment extends Fragment {
         repeats = gson.fromJson(jsonRepeats, userListType);
 
         markData = new TreeMap<>();
+        this.problemCnt = repeats.get(0).getProblemCount();
+        for(int i = 1; i <= this.problemCnt; i++){
+            markData.put(i, 0);
+        }
         int repeatCnt = 0;
         for(Repeat r : repeats){
             if(!r.isFinished()) continue;
@@ -159,7 +164,8 @@ public class ChapterStatsFragment extends Fragment {
 
     private void setBarChart(){
         barChart.setDescription(null);
-        barChart.setMinimumHeight(this.repeatCnt * 300);
+        int minLength = markData.size() * 180;
+        barChart.setMinimumHeight(minLength);
 
         barChart.getAxisLeft().setLabelCount(maxIncorrects);
         barChart.getAxisLeft().setGranularity(1f);
@@ -171,19 +177,39 @@ public class ChapterStatsFragment extends Fragment {
         barChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         barChart.getXAxis().setGranularity(1f);
         barChart.getXAxis().setLabelCount(markData.size());
+        barChart.getXAxis().setDrawAxisLine(false);
         //barChart.getXAxis().setEnabled(false);
         barChart.getXAxis().setDrawGridLines(false);
+        barChart.getXAxis().setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.valueOf((int)value*-1);
+            }
+        });
 
         ArrayList<BarEntry> values = new ArrayList<>();
+
         for(Map.Entry<Integer, Integer> e : markData.entrySet()){
-            values.add(new BarEntry((float)e.getKey(), (float)e.getValue()));
+            values.add(new BarEntry((float)e.getKey()*-1, (float)e.getValue()));
         }
 
         CustomBarDataSet barDataSet = new CustomBarDataSet(values, "오답 횟수");
         barDataSet.setColors(REPEAT_COLORS);
+        barDataSet.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return "";
+            }
+        });
 
         BarData barData = new BarData(barDataSet);
-        barData.setBarWidth(0.3f);
+        barData.setBarWidth(0.4f);
+        barData.setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return "";
+            }
+        });
 
         barChart.setData(barData);
     }

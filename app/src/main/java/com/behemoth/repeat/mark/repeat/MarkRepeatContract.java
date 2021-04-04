@@ -19,7 +19,7 @@ public interface MarkRepeatContract {
     }
 
     interface Presenter{
-        void setRecyclerView(Book b, int chapterNumber);
+        void setRecyclerView(int chapterNumber);
         void mark(Book b, int chapterNumber, List<Problem> problems, boolean temp);
         void onUpdateSuccess(boolean goToRecents);
         void onUpdateFailure();

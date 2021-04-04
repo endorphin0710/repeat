@@ -87,9 +87,9 @@ public class ProblemAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         }else{
             ChapterViewHolder chapterViewHolder = (ChapterViewHolder)holder;
             chapterViewHolder.chapterNumber.setText(String.valueOf(mList.get(position).getChapterNumber()));
-            chapterViewHolder.seekBar.setProgress(1);
-            chapterViewHolder.problemCnt.setText("1");
-            mList.get(position).setProblemCount(1);
+            chapterViewHolder.seekBar.setProgress(mList.get(position).getProblemCount());
+            chapterViewHolder.problemCnt.setText(String.valueOf(mList.get(position).getProblemCount()));
+//            mList.get(position).setProblemCount(1);
             chapterViewHolder.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
                 public void onProgressChanged(SeekBar seekBar, int i, boolean b) {

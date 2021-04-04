@@ -3,6 +3,8 @@ package com.behemoth.repeat.auth;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,7 +37,7 @@ import java.util.List;
 
 public class KakaoLogin extends AppCompatActivity {
 
-    private static final String TAG = "KakaoLogin";
+    private static final String TAG = "KakaoLoginTAG";
     private SessionCallback callback;
 
     @Override
@@ -76,7 +78,7 @@ public class KakaoLogin extends AppCompatActivity {
             if (exception != null) {
                 LogUtil.d(TAG, "exception : " + exception);
             }
-            startLoginActivity();
+            startLoginActivity(1);
         }
     }
 
@@ -88,12 +90,12 @@ public class KakaoLogin extends AppCompatActivity {
             @Override
             public void onFailure(ErrorResult errorResult) {
                 LogUtil.d(TAG, "failed to get user info. msg=" + errorResult);
-                startLoginActivity();
+                startLoginActivity(2);
             }
 
             @Override
             public void onSessionClosed(ErrorResult errorResult) {
-                startLoginActivity();
+                startLoginActivity(3);
             }
 
             @Override
@@ -101,28 +103,34 @@ public class KakaoLogin extends AppCompatActivity {
                 String token = Session.getCurrentSession().getTokenInfo().getAccessToken();
                 LogUtil.d(TAG, "token -> " + token);
 
-                LogUtil.d(TAG, "reuqestMe -> onSuccess: ");
+                LogUtil.d(TAG, "reuqestMe -> onSuccess ");
 
                 FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
                 firebaseAuth.signInAnonymously()
                         .addOnSuccessListener(authResult -> {
+                            LogUtil.d(TAG, "Firebase Signin Success ");
                             FirebaseUser user = authResult.getUser();
                             String uid = "";
-                            if(user != null) uid = user.getUid();
+                            if(user != null) {
+                                uid = user.getUid();
+                                LogUtil.d(TAG, "UID : " + uid);
+                            }
                             String id = Long.toString(response.getId());
                             saveUser(id, uid);
                         })
                         .addOnFailureListener( e -> {
                             LogUtil.e(TAG, "message : " + e.getMessage());
-                            finishAffinity();
+                            startLoginActivity(4);
                         });
             }
         });
     }
 
     private void saveUser(String id, String uid){
+        LogUtil.d(TAG, "Save User Data");
         id = Constants.KAKAO_ID_PREFIX + id;
         String nickName = Util.generateNickname(6);
+        LogUtil.d(TAG, "Nickname : " + nickName);
 
         /** sharedPreference **/
         SharedPreference.getInstance().putString(Constants.LOGIN_TYPE, Constants.KAKAO);
@@ -135,23 +143,51 @@ public class KakaoLogin extends AppCompatActivity {
         ref.child("user").child(id).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if(dataSnapshot.getChildrenCount() == 0) {
+                if(dataSnapshot.getChildrenCount() <= 0) {
+                    LogUtil.d(TAG, "UID not found");
                     ref.child("user").child(finalId).setValue(new User(finalId, Constants.USER_TYPE_SOCIAL, uid, nickName))
                             .addOnSuccessListener(aVoid -> {
                                 startMainActivity();
                             });
                 }else{
-                    ref.child("user").child(finalId).child("uid").setValue(uid).addOnSuccessListener(aVoid -> {
-                        startMainActivity();
+                    LogUtil.d(TAG, "UID exists : " + uid);
+                    ref.child("user").child(finalId).child("uid").addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            String uidStored = (String) dataSnapshot.getValue();
+                            LogUtil.d(TAG, "UID stored : " + uidStored);
+                            if(uid.equals(uidStored)){
+                                startMainActivity();
+                            }else{
+                                ref.child("user").child(finalId).child("uid").setValue(uid)
+                                        .addOnSuccessListener(aVoid -> {
+                                            startMainActivity();
+                                        })
+                                        .addOnFailureListener(aVoid ->{
+                                            startLoginActivity(5);
+                                        });
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            startLoginActivity(6);
+                        }
                     });
+
                 }
             }
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) { }
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                startLoginActivity(7);
+            }
         });
     }
 
-    private void startLoginActivity(){
+    private void startLoginActivity(int a){
+        Toast.makeText(this, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show();
+        Log.e(TAG, "Kakao login error with index : " + a);
+
         Intent i = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(i, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
         finish();

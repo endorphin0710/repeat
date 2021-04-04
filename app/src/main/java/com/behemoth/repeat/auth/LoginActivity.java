@@ -67,16 +67,16 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void prepareButtons(){
-        Button naverLoginButton = findViewById(R.id.buttonNaverLogin);
-        naverLoginButton.setVisibility(View.VISIBLE);
-        naverLoginButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                if(ongoing) return;
-                startLogin(Constants.NAVER);
-                ongoing = true;
-            }
-        });
+//        Button naverLoginButton = findViewById(R.id.buttonNaverLogin);
+//        naverLoginButton.setVisibility(View.VISIBLE);
+//        naverLoginButton.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View v) {
+//                if(ongoing) return;
+//                startLogin(Constants.NAVER);
+//                ongoing = true;
+//            }
+//        });
 
         Button kakaoLoginButton = findViewById(R.id.buttonKakaoLogin);
         kakaoLoginButton.setVisibility(View.VISIBLE);
